@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSGetItemPKsByCriteria complex type的 Java 类。
+ * <p>WSGetItemPKsByCriteria complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSGetItemPKsByCriteria">
@@ -58,7 +58,7 @@ public class WSGetItemPKsByCriteria {
     protected WSDataClusterPK wsDataClusterPK;
 
     /**
-     * 获取conceptName属性的值。
+     * 锟斤拷取conceptName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置conceptName属性的值。
+     * 锟斤拷锟斤拷conceptName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -82,7 +82,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取contentKeywords属性的值。
+     * 锟斤拷取contentKeywords锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -94,7 +94,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置contentKeywords属性的值。
+     * 锟斤拷锟斤拷contentKeywords锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -106,7 +106,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取fromDate属性的值。
+     * 锟斤拷取fromDate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -118,7 +118,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置fromDate属性的值。
+     * 锟斤拷锟斤拷fromDate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -130,7 +130,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取keys属性的值。
+     * 锟斤拷取keys锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -142,7 +142,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置keys属性的值。
+     * 锟斤拷锟斤拷keys锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -154,7 +154,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取keysKeywords属性的值。
+     * 锟斤拷取keysKeywords锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -166,7 +166,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置keysKeywords属性的值。
+     * 锟斤拷锟斤拷keysKeywords锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -178,7 +178,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取maxItems属性的值。
+     * 锟斤拷取maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getMaxItems() {
@@ -186,7 +186,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置maxItems属性的值。
+     * 锟斤拷锟斤拷maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setMaxItems(int value) {
@@ -194,7 +194,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取skip属性的值。
+     * 锟斤拷取skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSkip() {
@@ -202,7 +202,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置skip属性的值。
+     * 锟斤拷锟斤拷skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSkip(int value) {
@@ -210,7 +210,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取toDate属性的值。
+     * 锟斤拷取toDate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -222,7 +222,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置toDate属性的值。
+     * 锟斤拷锟斤拷toDate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -234,7 +234,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -246,7 +246,7 @@ public class WSGetItemPKsByCriteria {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSPartialPutItem complex type的 Java 类。
+ * <p>WSPartialPutItem complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSPartialPutItem">
@@ -61,7 +61,7 @@ public class WSPartialPutItem {
     protected String xml;
 
     /**
-     * 获取datacluster属性的值。
+     * 锟斤拷取datacluster锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置datacluster属性的值。
+     * 锟斤拷锟斤拷datacluster锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -85,7 +85,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取datamodel属性的值。
+     * 锟斤拷取datamodel锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -97,7 +97,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置datamodel属性的值。
+     * 锟斤拷锟斤拷datamodel锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -109,7 +109,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取delete属性的值。
+     * 锟斤拷取delete锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -121,7 +121,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置delete属性的值。
+     * 锟斤拷锟斤拷delete锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -133,7 +133,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取keyXPath属性的值。
+     * 锟斤拷取keyXPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -145,7 +145,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置keyXPath属性的值。
+     * 锟斤拷锟斤拷keyXPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -157,7 +157,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取overwrite属性的值。
+     * 锟斤拷取overwrite锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -169,7 +169,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置overwrite属性的值。
+     * 锟斤拷锟斤拷overwrite锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -181,7 +181,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取pivot属性的值。
+     * 锟斤拷取pivot锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -193,7 +193,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置pivot属性的值。
+     * 锟斤拷锟斤拷pivot锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -205,7 +205,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取report属性的值。
+     * 锟斤拷取report锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public boolean isReport() {
@@ -213,7 +213,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置report属性的值。
+     * 锟斤拷锟斤拷report锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setReport(boolean value) {
@@ -221,7 +221,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取source属性的值。
+     * 锟斤拷取source锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -233,7 +233,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置source属性的值。
+     * 锟斤拷锟斤拷source锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -245,7 +245,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取startingPosition属性的值。
+     * 锟斤拷取startingPosition锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -257,7 +257,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置startingPosition属性的值。
+     * 锟斤拷锟斤拷startingPosition锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -269,7 +269,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 获取xml属性的值。
+     * 锟斤拷取xml锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -281,7 +281,7 @@ public class WSPartialPutItem {
     }
 
     /**
-     * 设置xml属性的值。
+     * 锟斤拷锟斤拷xml锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

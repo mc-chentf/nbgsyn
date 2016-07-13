@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSI18NString complex type的 Java 类。
+ * <p>WSI18NString complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSI18NString">
@@ -39,7 +39,7 @@ public class WSI18NString {
     protected WSLanguage language;
 
     /**
-     * 获取label属性的值。
+     * 锟斤拷取label锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -51,7 +51,7 @@ public class WSI18NString {
     }
 
     /**
-     * 设置label属性的值。
+     * 锟斤拷锟斤拷label锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -63,7 +63,7 @@ public class WSI18NString {
     }
 
     /**
-     * 获取language属性的值。
+     * 锟斤拷取language锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -75,7 +75,7 @@ public class WSI18NString {
     }
 
     /**
-     * 设置language属性的值。
+     * 锟斤拷锟斤拷language锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

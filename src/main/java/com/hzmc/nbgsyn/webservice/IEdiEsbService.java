@@ -28,7 +28,9 @@ public interface IEdiEsbService {
 	 *            用户密码，EDI统一管理
 	 * @return
 	 */
-	public String callEDIESBPub(@WebParam(name = "fromNode") String fromNode, @WebParam(name = "toNode") String toNode,
-			@WebParam(name = "esbID") String esbID, @WebParam(name = "applyData") String applyData,
-			@WebParam(name = "userID") String userID, @WebParam(name = "password") String password);
+	public String outService(@WebParam(name = "applyData") String applyData);
+
+	
+	public String registerService(@WebParam(name = "applyData") String applyData);
+	
 }

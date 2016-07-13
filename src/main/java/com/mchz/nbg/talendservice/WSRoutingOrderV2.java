@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSRoutingOrderV2 complex type的 Java 类。
+ * <p>WSRoutingOrderV2 complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSRoutingOrderV2">
@@ -69,7 +69,7 @@ public class WSRoutingOrderV2 {
     protected WSItemPK wsItemPK;
 
     /**
-     * 获取bindingUniverseName属性的值。
+     * 锟斤拷取bindingUniverseName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -81,7 +81,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置bindingUniverseName属性的值。
+     * 锟斤拷锟斤拷bindingUniverseName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -93,7 +93,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取bindingUserToken属性的值。
+     * 锟斤拷取bindingUserToken锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -105,7 +105,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置bindingUserToken属性的值。
+     * 锟斤拷锟斤拷bindingUserToken锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -117,7 +117,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取message属性的值。
+     * 锟斤拷取message锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -129,7 +129,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置message属性的值。
+     * 锟斤拷锟斤拷message锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -141,7 +141,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取name属性的值。
+     * 锟斤拷取name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -153,7 +153,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置name属性的值。
+     * 锟斤拷锟斤拷name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -165,7 +165,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取serviceJNDI属性的值。
+     * 锟斤拷取serviceJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -177,7 +177,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置serviceJNDI属性的值。
+     * 锟斤拷锟斤拷serviceJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -189,7 +189,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取serviceParameters属性的值。
+     * 锟斤拷取serviceParameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -201,7 +201,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置serviceParameters属性的值。
+     * 锟斤拷锟斤拷serviceParameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -213,7 +213,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取status属性的值。
+     * 锟斤拷取status锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -225,7 +225,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置status属性的值。
+     * 锟斤拷锟斤拷status锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -237,7 +237,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取timeCreated属性的值。
+     * 锟斤拷取timeCreated锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeCreated() {
@@ -245,7 +245,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置timeCreated属性的值。
+     * 锟斤拷锟斤拷timeCreated锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeCreated(long value) {
@@ -253,7 +253,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取timeLastRunCompleted属性的值。
+     * 锟斤拷取timeLastRunCompleted锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunCompleted() {
@@ -261,7 +261,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置timeLastRunCompleted属性的值。
+     * 锟斤拷锟斤拷timeLastRunCompleted锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunCompleted(long value) {
@@ -269,7 +269,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取timeLastRunStarted属性的值。
+     * 锟斤拷取timeLastRunStarted锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunStarted() {
@@ -277,7 +277,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置timeLastRunStarted属性的值。
+     * 锟斤拷锟斤拷timeLastRunStarted锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunStarted(long value) {
@@ -285,7 +285,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取timeScheduled属性的值。
+     * 锟斤拷取timeScheduled锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeScheduled() {
@@ -293,7 +293,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置timeScheduled属性的值。
+     * 锟斤拷锟斤拷timeScheduled锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeScheduled(long value) {
@@ -301,7 +301,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 获取wsItemPK属性的值。
+     * 锟斤拷取wsItemPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -313,7 +313,7 @@ public class WSRoutingOrderV2 {
     }
 
     /**
-     * 设置wsItemPK属性的值。
+     * 锟斤拷锟斤拷wsItemPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

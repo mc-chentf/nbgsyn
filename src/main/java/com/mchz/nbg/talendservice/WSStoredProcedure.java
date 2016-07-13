@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSStoredProcedure complex type的 Java 类。
+ * <p>WSStoredProcedure complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSStoredProcedure">
@@ -43,7 +43,7 @@ public class WSStoredProcedure {
     protected Boolean refreshCache;
 
     /**
-     * 获取description属性的值。
+     * 锟斤拷取description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -55,7 +55,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 设置description属性的值。
+     * 锟斤拷锟斤拷description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -67,7 +67,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 获取name属性的值。
+     * 锟斤拷取name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -79,7 +79,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 设置name属性的值。
+     * 锟斤拷锟斤拷name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -91,7 +91,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 获取procedure属性的值。
+     * 锟斤拷取procedure锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -103,7 +103,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 设置procedure属性的值。
+     * 锟斤拷锟斤拷procedure锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -115,7 +115,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 获取refreshCache属性的值。
+     * 锟斤拷取refreshCache锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -127,7 +127,7 @@ public class WSStoredProcedure {
     }
 
     /**
-     * 设置refreshCache属性的值。
+     * 锟斤拷锟斤拷refreshCache锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

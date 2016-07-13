@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>getTransformerPluginV2Configuration complex type的 Java 类。
+ * <p>getTransformerPluginV2Configuration complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="getTransformerPluginV2Configuration">
@@ -34,7 +34,7 @@ public class GetTransformerPluginV2Configuration {
     protected WSTransformerPluginV2GetConfiguration arg0;
 
     /**
-     * 获取arg0属性的值。
+     * 锟斤拷取arg0锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class GetTransformerPluginV2Configuration {
     }
 
     /**
-     * 设置arg0属性的值。
+     * 锟斤拷锟斤拷arg0锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

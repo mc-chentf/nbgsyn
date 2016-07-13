@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSLong complex type的 Java 类。
+ * <p>WSLong complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSLong">
@@ -34,7 +34,7 @@ public class WSLong {
     protected long value;
 
     /**
-     * 获取value属性的值。
+     * 锟斤拷取value锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getValue() {
@@ -42,7 +42,7 @@ public class WSLong {
     }
 
     /**
-     * 设置value属性的值。
+     * 锟斤拷锟斤拷value锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setValue(long value) {

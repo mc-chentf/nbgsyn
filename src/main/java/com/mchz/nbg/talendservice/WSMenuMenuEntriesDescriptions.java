@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSMenuMenuEntriesDescriptions complex type的 Java 类。
+ * <p>WSMenuMenuEntriesDescriptions complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSMenuMenuEntriesDescriptions">
@@ -37,7 +37,7 @@ public class WSMenuMenuEntriesDescriptions {
     protected String language;
 
     /**
-     * 获取label属性的值。
+     * 锟斤拷取label锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -49,7 +49,7 @@ public class WSMenuMenuEntriesDescriptions {
     }
 
     /**
-     * 设置label属性的值。
+     * 锟斤拷锟斤拷label锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -61,7 +61,7 @@ public class WSMenuMenuEntriesDescriptions {
     }
 
     /**
-     * 获取language属性的值。
+     * 锟斤拷取language锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class WSMenuMenuEntriesDescriptions {
     }
 
     /**
-     * 设置language属性的值。
+     * 锟斤拷锟斤拷language锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

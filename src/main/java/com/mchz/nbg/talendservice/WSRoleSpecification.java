@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSRoleSpecification complex type的 Java 类。
+ * <p>WSRoleSpecification complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSRoleSpecification">
@@ -44,7 +44,7 @@ public class WSRoleSpecification {
     protected String objectType;
 
     /**
-     * 获取admin属性的值。
+     * 锟斤拷取admin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public boolean isAdmin() {
@@ -52,7 +52,7 @@ public class WSRoleSpecification {
     }
 
     /**
-     * 设置admin属性的值。
+     * 锟斤拷锟斤拷admin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setAdmin(boolean value) {
@@ -89,7 +89,7 @@ public class WSRoleSpecification {
     }
 
     /**
-     * 获取objectType属性的值。
+     * 锟斤拷取objectType锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -101,7 +101,7 @@ public class WSRoleSpecification {
     }
 
     /**
-     * 设置objectType属性的值。
+     * 锟斤拷锟斤拷objectType锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

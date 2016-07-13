@@ -8,7 +8,7 @@ public class Test {
 	public static void main(String[] args) {
 		System.out.println("Server is starting...");
 		EdiEsbServiceImpl ediEsbService = new EdiEsbServiceImpl();
-		Endpoint.publish("http://localhost:8081/readerService", ediEsbService);
+		Endpoint.publish("http://localhost:8081/EDIESBService", ediEsbService);
 		System.out.println("Server is started...");
 	}
 }

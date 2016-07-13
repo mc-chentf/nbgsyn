@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSRoutingOrderV2SearchCriteriaWithPaging complex type的 Java 类。
+ * <p>WSRoutingOrderV2SearchCriteriaWithPaging complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSRoutingOrderV2SearchCriteriaWithPaging">
@@ -90,7 +90,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     protected Boolean totalCountOnFirstResult;
 
     /**
-     * 获取anyFieldContains属性的值。
+     * 锟斤拷取anyFieldContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -102,7 +102,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置anyFieldContains属性的值。
+     * 锟斤拷锟斤拷anyFieldContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -114,7 +114,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取itemPKConceptContains属性的值。
+     * 锟斤拷取itemPKConceptContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -126,7 +126,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置itemPKConceptContains属性的值。
+     * 锟斤拷锟斤拷itemPKConceptContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -138,7 +138,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取itemPKIDFieldsContain属性的值。
+     * 锟斤拷取itemPKIDFieldsContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -150,7 +150,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置itemPKIDFieldsContain属性的值。
+     * 锟斤拷锟斤拷itemPKIDFieldsContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -162,7 +162,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取maxItems属性的值。
+     * 锟斤拷取maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getMaxItems() {
@@ -170,7 +170,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置maxItems属性的值。
+     * 锟斤拷锟斤拷maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setMaxItems(int value) {
@@ -178,7 +178,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取messageContain属性的值。
+     * 锟斤拷取messageContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -190,7 +190,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置messageContain属性的值。
+     * 锟斤拷锟斤拷messageContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -202,7 +202,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取nameContains属性的值。
+     * 锟斤拷取nameContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -214,7 +214,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置nameContains属性的值。
+     * 锟斤拷锟斤拷nameContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -226,7 +226,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取serviceJNDIContains属性的值。
+     * 锟斤拷取serviceJNDIContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -238,7 +238,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置serviceJNDIContains属性的值。
+     * 锟斤拷锟斤拷serviceJNDIContains锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -250,7 +250,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取serviceParametersContain属性的值。
+     * 锟斤拷取serviceParametersContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -262,7 +262,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置serviceParametersContain属性的值。
+     * 锟斤拷锟斤拷serviceParametersContain锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -274,7 +274,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取skip属性的值。
+     * 锟斤拷取skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSkip() {
@@ -282,7 +282,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置skip属性的值。
+     * 锟斤拷锟斤拷skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSkip(int value) {
@@ -290,7 +290,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取status属性的值。
+     * 锟斤拷取status锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -302,7 +302,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置status属性的值。
+     * 锟斤拷锟斤拷status锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -314,7 +314,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeCreatedMax属性的值。
+     * 锟斤拷取timeCreatedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeCreatedMax() {
@@ -322,7 +322,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeCreatedMax属性的值。
+     * 锟斤拷锟斤拷timeCreatedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeCreatedMax(long value) {
@@ -330,7 +330,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeCreatedMin属性的值。
+     * 锟斤拷取timeCreatedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeCreatedMin() {
@@ -338,7 +338,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeCreatedMin属性的值。
+     * 锟斤拷锟斤拷timeCreatedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeCreatedMin(long value) {
@@ -346,7 +346,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeLastRunCompletedMax属性的值。
+     * 锟斤拷取timeLastRunCompletedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunCompletedMax() {
@@ -354,7 +354,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeLastRunCompletedMax属性的值。
+     * 锟斤拷锟斤拷timeLastRunCompletedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunCompletedMax(long value) {
@@ -362,7 +362,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeLastRunCompletedMin属性的值。
+     * 锟斤拷取timeLastRunCompletedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunCompletedMin() {
@@ -370,7 +370,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeLastRunCompletedMin属性的值。
+     * 锟斤拷锟斤拷timeLastRunCompletedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunCompletedMin(long value) {
@@ -378,7 +378,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeLastRunStartedMax属性的值。
+     * 锟斤拷取timeLastRunStartedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunStartedMax() {
@@ -386,7 +386,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeLastRunStartedMax属性的值。
+     * 锟斤拷锟斤拷timeLastRunStartedMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunStartedMax(long value) {
@@ -394,7 +394,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeLastRunStartedMin属性的值。
+     * 锟斤拷取timeLastRunStartedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeLastRunStartedMin() {
@@ -402,7 +402,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeLastRunStartedMin属性的值。
+     * 锟斤拷锟斤拷timeLastRunStartedMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeLastRunStartedMin(long value) {
@@ -410,7 +410,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeScheduledMax属性的值。
+     * 锟斤拷取timeScheduledMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeScheduledMax() {
@@ -418,7 +418,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeScheduledMax属性的值。
+     * 锟斤拷锟斤拷timeScheduledMax锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeScheduledMax(long value) {
@@ -426,7 +426,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取timeScheduledMin属性的值。
+     * 锟斤拷取timeScheduledMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public long getTimeScheduledMin() {
@@ -434,7 +434,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置timeScheduledMin属性的值。
+     * 锟斤拷锟斤拷timeScheduledMin锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setTimeScheduledMin(long value) {
@@ -442,7 +442,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 获取totalCountOnFirstResult属性的值。
+     * 锟斤拷取totalCountOnFirstResult锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -454,7 +454,7 @@ public class WSRoutingOrderV2SearchCriteriaWithPaging {
     }
 
     /**
-     * 设置totalCountOnFirstResult属性的值。
+     * 锟斤拷锟斤拷totalCountOnFirstResult锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

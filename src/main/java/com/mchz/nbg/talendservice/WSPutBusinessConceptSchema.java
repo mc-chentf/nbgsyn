@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSPutBusinessConceptSchema complex type的 Java 类。
+ * <p>WSPutBusinessConceptSchema complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSPutBusinessConceptSchema">
@@ -37,7 +37,7 @@ public class WSPutBusinessConceptSchema {
     protected WSDataModelPK wsDataModelPK;
 
     /**
-     * 获取businessConceptSchema属性的值。
+     * 锟斤拷取businessConceptSchema锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -49,7 +49,7 @@ public class WSPutBusinessConceptSchema {
     }
 
     /**
-     * 设置businessConceptSchema属性的值。
+     * 锟斤拷锟斤拷businessConceptSchema锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -61,7 +61,7 @@ public class WSPutBusinessConceptSchema {
     }
 
     /**
-     * 获取wsDataModelPK属性的值。
+     * 锟斤拷取wsDataModelPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class WSPutBusinessConceptSchema {
     }
 
     /**
-     * 设置wsDataModelPK属性的值。
+     * 锟斤拷锟斤拷wsDataModelPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

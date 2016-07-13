@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSView complex type的 Java 类。
+ * <p>WSView complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSView">
@@ -58,7 +58,7 @@ public class WSView {
     protected List<WSWhereCondition> whereConditions;
 
     /**
-     * 获取description属性的值。
+     * 锟斤拷取description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class WSView {
     }
 
     /**
-     * 设置description属性的值。
+     * 锟斤拷锟斤拷description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -82,7 +82,7 @@ public class WSView {
     }
 
     /**
-     * 获取isTransformerActive属性的值。
+     * 锟斤拷取isTransformerActive锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -94,7 +94,7 @@ public class WSView {
     }
 
     /**
-     * 设置isTransformerActive属性的值。
+     * 锟斤拷锟斤拷isTransformerActive锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -106,7 +106,7 @@ public class WSView {
     }
 
     /**
-     * 获取name属性的值。
+     * 锟斤拷取name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -118,7 +118,7 @@ public class WSView {
     }
 
     /**
-     * 设置name属性的值。
+     * 锟斤拷锟斤拷name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -159,7 +159,7 @@ public class WSView {
     }
 
     /**
-     * 获取transformerPK属性的值。
+     * 锟斤拷取transformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -171,7 +171,7 @@ public class WSView {
     }
 
     /**
-     * 设置transformerPK属性的值。
+     * 锟斤拷锟斤拷transformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

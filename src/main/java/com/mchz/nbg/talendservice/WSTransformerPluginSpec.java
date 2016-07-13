@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSTransformerPluginSpec complex type的 Java 类。
+ * <p>WSTransformerPluginSpec complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSTransformerPluginSpec">
@@ -46,7 +46,7 @@ public class WSTransformerPluginSpec {
     protected String pluginJNDI;
 
     /**
-     * 获取description属性的值。
+     * 锟斤拷取description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -58,7 +58,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 设置description属性的值。
+     * 锟斤拷锟斤拷description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -70,7 +70,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 获取input属性的值。
+     * 锟斤拷取input锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -82,7 +82,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 设置input属性的值。
+     * 锟斤拷锟斤拷input锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -94,7 +94,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 获取output属性的值。
+     * 锟斤拷取output锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -106,7 +106,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 设置output属性的值。
+     * 锟斤拷锟斤拷output锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -118,7 +118,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 获取parameters属性的值。
+     * 锟斤拷取parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -130,7 +130,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 设置parameters属性的值。
+     * 锟斤拷锟斤拷parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -142,7 +142,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 获取pluginJNDI属性的值。
+     * 锟斤拷取pluginJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -154,7 +154,7 @@ public class WSTransformerPluginSpec {
     }
 
     /**
-     * 设置pluginJNDI属性的值。
+     * 锟斤拷锟斤拷pluginJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

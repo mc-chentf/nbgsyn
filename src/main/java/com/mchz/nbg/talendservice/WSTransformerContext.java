@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSTransformerContext complex type的 Java 类。
+ * <p>WSTransformerContext complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSTransformerContext">
@@ -40,7 +40,7 @@ public class WSTransformerContext {
     protected WSTransformerV2PK wsTransformerPK;
 
     /**
-     * 获取pipeline属性的值。
+     * 锟斤拷取pipeline锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class WSTransformerContext {
     }
 
     /**
-     * 设置pipeline属性的值。
+     * 锟斤拷锟斤拷pipeline锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -64,7 +64,7 @@ public class WSTransformerContext {
     }
 
     /**
-     * 获取projectedItemPKs属性的值。
+     * 锟斤拷取projectedItemPKs锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class WSTransformerContext {
     }
 
     /**
-     * 设置projectedItemPKs属性的值。
+     * 锟斤拷锟斤拷projectedItemPKs锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class WSTransformerContext {
     }
 
     /**
-     * 获取wsTransformerPK属性的值。
+     * 锟斤拷取wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -100,7 +100,7 @@ public class WSTransformerContext {
     }
 
     /**
-     * 设置wsTransformerPK属性的值。
+     * 锟斤拷锟斤拷wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

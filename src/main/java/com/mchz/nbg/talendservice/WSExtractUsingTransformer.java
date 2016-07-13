@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSExtractUsingTransformer complex type的 Java 类。
+ * <p>WSExtractUsingTransformer complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSExtractUsingTransformer">
@@ -37,7 +37,7 @@ public class WSExtractUsingTransformer {
     protected WSTransformerPK wsTransformerPK;
 
     /**
-     * 获取wsItemPK属性的值。
+     * 锟斤拷取wsItemPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -49,7 +49,7 @@ public class WSExtractUsingTransformer {
     }
 
     /**
-     * 设置wsItemPK属性的值。
+     * 锟斤拷锟斤拷wsItemPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -61,7 +61,7 @@ public class WSExtractUsingTransformer {
     }
 
     /**
-     * 获取wsTransformerPK属性的值。
+     * 锟斤拷取wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class WSExtractUsingTransformer {
     }
 
     /**
-     * 设置wsTransformerPK属性的值。
+     * 锟斤拷锟斤拷wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

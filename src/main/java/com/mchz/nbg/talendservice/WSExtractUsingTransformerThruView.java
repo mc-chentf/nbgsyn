@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSExtractUsingTransformerThruView complex type的 Java 类。
+ * <p>WSExtractUsingTransformerThruView complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSExtractUsingTransformerThruView">
@@ -58,7 +58,7 @@ public class WSExtractUsingTransformerThruView {
     protected WSViewPK wsViewPK;
 
     /**
-     * 获取direction属性的值。
+     * 锟斤拷取direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置direction属性的值。
+     * 锟斤拷锟斤拷direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -82,7 +82,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取maxItems属性的值。
+     * 锟斤拷取maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getMaxItems() {
@@ -90,7 +90,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置maxItems属性的值。
+     * 锟斤拷锟斤拷maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setMaxItems(int value) {
@@ -98,7 +98,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取orderBy属性的值。
+     * 锟斤拷取orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置orderBy属性的值。
+     * 锟斤拷锟斤拷orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取skip属性的值。
+     * 锟斤拷取skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSkip() {
@@ -130,7 +130,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置skip属性的值。
+     * 锟斤拷锟斤拷skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSkip(int value) {
@@ -138,7 +138,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取spellTreshold属性的值。
+     * 锟斤拷取spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSpellTreshold() {
@@ -146,7 +146,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置spellTreshold属性的值。
+     * 锟斤拷锟斤拷spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSpellTreshold(int value) {
@@ -154,7 +154,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取whereItem属性的值。
+     * 锟斤拷取whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -166,7 +166,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置whereItem属性的值。
+     * 锟斤拷锟斤拷whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -178,7 +178,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -190,7 +190,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -202,7 +202,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取wsTransformerPK属性的值。
+     * 锟斤拷取wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -214,7 +214,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置wsTransformerPK属性的值。
+     * 锟斤拷锟斤拷wsTransformerPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -226,7 +226,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 获取wsViewPK属性的值。
+     * 锟斤拷取wsViewPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -238,7 +238,7 @@ public class WSExtractUsingTransformerThruView {
     }
 
     /**
-     * 设置wsViewPK属性的值。
+     * 锟斤拷锟斤拷wsViewPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

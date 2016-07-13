@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSViewSearch complex type的 Java 类。
+ * <p>WSViewSearch complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSViewSearch">
@@ -55,7 +55,7 @@ public class WSViewSearch {
     protected WSViewPK wsViewPK;
 
     /**
-     * 获取direction属性的值。
+     * 锟斤拷取direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -67,7 +67,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置direction属性的值。
+     * 锟斤拷锟斤拷direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -79,7 +79,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取maxItems属性的值。
+     * 锟斤拷取maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getMaxItems() {
@@ -87,7 +87,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置maxItems属性的值。
+     * 锟斤拷锟斤拷maxItems锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setMaxItems(int value) {
@@ -95,7 +95,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取orderBy属性的值。
+     * 锟斤拷取orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置orderBy属性的值。
+     * 锟斤拷锟斤拷orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -119,7 +119,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取skip属性的值。
+     * 锟斤拷取skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSkip() {
@@ -127,7 +127,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置skip属性的值。
+     * 锟斤拷锟斤拷skip锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSkip(int value) {
@@ -135,7 +135,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取spellTreshold属性的值。
+     * 锟斤拷取spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSpellTreshold() {
@@ -143,7 +143,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置spellTreshold属性的值。
+     * 锟斤拷锟斤拷spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSpellTreshold(int value) {
@@ -151,7 +151,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取whereItem属性的值。
+     * 锟斤拷取whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -163,7 +163,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置whereItem属性的值。
+     * 锟斤拷锟斤拷whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -175,7 +175,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -187,7 +187,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -199,7 +199,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 获取wsViewPK属性的值。
+     * 锟斤拷取wsViewPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -211,7 +211,7 @@ public class WSViewSearch {
     }
 
     /**
-     * 设置wsViewPK属性的值。
+     * 锟斤拷锟斤拷wsViewPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

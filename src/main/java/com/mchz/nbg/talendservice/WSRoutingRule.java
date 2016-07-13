@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSRoutingRule complex type的 Java 类。
+ * <p>WSRoutingRule complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSRoutingRule">
@@ -65,7 +65,7 @@ public class WSRoutingRule {
     protected List<WSRoutingRuleExpression> wsRoutingRuleExpressions;
 
     /**
-     * 获取concept属性的值。
+     * 锟斤拷取concept锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -77,7 +77,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置concept属性的值。
+     * 锟斤拷锟斤拷concept锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -89,7 +89,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取condition属性的值。
+     * 锟斤拷取condition锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -101,7 +101,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置condition属性的值。
+     * 锟斤拷锟斤拷condition锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -113,7 +113,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取deactive属性的值。
+     * 锟斤拷取deactive锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -125,7 +125,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置deactive属性的值。
+     * 锟斤拷锟斤拷deactive锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -137,7 +137,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取description属性的值。
+     * 锟斤拷取description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -149,7 +149,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置description属性的值。
+     * 锟斤拷锟斤拷description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -161,7 +161,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取executeOrder属性的值。
+     * 锟斤拷取executeOrder锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getExecuteOrder() {
@@ -169,7 +169,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置executeOrder属性的值。
+     * 锟斤拷锟斤拷executeOrder锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setExecuteOrder(int value) {
@@ -177,7 +177,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取name属性的值。
+     * 锟斤拷取name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -189,7 +189,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置name属性的值。
+     * 锟斤拷锟斤拷name锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -201,7 +201,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取parameters属性的值。
+     * 锟斤拷取parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -213,7 +213,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置parameters属性的值。
+     * 锟斤拷锟斤拷parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -225,7 +225,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取serviceJNDI属性的值。
+     * 锟斤拷取serviceJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -237,7 +237,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置serviceJNDI属性的值。
+     * 锟斤拷锟斤拷serviceJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -249,7 +249,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 获取synchronous属性的值。
+     * 锟斤拷取synchronous锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public boolean isSynchronous() {
@@ -257,7 +257,7 @@ public class WSRoutingRule {
     }
 
     /**
-     * 设置synchronous属性的值。
+     * 锟斤拷锟斤拷synchronous锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSynchronous(boolean value) {

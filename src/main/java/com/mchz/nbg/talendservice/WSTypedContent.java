@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSTypedContent complex type的 Java 类。
+ * <p>WSTypedContent complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSTypedContent">
@@ -40,7 +40,7 @@ public class WSTypedContent {
     protected WSByteArray wsBytes;
 
     /**
-     * 获取contentType属性的值。
+     * 锟斤拷取contentType锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class WSTypedContent {
     }
 
     /**
-     * 设置contentType属性的值。
+     * 锟斤拷锟斤拷contentType锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -64,7 +64,7 @@ public class WSTypedContent {
     }
 
     /**
-     * 获取url属性的值。
+     * 锟斤拷取url锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class WSTypedContent {
     }
 
     /**
-     * 设置url属性的值。
+     * 锟斤拷锟斤拷url锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class WSTypedContent {
     }
 
     /**
-     * 获取wsBytes属性的值。
+     * 锟斤拷取wsBytes锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -100,7 +100,7 @@ public class WSTypedContent {
     }
 
     /**
-     * 设置wsBytes属性的值。
+     * 锟斤拷锟斤拷wsBytes锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

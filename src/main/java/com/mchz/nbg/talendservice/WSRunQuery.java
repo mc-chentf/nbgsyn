@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSRunQuery complex type的 Java 类。
+ * <p>WSRunQuery complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSRunQuery">
@@ -73,7 +73,7 @@ public class WSRunQuery {
     }
 
     /**
-     * 获取query属性的值。
+     * 锟斤拷取query锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class WSRunQuery {
     }
 
     /**
-     * 设置query属性的值。
+     * 锟斤拷锟斤拷query锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -97,7 +97,7 @@ public class WSRunQuery {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -109,7 +109,7 @@ public class WSRunQuery {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

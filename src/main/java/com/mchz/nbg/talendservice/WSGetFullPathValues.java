@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSGetFullPathValues complex type的 Java 类。
+ * <p>WSGetFullPathValues complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSGetFullPathValues">
@@ -49,7 +49,7 @@ public class WSGetFullPathValues {
     protected WSDataClusterPK wsDataClusterPK;
 
     /**
-     * 获取direction属性的值。
+     * 锟斤拷取direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -61,7 +61,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置direction属性的值。
+     * 锟斤拷锟斤拷direction锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -73,7 +73,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 获取fullPath属性的值。
+     * 锟斤拷取fullPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置fullPath属性的值。
+     * 锟斤拷锟斤拷fullPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -97,7 +97,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 获取orderBy属性的值。
+     * 锟斤拷取orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -109,7 +109,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置orderBy属性的值。
+     * 锟斤拷锟斤拷orderBy锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -121,7 +121,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 获取spellThreshold属性的值。
+     * 锟斤拷取spellThreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSpellThreshold() {
@@ -129,7 +129,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置spellThreshold属性的值。
+     * 锟斤拷锟斤拷spellThreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSpellThreshold(int value) {
@@ -137,7 +137,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 获取whereItem属性的值。
+     * 锟斤拷取whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -149,7 +149,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置whereItem属性的值。
+     * 锟斤拷锟斤拷whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -161,7 +161,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -173,7 +173,7 @@ public class WSGetFullPathValues {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

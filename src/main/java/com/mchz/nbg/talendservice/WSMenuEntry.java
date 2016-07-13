@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSMenuEntry complex type的 Java 类。
+ * <p>WSMenuEntry complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSMenuEntry">
@@ -54,7 +54,7 @@ public class WSMenuEntry {
     protected List<WSMenuEntry> subMenus;
 
     /**
-     * 获取application属性的值。
+     * 锟斤拷取application锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -66,7 +66,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 设置application属性的值。
+     * 锟斤拷锟斤拷application锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -78,7 +78,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 获取context属性的值。
+     * 锟斤拷取context锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -90,7 +90,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 设置context属性的值。
+     * 锟斤拷锟斤拷context锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -131,7 +131,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 获取icon属性的值。
+     * 锟斤拷取icon锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -143,7 +143,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 设置icon属性的值。
+     * 锟斤拷锟斤拷icon锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -155,7 +155,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 获取id属性的值。
+     * 锟斤拷取id锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -167,7 +167,7 @@ public class WSMenuEntry {
     }
 
     /**
-     * 设置id属性的值。
+     * 锟斤拷锟斤拷id锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

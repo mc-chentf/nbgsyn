@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSMDMJob complex type的 Java 类。
+ * <p>WSMDMJob complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSMDMJob">
@@ -40,7 +40,7 @@ public class WSMDMJob {
     protected String suffix;
 
     /**
-     * 获取jobName属性的值。
+     * 锟斤拷取jobName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class WSMDMJob {
     }
 
     /**
-     * 设置jobName属性的值。
+     * 锟斤拷锟斤拷jobName锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -64,7 +64,7 @@ public class WSMDMJob {
     }
 
     /**
-     * 获取jobVersion属性的值。
+     * 锟斤拷取jobVersion锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class WSMDMJob {
     }
 
     /**
-     * 设置jobVersion属性的值。
+     * 锟斤拷锟斤拷jobVersion锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class WSMDMJob {
     }
 
     /**
-     * 获取suffix属性的值。
+     * 锟斤拷取suffix锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -100,7 +100,7 @@ public class WSMDMJob {
     }
 
     /**
-     * 设置suffix属性的值。
+     * 锟斤拷锟斤拷suffix锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

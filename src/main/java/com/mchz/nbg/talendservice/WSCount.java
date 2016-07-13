@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSCount complex type的 Java 类。
+ * <p>WSCount complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSCount">
@@ -43,7 +43,7 @@ public class WSCount {
     protected WSDataClusterPK wsDataClusterPK;
 
     /**
-     * 获取countPath属性的值。
+     * 锟斤拷取countPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -55,7 +55,7 @@ public class WSCount {
     }
 
     /**
-     * 设置countPath属性的值。
+     * 锟斤拷锟斤拷countPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -67,7 +67,7 @@ public class WSCount {
     }
 
     /**
-     * 获取spellTreshold属性的值。
+     * 锟斤拷取spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public int getSpellTreshold() {
@@ -75,7 +75,7 @@ public class WSCount {
     }
 
     /**
-     * 设置spellTreshold属性的值。
+     * 锟斤拷锟斤拷spellTreshold锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSpellTreshold(int value) {
@@ -83,7 +83,7 @@ public class WSCount {
     }
 
     /**
-     * 获取whereItem属性的值。
+     * 锟斤拷取whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -95,7 +95,7 @@ public class WSCount {
     }
 
     /**
-     * 设置whereItem属性的值。
+     * 锟斤拷锟斤拷whereItem锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -107,7 +107,7 @@ public class WSCount {
     }
 
     /**
-     * 获取wsDataClusterPK属性的值。
+     * 锟斤拷取wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -119,7 +119,7 @@ public class WSCount {
     }
 
     /**
-     * 设置wsDataClusterPK属性的值。
+     * 锟斤拷锟斤拷wsDataClusterPK锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

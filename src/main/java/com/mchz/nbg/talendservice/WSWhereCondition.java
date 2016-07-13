@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSWhereCondition complex type的 Java 类。
+ * <p>WSWhereCondition complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSWhereCondition">
@@ -49,7 +49,7 @@ public class WSWhereCondition {
     protected WSStringPredicate stringPredicate;
 
     /**
-     * 获取leftPath属性的值。
+     * 锟斤拷取leftPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -61,7 +61,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 设置leftPath属性的值。
+     * 锟斤拷锟斤拷leftPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -73,7 +73,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 获取operator属性的值。
+     * 锟斤拷取operator锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 设置operator属性的值。
+     * 锟斤拷锟斤拷operator锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -97,7 +97,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 获取rightValueOrPath属性的值。
+     * 锟斤拷取rightValueOrPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -109,7 +109,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 设置rightValueOrPath属性的值。
+     * 锟斤拷锟斤拷rightValueOrPath锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -121,7 +121,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 获取spellCheck属性的值。
+     * 锟斤拷取spellCheck锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public boolean isSpellCheck() {
@@ -129,7 +129,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 设置spellCheck属性的值。
+     * 锟斤拷锟斤拷spellCheck锟斤拷锟皆碉拷值锟斤拷
      * 
      */
     public void setSpellCheck(boolean value) {
@@ -137,7 +137,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 获取stringPredicate属性的值。
+     * 锟斤拷取stringPredicate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -149,7 +149,7 @@ public class WSWhereCondition {
     }
 
     /**
-     * 设置stringPredicate属性的值。
+     * 锟斤拷锟斤拷stringPredicate锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is

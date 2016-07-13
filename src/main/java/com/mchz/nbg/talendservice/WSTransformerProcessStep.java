@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>WSTransformerProcessStep complex type的 Java 类。
+ * <p>WSTransformerProcessStep complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="WSTransformerProcessStep">
@@ -54,7 +54,7 @@ public class WSTransformerProcessStep {
     protected String pluginJNDI;
 
     /**
-     * 获取description属性的值。
+     * 锟斤拷取description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -66,7 +66,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 设置description属性的值。
+     * 锟斤拷锟斤拷description锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -78,7 +78,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 获取disabled属性的值。
+     * 锟斤拷取disabled锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -90,7 +90,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 设置disabled属性的值。
+     * 锟斤拷锟斤拷disabled锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -160,7 +160,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 获取parameters属性的值。
+     * 锟斤拷取parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -172,7 +172,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 设置parameters属性的值。
+     * 锟斤拷锟斤拷parameters锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -184,7 +184,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 获取pluginJNDI属性的值。
+     * 锟斤拷取pluginJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -196,7 +196,7 @@ public class WSTransformerProcessStep {
     }
 
     /**
-     * 设置pluginJNDI属性的值。
+     * 锟斤拷锟斤拷pluginJNDI锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
