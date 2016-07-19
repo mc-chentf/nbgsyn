@@ -33,7 +33,7 @@ public interface IUserManager {
 	 * @param userInfoBean
 	 * @exception 用户自定义异常
 	 */
-	public void saveRegisterUserInfo(UserInfoBean userInfoBean) throws UserInfoException;
+	public Integer saveRegisterUserInfo(UserInfoBean userInfoBean) throws UserInfoException;
 
 	/**
 	 * 删除用户

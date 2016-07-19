@@ -20,6 +20,7 @@ public class UserInfoBean implements Serializable {
 	// primary key
 	private String ENTITY_CODE;
 	private String SERVICE_NAME;
+	private String TO_NODE;
 	private String username;
 	private String password;
 
@@ -53,6 +54,14 @@ public class UserInfoBean implements Serializable {
 
 	public void setSERVICE_NAME(String sERVICE_NAME) {
 		SERVICE_NAME = sERVICE_NAME;
+	}
+
+	public String getTO_NODE() {
+		return TO_NODE;
+	}
+
+	public void setTO_NODE(String tO_NODE) {
+		TO_NODE = tO_NODE;
 	}
 
 	public String getUsername() {

@@ -1,21 +1,40 @@
 package nbgsyn;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import com.hzmc.nbgsyn.util.DateJsonValueProcessor;
+
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import net.sf.json.xml.XMLSerializer;
 
 public class ForMart {
 
-	public static void main(String[] args) throws DocumentException {
-		ForMart.method2();
+	public static void main(String[] args) throws DocumentException, ParseException {
+		Date date = new Date();
+		Map<String, Object> jo = new HashMap<String, Object>();
+		jo.put("time", date);
+		JsonConfig config = new JsonConfig();
+		config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor());
+
+		System.out.println(JSONObject.fromObject(jo, config).toString());
+		String s = "2016-07-21T00:01:59";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date d = simpleDateFormat.parse(s);
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(simpleDateFormat2.format(d));
 	}
 
 	public static void method1() throws DocumentException {

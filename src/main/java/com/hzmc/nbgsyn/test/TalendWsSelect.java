@@ -1,13 +1,10 @@
 package com.hzmc.nbgsyn.test;
 
-import java.util.List;
-
 import javax.xml.ws.BindingProvider;
 
 import com.mchz.nbg.talendservice.TMDMService;
 import com.mchz.nbg.talendservice.TMDMService_Service;
 import com.mchz.nbg.talendservice.WSDataClusterPK;
-import com.mchz.nbg.talendservice.WSDataModelPK;
 import com.mchz.nbg.talendservice.WSGetItems;
 import com.mchz.nbg.talendservice.WSStringArray;
 import com.mchz.nbg.talendservice.WSStringPredicate;
@@ -53,7 +50,6 @@ public class TalendWsSelect {
 			wsWhereCondition.setStringPredicate(WSStringPredicate.NONE);
 
 			WSStringArray str = port.getItems(wsGetItems);
-			List<String> strlist = str.getStrings();
 			System.out.println(str);
 		} catch (Exception e) {
 

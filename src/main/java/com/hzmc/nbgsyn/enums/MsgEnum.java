@@ -17,7 +17,8 @@ public enum MsgEnum {
 	FAIL("999","失败"), 
 	ACTION_NO_EXIST("205","action不存在"), 
 	READDAT_FAIL("206", "读取错误异常，请检查"), 
-	ENTITYKEY_NOTFOUND("207","无法在配置文件找到entity的主键");
+	ENTITYKEY_NOTFOUND("207","无法在配置文件找到entity的主键"), 
+	METHOD_NO_EXIST("208","方法不存在");
 
 	private String msgId;
 	private String msgDesc;

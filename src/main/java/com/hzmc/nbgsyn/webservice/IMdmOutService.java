@@ -28,7 +28,7 @@ public interface IMdmOutService {
 	 *            用户密码，EDI统一管理
 	 * @return
 	 */
-	public String outService(@WebParam(name = "applyData") String applyData);
+	public String publishService(@WebParam(name = "applyData") String applyData);
 
 	
 	public String registerService(@WebParam(name = "applyData") String applyData);

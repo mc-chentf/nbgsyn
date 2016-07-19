@@ -1,34 +1,35 @@
 package com.hzmc.nbgsyn.business.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.hzmc.nbgsyn.business.IServiceRegisterDao;
 import com.hzmc.nbgsyn.business.IUserManager;
 import com.hzmc.nbgsyn.exception.UserInfoException;
+import com.hzmc.nbgsyn.persistence.ServiceRegister;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
 import com.hzmc.nbgsyn.resource.UserProperties;
-import com.hzmc.nbgsyn.util.ConnectionManager;
 
 /**
- * 用户注册服务
  * 
- * @author zhul
- *
+ * @author tfche 2016年7月19日11:16:35
  */
 @Service
+@Transactional
 public class UserManagerImpl implements IUserManager {
 
+	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(UserManagerImpl.class);
+
+	@Autowired
+	private IServiceRegisterDao serviceRegisterDao;
 
 	@Override
 	public Boolean validateUser(String userName, String userPassword) {
@@ -51,95 +52,40 @@ public class UserManagerImpl implements IUserManager {
 	 * @return
 	 */
 	public List<UserInfoBean> findAllUserInfo() {
-		List<UserInfoBean> ulist = new ArrayList<UserInfoBean>();
-		Connection conn = ConnectionManager.getInstance().getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rslt = null;
-		String sql = "select MD_CODE,SYS_CODE,ENTITY_CODE,SERVICE_NAME,USERNAME,PASSWORD from MAP_SERVICE_REGISTER";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rslt = pstmt.executeQuery();
-			while (rslt.next()) {
-				UserInfoBean userInfoBean = new UserInfoBean();
-				userInfoBean.setMD_CODE(rslt.getString(1));
-				userInfoBean.setSYS_CODE(rslt.getString(2));
-				userInfoBean.setENTITY_CODE(rslt.getString(3));
-				userInfoBean.setSERVICE_NAME(rslt.getString(4));
-				userInfoBean.setUsername(rslt.getString(5));
-				userInfoBean.setPassword(rslt.getString(6));
-				ulist.add(userInfoBean);
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		} finally {
-			close(rslt, pstmt, conn);
+		List<ServiceRegister> serviceRegisters = serviceRegisterDao.findAllServiceRegister();
+		List<UserInfoBean> userInfoBeans = new ArrayList<UserInfoBean>();
+		if (serviceRegisters == null || serviceRegisters.size() == 0)
+			return userInfoBeans;
+		for (ServiceRegister serviceRegister : serviceRegisters) {
+			serviceRegister.setPassword("******");
+			userInfoBeans.add(this.convertServiceRegisterToUserInfoBean(serviceRegister));
 		}
-
-		return ulist;
+		return userInfoBeans;
 	}
 
 	@Override
-	public void saveRegisterUserInfo(UserInfoBean userInfoBean) throws UserInfoException {
-		Connection conn = ConnectionManager.getInstance().getConnection();
-		String md_code = userInfoBean.getMD_CODE();
-		String sys_code = userInfoBean.getSYS_CODE();
-		String entity_code = userInfoBean.getENTITY_CODE();
-
+	public Integer saveRegisterUserInfo(UserInfoBean userInfoBean) throws UserInfoException {
+		// 把userinfo 转换为serviceRegister
+		ServiceRegister serviceRegister = this.convertUserInfoBeanToServiceRegister(userInfoBean);
 		// 是否已注册
-		// if ("A".equals(md_code) && "B".equals(sys_code) &&
-		// "C".equals(entity_code)) {
-		// throw new UserInfoException("md_code:" + md_code + ",sys_code:" +
-		// sys_code + ",entity_code" + entity_code
-		// + "已注册！");
-		// }
-		// 添加用户
-		PreparedStatement pstmt = null;
-		ResultSet rslt = null;
-		String sql = "insert into MAP_SERVICE_REGISTER (ID,MD_CODE,SYS_CODE,ENTITY_CODE,SERVICE_NAME,USERNAME,PASSWORD,REGISTER_TIME) values"
-				+ "(SEQ_MAP_SERVICE_REGISTER.nextval,?,?,?,?,?,?,?)";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, md_code);
-			pstmt.setString(2, sys_code);
-			pstmt.setString(3, entity_code);
-			pstmt.setString(4, userInfoBean.getSERVICE_NAME());
-			pstmt.setString(5, userInfoBean.getUsername());
-			pstmt.setString(6, userInfoBean.getPassword());
-			pstmt.setTimestamp(7, new Timestamp(new Date().getTime()));
-			pstmt.execute();
-		} catch (Exception e) {
-			throw new UserInfoException(
-					"md_code:" + md_code + ",sys_code:" + sys_code + ",entity_code" + entity_code + "注册失败！");
-		} finally {
-			close(rslt, pstmt, conn);
+		if (serviceRegisterDao.findServiceRegisterByCondition(serviceRegister) != null) {
+			throw new UserInfoException("SYS_CODE:" + serviceRegister.getSysCode() + ",SERVICE_NAME:" + serviceRegister.getServiceName() + ",TO_NODE:"
+					+ serviceRegister.getToNode() + ",ENTITY_CODE:" + serviceRegister.getEntityCode() + " 已注册！");
 		}
+		// 添加用户
+		Integer id = serviceRegisterDao.saveServiceRegister(serviceRegister);
+		return id;
 	}
 
 	@Override
 	public void removeUserInfo(UserInfoBean userInfoBean) throws UserInfoException {
-		Connection conn = ConnectionManager.getInstance().getConnection();
-		String md_code = userInfoBean.getMD_CODE();
-		String sys_code = userInfoBean.getSYS_CODE();
-		String entity_code = userInfoBean.getENTITY_CODE();
-		// if (temp == null)
-		// throw new UserInfoException("md_code:" + md_code + ",sys_code:" +
-		// sys_code + ",entity_code" + entity_code
-		// + "找不到用户信息！");
-		// 删除用户
-		PreparedStatement pstmt = null;
-		ResultSet rslt = null;
-		String sql = "delete from MAP_SERVICE_REGISTER where MD_CODE = ? and SYS_CODE = ? and ENTITY_CODE = ?";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, md_code);
-			pstmt.setString(2, sys_code);
-			pstmt.setString(3, entity_code);
-			pstmt.execute();
-		} catch (Exception e) {
-			throw new UserInfoException(
-					"md_code:" + md_code + ",sys_code:" + sys_code + ",entity_code" + entity_code + "删除注册信息失败！");
-		} finally {
-			close(rslt, pstmt, conn);
+		ServiceRegister serviceRegister = this.convertUserInfoBeanToServiceRegister(userInfoBean);
+		ServiceRegister temp = serviceRegisterDao.findServiceRegisterByCondition(serviceRegister);
+		if (temp == null) {
+			throw new UserInfoException("SYS_CODE:" + serviceRegister.getSysCode() + ",SERVICE_NAME:" + serviceRegister.getServiceName() + ",TO_NODE:"
+					+ serviceRegister.getToNode() + ",ENTITY_CODE:" + serviceRegister.getEntityCode() + " 不存在！");
+		} else {
+			serviceRegisterDao.removeById(temp.getId());
 		}
 	}
 
@@ -152,66 +98,54 @@ public class UserManagerImpl implements IUserManager {
 	@SuppressWarnings("unused")
 	private UserInfoBean findUserInfo(UserInfoBean userInfoBean) {
 		// 查找用户
-		UserInfoBean temp = null;
-		// temp = findUser(temp);
-		return temp;
+		ServiceRegister serviceRegister = this.convertUserInfoBeanToServiceRegister(userInfoBean);
+		ServiceRegister temp = serviceRegisterDao.findServiceRegisterByCondition(serviceRegister);
+		return convertServiceRegisterToUserInfoBean(temp);
 	}
 
 	@Override
 	public void modifyUserInfo(UserInfoBean userInfoBean) throws UserInfoException {
-		Connection conn = ConnectionManager.getInstance().getConnection();
-		String md_code = userInfoBean.getMD_CODE();
-		String sys_code = userInfoBean.getSYS_CODE();
-		String entity_code = userInfoBean.getENTITY_CODE();
-		// UserInfoBean temp = this.findUserInfo(userInfoBean);
-		// if (temp == null)
-		// throw new UserInfoException("md_code:" + md_code + ",sys_code:" +
-		// sys_code + ",entity_code" + entity_code
-		// + "找不到用户信息！");
+		ServiceRegister serviceRegister = this.convertUserInfoBeanToServiceRegister(userInfoBean);
+		ServiceRegister temp = serviceRegisterDao.findServiceRegisterByCondition(serviceRegister);
 		// 更新
 		// 是否已注册
-		// if ("A".equals(md_code) && "B".equals(sys_code) &&
-		// "C".equals(entity_code)) {
-		// throw new UserInfoException("md_code:" + md_code + ",sys_code:" +
-		// sys_code + ",entity_code" + entity_code
-		// + "已注册！");
-		// }
-		// 添加用户
-		PreparedStatement pstmt = null;
-		ResultSet rslt = null;
-		String sql = "update MAP_SERVICE_REGISTER set (SERVICE_NAME,USERNAME,PASSWORD) values"
-				+ "(?,?,?) where MD_CODE = ? and SYS_CODE = ? and ENTITY_CODE = ?";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userInfoBean.getSERVICE_NAME());
-			pstmt.setString(2, userInfoBean.getUsername());
-			pstmt.setString(3, userInfoBean.getPassword());
-			pstmt.setString(4, md_code);
-			pstmt.setString(5, sys_code);
-			pstmt.setString(6, entity_code);
-			pstmt.execute();
-		} catch (Exception e) {
-			throw new UserInfoException(
-					"md_code:" + md_code + ",sys_code:" + sys_code + ",entity_code" + entity_code + "修改注册信息失败！");
-		} finally {
-			close(rslt, pstmt, conn);
+		if (temp == null) {
+			throw new UserInfoException("SYS_CODE:" + serviceRegister.getSysCode() + ",SERVICE_NAME" + serviceRegister.getServiceName() + ",TO_NODE"
+					+ serviceRegister.getToNode() + ",ENTITY_CODE:" + serviceRegister.getEntityCode() + " 不存在！");
+		} else {
+			serviceRegisterDao.modifyServiceRegister(serviceRegister);
 		}
 	}
 
-	private void close(ResultSet rslt, PreparedStatement pstmt, Connection conn) {
-		try {
-			if (rslt != null) {
-				rslt.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private ServiceRegister convertUserInfoBeanToServiceRegister(UserInfoBean userInfoBean) {
+		// TODO Auto-generated method stub
+		if (userInfoBean == null)
+			return null;
+		Date now = new Date();
+		ServiceRegister serviceRegister = new ServiceRegister();
+		serviceRegister.setMdCode(userInfoBean.getMD_CODE());
+		serviceRegister.setEntityCode(userInfoBean.getENTITY_CODE());
+		serviceRegister.setModifyTime(now);
+		serviceRegister.setPassword(userInfoBean.getPassword());
+		serviceRegister.setUsername(userInfoBean.getUsername());
+		serviceRegister.setToNode(userInfoBean.getTO_NODE());
+		serviceRegister.setRegisterTime(now);
+		serviceRegister.setSysCode(userInfoBean.getSYS_CODE());
+		serviceRegister.setServiceName(userInfoBean.getSERVICE_NAME());
+		return serviceRegister;
 	}
 
+	private UserInfoBean convertServiceRegisterToUserInfoBean(ServiceRegister serviceRegister) {
+		if (serviceRegister == null)
+			return null;
+		UserInfoBean userInfoBean = new UserInfoBean();
+		userInfoBean.setMD_CODE(serviceRegister.getMdCode());
+		userInfoBean.setENTITY_CODE(serviceRegister.getEntityCode());
+		userInfoBean.setPassword(serviceRegister.getPassword());
+		userInfoBean.setUsername(serviceRegister.getUsername());
+		userInfoBean.setTO_NODE(serviceRegister.getToNode());
+		userInfoBean.setSYS_CODE(serviceRegister.getSysCode());
+		userInfoBean.setSERVICE_NAME(serviceRegister.getServiceName());
+		return userInfoBean;
+	}
 }
