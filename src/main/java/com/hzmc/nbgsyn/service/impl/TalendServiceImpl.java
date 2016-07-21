@@ -15,14 +15,16 @@ import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.persistence.ResultInfo;
-import com.hzmc.nbgsyn.resource.EntityKeyProperties;
+import com.hzmc.nbgsyn.pojo.EntityView;
 import com.hzmc.nbgsyn.service.TalendService;
 import com.hzmc.nbgsyn.util.Constant;
 import com.hzmc.nbgsyn.util.XmlStrToJsonUtil;
@@ -37,7 +39,9 @@ import com.mchz.nbg.talendservice.WSPutItem;
 import com.mchz.nbg.talendservice.WSPutItemWithReport;
 import com.mchz.nbg.talendservice.WSStringPredicate;
 import com.mchz.nbg.talendservice.WSWhereCondition;
+import com.mchz.nbg.talendservice.WSWhereItem;
 import com.mchz.nbg.talendservice.WSWhereOperator;
+import com.mchz.nbg.talendservice.WSWhereOr;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -50,18 +54,21 @@ public class TalendServiceImpl implements TalendService {
 
 	private final String S_URL = Constant.S_URL;
 
-	public final static URL WSDL_LOCATION;
+	private final static URL WSDL_LOCATION;
 
 	static {
 		URL url = null;
 		try {
 			url = new URL(Constant.WS_URL);
 		} catch (MalformedURLException e) {
-			java.util.logging.Logger.getLogger(TMDMService_Service.class.getName()).log(java.util.logging.Level.INFO,
-					"Can not initialize the default wsdl from {0}", "file:/d:/talend/soap.wsdl");
+			java.util.logging.Logger.getLogger(TMDMService_Service.class.getName()).log(java.util.logging.Level.INFO, "Can not initialize the default wsdl from {0}",
+					"file:/d:/talend/soap.wsdl");
 		}
 		WSDL_LOCATION = url;
 	}
+
+	@Autowired
+	private IEntityViewDao entityViewDao;
 
 	/**
 	 * 
@@ -114,8 +121,7 @@ public class TalendServiceImpl implements TalendService {
 		return rtnMessage;
 	}
 
-	private List<String> getItemsInfoInTalend(String model, String entityName, String entityKey, Integer limitStart,
-			Integer limit) throws TalendException {
+	private List<String> getItemsInfoInTalend(String model, String entityName, Integer limitStart, Integer limit) throws TalendException {
 		List<String> res = new ArrayList<String>();
 
 		TMDMService_Service tws = new TMDMService_Service(WSDL_LOCATION);
@@ -132,14 +138,6 @@ public class TalendServiceImpl implements TalendService {
 		wsGetItems.setSpellTreshold(-1);
 		wsGetItems.setTotalCountOnFirstResult(true);
 		wsGetItems.setWsDataClusterPK(dc);
-
-		WSWhereCondition wsWhereCondition = new WSWhereCondition();
-		// 配置文件拿
-		wsWhereCondition.setLeftPath(entityKey);
-		wsWhereCondition.setOperator(WSWhereOperator.NOT_EQUALS);
-		wsWhereCondition.setRightValueOrPath("-1");
-		wsWhereCondition.setSpellCheck(true);
-		wsWhereCondition.setStringPredicate(WSStringPredicate.NONE);
 
 		bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, "administrator");
 		bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, "administrator");
@@ -221,13 +219,17 @@ public class TalendServiceImpl implements TalendService {
 		ResultBean res = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
 		String model = applyDate.getModel();
 		String entityName = applyDate.getEntity();
-		// 硬编码 配置文件
-		String entityKey = EntityKeyProperties.getInstacne().getProperty(entityName);
-		if (StringUtils.isEmpty(entityKey)) {
+
+		EntityView entityView = entityViewDao.findEntityViewByEntityName(entityName);
+		if (entityView == null) {
 			res.setMsgId(MsgEnum.ENTITYKEY_NOTFOUND.getMsgId());
 			res.setMsgDesc(MsgEnum.ENTITYKEY_NOTFOUND.getMsgDesc() + ":" + entityName);
 			return res;
 		}
+
+		// 根据entityName获取对象映射的封装
+		// ---------------------- 暂时 这样 最后讨论从配置文件还是从数据库找出来 ---------------------
+
 		Integer page = applyDate.getPage();
 		Integer pageSize = applyDate.getPagesize();
 
@@ -238,7 +240,7 @@ public class TalendServiceImpl implements TalendService {
 		Integer limit = pageSize;
 		List<String> date = new ArrayList<String>();
 		try {
-			date = this.getItemsInfoInTalend(model, entityName, entityKey, limitStart, limit);
+			date = this.getItemsInfoInTalend(model, entityName, limitStart, limit);
 		} catch (TalendException e) {
 			// TODO Auto-generated catch block
 			// 处理异常
@@ -261,6 +263,7 @@ public class TalendServiceImpl implements TalendService {
 			String talendStr = iterator.next();
 			// 使用dom4j解析
 			JSON json = XmlStrToJsonUtil.xmlStrToJson(talendStr);
+			// 总记录数
 			if (json instanceof JSONArray) {
 				int totalCount = ((JSONArray) json).getInt(0);
 				result.put("total", totalCount);
@@ -270,7 +273,9 @@ public class TalendServiceImpl implements TalendService {
 				result.put("pagesize", pageSize);
 				result.put("page", page);
 				result.put("isMore", page == totalPage ? "N" : "Y");
-			} else if (json instanceof JSONObject) {
+			}
+			// 每条数据
+			else if (json instanceof JSONObject) {
 				JSONObject jo = (JSONObject) json;
 				@SuppressWarnings("unchecked")
 				Iterator<String> joIterator = jo.keys();
@@ -280,7 +285,139 @@ public class TalendServiceImpl implements TalendService {
 				}
 			}
 		}
+
+		// 给dataList加入外键信息 目前 只和一个外键表关联
+		if (StringUtils.equals("Y", entityView.getIsRalate())) {
+			try {
+				this.getRalteInfoDateList(dataList, entityView, model);
+			} catch (TalendException e) {
+				// TODO Auto-generated catch block
+				// 处理异常
+				e.printStackTrace();
+				String msg = e.getMessage();
+				if (msg.length() > 100) {
+					msg = msg.substring(0, 100);
+				}
+				res.setMsgId(MsgEnum.READDAT_FAIL.getMsgId());
+				res.setMsgDesc(MsgEnum.READDAT_FAIL.getMsgDesc() + ",详情:" + msg);
+				return res;
+			}
+		}
+
+		// 给dataList加入localCode
+		// if (StringUtils.equals("Y", entityView.getHasLocalCode())) {
+		// dataMappingManager.getLocalCodeDataList(dataList, entityView);
+		// }
 		result.put("dataList", dataList);
+		return res;
+	}
+
+	private void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		List<String> pks = new ArrayList<String>();
+
+		// 循环ja
+		// 拿ja 中的ids
+		for (int i = 0; i < dataList.size(); i++) {
+			JSONObject jo = dataList.getJSONObject(i);
+			JSONArray jsonArray = jo.getJSONArray(entityView.getEntityFk());
+			String foreignKey = jsonArray.getString(0);
+			jo.remove(entityView.getEntityFk());
+			jo.put(entityView.getEntityFk(), foreignKey);
+			pks.add(foreignKey);
+		}
+
+		// 组装wswhereItem的搜索条件
+		WSWhereItem wsWhereItem = new WSWhereItem();
+		WSWhereOr wsWhereOr = new WSWhereOr();
+		for (String temp : pks) {
+			WSWhereItem tempWsWhereItem = new WSWhereItem();
+			WSWhereCondition tempWsWhereCondition = new WSWhereCondition();
+			tempWsWhereCondition.setLeftPath(entityView.getForeignEntityKey());
+			tempWsWhereCondition.setOperator(WSWhereOperator.EQUALS);
+			tempWsWhereCondition.setRightValueOrPath(temp);
+			tempWsWhereCondition.setSpellCheck(true);
+			tempWsWhereCondition.setStringPredicate(WSStringPredicate.NONE);
+			tempWsWhereItem.setWhereCondition(tempWsWhereCondition);
+			wsWhereOr.getWhereItems().add(tempWsWhereItem);
+		}
+		wsWhereItem.setWhereOr(wsWhereOr);
+
+		// 根据ids 去 talend 中 找到相应的数据块
+		List<String> date = this.getItemsInfoInTalendByCondition(model, entityView.getForeignEntityName(), 0, pks.size(), wsWhereItem);
+
+		JSONArray pkDataList = new JSONArray();
+		// 处理返回的信息
+		Iterator<String> iterator = date.iterator();
+		while (iterator.hasNext()) {
+			String talendStr = iterator.next();
+			// 使用dom4j解析
+			JSON json = XmlStrToJsonUtil.xmlStrToJson(talendStr);
+			if (json instanceof JSONObject) {
+				JSONObject jo = (JSONObject) json;
+				@SuppressWarnings("unchecked")
+				Iterator<String> joIterator = jo.keys();
+				while (joIterator.hasNext()) {
+					String key = joIterator.next();
+					pkDataList.add(jo.getJSONObject(key));
+				}
+			}
+		}
+		System.out.println(dataList);
+		System.out.println(pkDataList);
+		// 组装
+		// 循环dataList // 查找数据 // 合并jo
+		for (int i = 0; i < dataList.size(); i++) {
+			JSONObject jo = dataList.getJSONObject(i);
+			// 获取PK
+			String foreignKey = jo.getString(entityView.getEntityFk());
+			// 循环 外键的data
+			for (int j = 0; j < pkDataList.size(); j++) {
+				JSONObject fkJo = pkDataList.getJSONObject(j);
+				String fkJoPk = fkJo.getString(entityView.getForeignEntityKey());
+				if (StringUtils.equals(fkJoPk, foreignKey))
+					jo.putAll(fkJo);
+			}
+		}
+
+		System.out.println(dataList);
+
+	}
+
+	private List<String> getItemsInfoInTalendByCondition(String model, String entityName, Integer limitStart, Integer limit, WSWhereItem whereItem)
+			throws TalendException {
+		List<String> res = new ArrayList<String>();
+
+		TMDMService_Service tws = new TMDMService_Service(WSDL_LOCATION);
+		TMDMService port = tws.getTMDMPort();
+		BindingProvider bp = (BindingProvider) port;
+
+		WSDataClusterPK dc = new WSDataClusterPK();
+		dc.setPk(model);
+
+		WSGetItems wsGetItems = new WSGetItems();
+		wsGetItems.setConceptName(entityName);
+		wsGetItems.setMaxItems(limit);
+		wsGetItems.setSkip(limitStart);
+		wsGetItems.setSpellTreshold(-1);
+		wsGetItems.setTotalCountOnFirstResult(true);
+		wsGetItems.setWsDataClusterPK(dc);
+		wsGetItems.setWhereItem(whereItem);
+
+		bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, "administrator");
+		bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, "administrator");
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, S_URL);
+		try {
+			res = port.getItems(wsGetItems).getStrings();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			// 扔出异常
+			log.error(e);
+			throw new TalendException("talend调用错误" + e.getMessage());
+		}
+
 		return res;
 	}
 

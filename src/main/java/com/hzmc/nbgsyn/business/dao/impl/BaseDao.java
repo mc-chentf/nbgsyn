@@ -1,4 +1,4 @@
-package com.hzmc.nbgsyn.business.impl;
+package com.hzmc.nbgsyn.business.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;

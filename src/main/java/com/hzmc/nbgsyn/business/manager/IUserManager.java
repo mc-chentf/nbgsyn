@@ -1,4 +1,4 @@
-package com.hzmc.nbgsyn.business;
+package com.hzmc.nbgsyn.business.manager;
 
 import java.util.List;
 

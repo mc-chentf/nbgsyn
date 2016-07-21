@@ -1,11 +1,11 @@
-package com.hzmc.nbgsyn.business.impl;
+package com.hzmc.nbgsyn.business.dao.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.hzmc.nbgsyn.business.IServiceRegisterDao;
-import com.hzmc.nbgsyn.persistence.ServiceRegister;
+import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
 
 /**
  * 

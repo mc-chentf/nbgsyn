@@ -26,7 +26,7 @@ public class TMDMService_Service extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:/d:/talend/soap.wsdl");
+            url = new URL("file:/c:/talend/soap.wsdl");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(TMDMService_Service.class.getName())
                 .log(java.util.logging.Level.INFO, 

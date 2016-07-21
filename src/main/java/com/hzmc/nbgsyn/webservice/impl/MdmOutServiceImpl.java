@@ -9,7 +9,7 @@ import javax.jws.WebService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hzmc.nbgsyn.business.IUserManager;
+import com.hzmc.nbgsyn.business.manager.IUserManager;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.exception.UserInfoException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;

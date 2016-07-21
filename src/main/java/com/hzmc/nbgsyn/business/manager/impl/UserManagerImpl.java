@@ -1,4 +1,4 @@
-package com.hzmc.nbgsyn.business.impl;
+package com.hzmc.nbgsyn.business.manager.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,13 +8,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.hzmc.nbgsyn.business.IServiceRegisterDao;
-import com.hzmc.nbgsyn.business.IUserManager;
+import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
+import com.hzmc.nbgsyn.business.manager.IUserManager;
 import com.hzmc.nbgsyn.exception.UserInfoException;
-import com.hzmc.nbgsyn.persistence.ServiceRegister;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
 import com.hzmc.nbgsyn.resource.UserProperties;
 
 /**
@@ -22,7 +21,6 @@ import com.hzmc.nbgsyn.resource.UserProperties;
  * @author tfche 2016年7月19日11:16:35
  */
 @Service
-@Transactional
 public class UserManagerImpl implements IUserManager {
 
 	@SuppressWarnings("unused")

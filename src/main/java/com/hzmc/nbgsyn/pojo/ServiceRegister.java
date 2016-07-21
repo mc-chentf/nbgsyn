@@ -1,4 +1,4 @@
-package com.hzmc.nbgsyn.persistence;
+package com.hzmc.nbgsyn.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * 
- * @author chentf
+ * @author chentf 数据库pojo
  *
  *         2016年7月14日
  */

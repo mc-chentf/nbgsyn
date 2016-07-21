@@ -1,8 +1,8 @@
-package com.hzmc.nbgsyn.business;
+package com.hzmc.nbgsyn.business.dao;
 
 import java.util.List;
 
-import com.hzmc.nbgsyn.persistence.ServiceRegister;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
 
 /**
  * 

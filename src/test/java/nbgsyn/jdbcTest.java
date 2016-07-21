@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hzmc.nbgsyn.business.IServiceRegisterDao;
-import com.hzmc.nbgsyn.persistence.ServiceRegister;
+import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
 
 public class jdbcTest {
 
