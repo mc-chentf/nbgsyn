@@ -5,4 +5,5 @@
 		maxTransactions="5" useStatementNamespaces="false" />
 	<sqlMap resource="sqlmap/serviceRegister.xml" />
 	<sqlMap resource="sqlmap/entityView.xml" />
+	<sqlMap resource="sqlmap/mapBase.xml" />
 </sqlMapConfig>  

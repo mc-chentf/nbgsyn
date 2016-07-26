@@ -4,7 +4,7 @@ import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 
-public interface TalendService {
+public interface ITalendService {
 
 	public String talendSaveOrUpdateWS(String type, String model, String cluster, String xmls) throws TalendException;
 

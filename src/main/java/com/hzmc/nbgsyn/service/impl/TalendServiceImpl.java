@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.xml.ws.BindingProvider;
 
@@ -19,13 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
+import com.hzmc.nbgsyn.business.dao.IMapBaseDao;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.persistence.ResultInfo;
 import com.hzmc.nbgsyn.pojo.EntityView;
-import com.hzmc.nbgsyn.service.TalendService;
+import com.hzmc.nbgsyn.resource.RedundanceTableInfo;
+import com.hzmc.nbgsyn.service.ITalendService;
 import com.hzmc.nbgsyn.util.Constant;
 import com.hzmc.nbgsyn.util.XmlStrToJsonUtil;
 import com.mchz.nbg.talendservice.TMDMService;
@@ -48,7 +51,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Service
-public class TalendServiceImpl implements TalendService {
+public class TalendServiceImpl implements ITalendService {
 
 	private Logger log = Logger.getLogger(TalendServiceImpl.class);
 
@@ -56,19 +59,51 @@ public class TalendServiceImpl implements TalendService {
 
 	private final static URL WSDL_LOCATION;
 
+	// 关联表信息
+	private static HashMap<String, HashSet<String>> ralateTableInfo;
+
+	// 冗余表信息
+	// private static HashMap<String, HashSet<String>> redundanceTableInfo;
+
 	static {
 		URL url = null;
 		try {
 			url = new URL(Constant.WS_URL);
 		} catch (MalformedURLException e) {
-			java.util.logging.Logger.getLogger(TMDMService_Service.class.getName()).log(java.util.logging.Level.INFO, "Can not initialize the default wsdl from {0}",
-					"file:/d:/talend/soap.wsdl");
+			Logger.getLogger(TalendServiceImpl.class).error(e);
 		}
 		WSDL_LOCATION = url;
+
+		// 初始化 ralateTableInfo
+		ralateTableInfo = new HashMap<String, HashSet<String>>();
+		String companyBase = "COMPANY_SETTLEMENT_CODE,COMPANY_FLAG,COMPANY_TEL,COMPANY_NBPORTGROUP_FLAG,COMPANY_TOWN,COMPANY_LEGAL_PERSON,COMPANY_CITY,COMPANY_EDI_CODE,COMPANY_ENAME,COMPANY_GPS,COMPANY_URL,COMPANY_BUSINESS_SCOPE,COMPANY_FTA_CODE,COMPANY_ORG_CODE,COMPANY_ADDRESS,COMPANY_REG_FUND,COMPANY_CREDIT_CODE,COMPANY_PROVINCE,COMPANY_SHORT_CNAME,COMPANY_CARDNO,COMPANY_INSPECTION_CODE,COMPANY_BANK,COMPANY_COUNTY,COMPANY_SHORT_ENAME,COMPANY_REMARK,COMPANY_REG_CODE,COMPANY_DETAIL_ADDRESS,COMPANY_ID,COMPANY_CIQ_CODE,COMPANY_CUSTOM_CODE,COMPANY_LOGO,COMPANY_ZIP,COMPANY_BANK_ACCOUNT,COMPANY_TAX_CODE,COMPANY_DESC,COMPANY_IMMIGRATE_CODE,COMPANY_REG_ADDRESS,COMPANY_FAX,COMPANY_NATIONALITY_CODE,COMPANY_CODE,COMPANY_CNAME,COMPANY_AREA_CODE,COMPANY_TYPE_CODE,ACTIVE_FLAG";
+		StringTokenizer companyBaseStringTokenizer = new StringTokenizer(companyBase, ",");
+		HashSet<String> companyBaseSet = new HashSet<String>();
+		while (companyBaseStringTokenizer.hasMoreElements()) {
+			String temp = companyBaseStringTokenizer.nextToken();
+			companyBaseSet.add(temp);
+		}
+		ralateTableInfo.put("MD_COMPANY_BASE", companyBaseSet);
+
+		// // 初始化 redundanceTableInfo 冗余
+		// redundanceTableInfo = new HashMap<String, HashSet<String>>();
+		// String companyCtnowner = "COMPANY_CODE,COMPANY_CNAME,COMPANY_ENAME";
+		// StringTokenizer companyCtnownerStringTokenizer = new StringTokenizer(companyCtnowner, ",");
+		// HashSet<String> companyCtnownerSet = new HashSet<String>();
+		// while (companyCtnownerStringTokenizer.hasMoreElements()) {
+		// String temp = companyCtnownerStringTokenizer.nextToken();
+		// companyCtnownerSet.add(temp);
+		// }
+		//
+		// redundanceTableInfo.put("MD_COMPANY_CTNOWNER", companyCtnownerSet);
+
 	}
 
 	@Autowired
 	private IEntityViewDao entityViewDao;
+
+	@Autowired
+	private IMapBaseDao mapBaseDao;
 
 	/**
 	 * 
@@ -304,16 +339,17 @@ public class TalendServiceImpl implements TalendService {
 			}
 		}
 
-		// 给dataList加入localCode
-		// if (StringUtils.equals("Y", entityView.getHasLocalCode())) {
-		// dataMappingManager.getLocalCodeDataList(dataList, entityView);
-		// }
+		// 移除字段
+		for (int i = 0; i < dataList.size(); i++) {
+			JSONObject jo = (JSONObject) dataList.get(i);
+			jo.remove("ERROR_FLAG");
+		}
+
 		result.put("dataList", dataList);
 		return res;
 	}
 
 	private void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException {
-		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		List<String> pks = new ArrayList<String>();
 
@@ -364,9 +400,12 @@ public class TalendServiceImpl implements TalendService {
 				}
 			}
 		}
-		System.out.println(dataList);
-		System.out.println(pkDataList);
+		// System.out.println(dataList);
+		// System.out.println(pkDataList);
 		// 组装
+		HashSet<String> removeKey = new HashSet<String>();
+		removeKey.add("TALEND_COMPANY_FLAG");
+
 		// 循环dataList // 查找数据 // 合并jo
 		for (int i = 0; i < dataList.size(); i++) {
 			JSONObject jo = dataList.getJSONObject(i);
@@ -375,13 +414,17 @@ public class TalendServiceImpl implements TalendService {
 			// 循环 外键的data
 			for (int j = 0; j < pkDataList.size(); j++) {
 				JSONObject fkJo = pkDataList.getJSONObject(j);
+				// 移除不需要的属性
+				for (String temp : removeKey) {
+					fkJo.remove(temp);
+				}
 				String fkJoPk = fkJo.getString(entityView.getForeignEntityKey());
 				if (StringUtils.equals(fkJoPk, foreignKey))
 					jo.putAll(fkJo);
 			}
 		}
 
-		System.out.println(dataList);
+		// System.out.println(dataList);
 
 	}
 
@@ -429,6 +472,13 @@ public class TalendServiceImpl implements TalendService {
 		String model = applyDate.getModel();
 		String cluster = model;
 
+		EntityView entityView = entityViewDao.findEntityViewByEntityName(entity);
+		if (entityView == null) {
+			res.setMsgId(MsgEnum.ENTITYKEY_NOTFOUND.getMsgId());
+			res.setMsgDesc(MsgEnum.ENTITYKEY_NOTFOUND.getMsgDesc() + ":" + entity);
+			return res;
+		}
+
 		// 数据的array
 		JSONArray jsonArray = applyDate.getData();
 		// 对应每一个data的返回信息
@@ -437,6 +487,79 @@ public class TalendServiceImpl implements TalendService {
 		for (int i = 0; i < jsonArray.size(); i++) {
 			ResultInfo temp = new ResultInfo("success", "");
 			JSONObject dataInfo = (JSONObject) jsonArray.get(i);
+
+			// 如果关联表的话 dataInfo 要清洗 拆成dataInfoMain 和 dataInFoPK
+			if (StringUtils.equals("Y", entityView.getIsRalate())) {
+				// 获取配置的set
+				// 遍历是否在set 在set 就扔出dataINfoPk
+				HashSet<String> entityColumns = ralateTableInfo.get(entityView.getForeignEntityName());
+				HashSet<String> redundanceColumns = RedundanceTableInfo.getInstacne().getRedundance().get(entityView.getEntityName());
+
+				JSONObject dataInfoFk = new JSONObject();
+				HashSet<String> removeKey = new HashSet<String>();
+				@SuppressWarnings("unchecked")
+				Iterator<String> iterator = dataInfo.keys();
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					if (entityColumns.contains(key)) {
+						dataInfoFk.put(key, dataInfo.get(key));
+						// 如果不是 冗余数据 并且 不是FK的话 添加到移除的set中
+						if ((!StringUtils.equals(key, entityView.getEntityFk())) && (!redundanceColumns.contains(key)))
+							removeKey.add(key);
+					}
+				}
+				// 遍历removeKey 移除dataInfo中的属性
+				for (String tempKey : removeKey) {
+					dataInfo.remove(tempKey);
+				}
+
+				if (!StringUtils.equals("D", inType)) {
+					// 如果是 不是删除 就判断是否含companyId 有更新 没有 插入
+					// 先直接扔进去试试
+					// 是更新还是插入
+					String pkIntype = StringUtils.isEmpty(dataInfoFk.getString(entityView.getForeignEntityKey())) ? "C" : "U";
+					if (pkIntype.equals("C")) {
+						// 找到最大值
+						HashMap<String, Object> par = new HashMap<String, Object>();
+						par.put("table", entityView.getForeignEntityName());
+						par.put("col", "X_" + entityView.getForeignEntityKey());
+						Integer id = mapBaseDao.getMaxIdByCondition(par);
+						id++;
+						dataInfoFk.put(entityView.getForeignEntityKey(), id);
+					}
+
+					// 组装xmls
+					Element root = DocumentHelper.createElement(entityView.getForeignEntityName());
+					Document document = DocumentHelper.createDocument(root);
+					@SuppressWarnings("unchecked")
+					Iterator<String> iteratorFk = dataInfoFk.keys();
+					while (iteratorFk.hasNext()) {
+						String key = iteratorFk.next().toString();
+						root.addElement(key).addText(dataInfoFk.getString(key));
+					}
+					String xmls = document.getRootElement().asXML();
+					String primaryKey = "";
+					try {
+						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls);
+					} catch (TalendException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						String msg = e.getMessage();
+						if (msg.length() > 100) {
+							msg = msg.substring(0, 100);
+						}
+						temp.setMsg("调用talend失败,详情:" + msg);
+						temp.setSuccess("fail");
+						resultInfos.add(temp);
+						continue;
+					}
+					temp.setMsg("调用成功,主键为" + primaryKey);
+					// 如果是删除 则不做操作
+					dataInfo.put(entityView.getEntityFk(), primaryKey);
+				}
+
+			}
+
 			// 组装xmls
 			Element root = DocumentHelper.createElement(entity);
 			Document document = DocumentHelper.createDocument(root);
@@ -466,6 +589,7 @@ public class TalendServiceImpl implements TalendService {
 				temp.setMsg("调用talend失败,详情:" + msg);
 				temp.setSuccess("fail");
 			}
+
 			resultInfos.add(temp);
 		}
 		res.getResult().put("resultInfos", resultInfos);

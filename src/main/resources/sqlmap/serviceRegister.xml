@@ -69,4 +69,28 @@
   		from map_service_register
   		order by x_id
 	</select>
+	
+	<select id="findServiceRegistersByCondition" parameterClass="serviceRegister" resultClass="serviceRegister">
+		select x_id            as id,
+		       x_md_code       as mdCode,
+		       x_sys_code      as sysCode,
+		       x_entity_code   as entityCode,
+		       x_service_name  as serviceName,
+		       x_to_node       as toNode,
+		       x_username      as username,
+		       x_password      as password,
+		       x_register_time as registerTime,
+		       x_modify_time   as modifyTime
+  		from map_service_register
+  		<dynamic prepend="where">
+  			<isNotEmpty prepend="and" property="sysCode">
+  				x_sys_code = #sysCode#
+  			</isNotEmpty>
+  			<isNotEmpty prepend="and" property="entityCode">
+  				x_entity_code = #entityCode#
+  			</isNotEmpty>
+  		</dynamic>
+  		 
+  		order by x_id
+	</select>
 </sqlMap> 

@@ -35,6 +35,7 @@ public class ForMart {
 		Date d = simpleDateFormat.parse(s);
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		System.out.println(simpleDateFormat2.format(d));
+		ForMart.method2();
 	}
 
 	public static void method1() throws DocumentException {

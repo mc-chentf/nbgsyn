@@ -3,6 +3,7 @@ package com.hzmc.nbgsyn.webservice.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 import javax.jws.WebService;
 
@@ -16,7 +17,8 @@ import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.persistence.ResultInfo;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
-import com.hzmc.nbgsyn.service.TalendService;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
+import com.hzmc.nbgsyn.service.ITalendService;
 import com.hzmc.nbgsyn.webservice.IMdmOutService;
 
 import net.sf.json.JSONObject;
@@ -42,7 +44,7 @@ public class MdmOutServiceImpl implements IMdmOutService {
 	private IUserManager userManager;
 
 	@Autowired
-	private TalendService talendService;
+	private ITalendService talendService;
 
 	@Override
 	public String publishService(String applyDataStr) {
@@ -199,7 +201,11 @@ public class MdmOutServiceImpl implements IMdmOutService {
 				}
 				// 查找
 				else if ("R".equals(type)) {
-					List<UserInfoBean> userInfoBeans = userManager.findAllUserInfo();
+					// 获取 syscode的字段
+					String sysCode = applyDate.getSys_code();
+					ServiceRegister serviceRegister = new ServiceRegister();
+					serviceRegister.setSysCode(sysCode);
+					List<UserInfoBean> userInfoBeans = userManager.findUserInfosByCondition(serviceRegister);
 					resultBean.getResult().put("dataList", userInfoBeans);
 				} else {
 					ResultInfo temp = new ResultInfo(this.FAIL, "TYPE不存在");
@@ -220,7 +226,9 @@ public class MdmOutServiceImpl implements IMdmOutService {
 			resultBean.setMsgId(MsgEnum.METHOD_NO_EXIST.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.METHOD_NO_EXIST.getMsgDesc());
 		}
-
+		
+		UUID uuid = UUID.randomUUID();
+		resultBean.getResult().put("reqId", uuid.toString());
 		return JSONObject.fromObject(resultBean).toString();
 	}
 

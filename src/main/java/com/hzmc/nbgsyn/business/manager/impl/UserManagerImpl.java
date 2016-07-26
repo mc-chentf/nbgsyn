@@ -62,6 +62,20 @@ public class UserManagerImpl implements IUserManager {
 	}
 
 	@Override
+	public List<UserInfoBean> findUserInfosByCondition(ServiceRegister serviceRegister) {
+		// TODO Auto-generated method stub
+		List<ServiceRegister> serviceRegisters = serviceRegisterDao.findServiceRegistersByCondition(serviceRegister);
+		List<UserInfoBean> userInfoBeans = new ArrayList<UserInfoBean>();
+		if (serviceRegisters == null || serviceRegisters.size() == 0)
+			return userInfoBeans;
+		for (ServiceRegister temp : serviceRegisters) {
+			temp.setPassword("******");
+			userInfoBeans.add(this.convertServiceRegisterToUserInfoBean(temp));
+		}
+		return userInfoBeans;
+	}
+
+	@Override
 	public Integer saveRegisterUserInfo(UserInfoBean userInfoBean) throws UserInfoException {
 		// 把userinfo 转换为serviceRegister
 		ServiceRegister serviceRegister = this.convertUserInfoBeanToServiceRegister(userInfoBean);
@@ -146,4 +160,5 @@ public class UserManagerImpl implements IUserManager {
 		userInfoBean.setSERVICE_NAME(serviceRegister.getServiceName());
 		return userInfoBean;
 	}
+
 }

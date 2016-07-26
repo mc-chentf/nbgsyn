@@ -34,6 +34,9 @@ public class ApplyDate implements Serializable {
 	// 数据块
 	private JSONArray data;
 
+	// 系统源代码 在注册查询中使用
+	private String sys_code;
+
 	// 用于查找
 	// 从第几条开始查找
 	private Integer page;
@@ -110,6 +113,21 @@ public class ApplyDate implements Serializable {
 
 	public void setPagesize(Integer pagesize) {
 		this.pagesize = pagesize;
+	}
+
+	/**
+	 * @return the sys_code
+	 */
+	public String getSys_code() {
+		return sys_code;
+	}
+
+	/**
+	 * @param sys_code
+	 *            the sys_code to set
+	 */
+	public void setSys_code(String sys_code) {
+		this.sys_code = sys_code;
 	}
 
 }

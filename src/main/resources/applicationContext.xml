@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:jaxws="http://cxf.apache.org/jaxws"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="  
        http://www.springframework.org/schema/beans  
        http://www.springframework.org/schema/beans/spring-beans.xsd  
@@ -11,7 +10,9 @@
        http://www.springframework.org/schema/aop 
        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://cxf.apache.org/jaxrs
+       http://cxf.apache.org/schemas/jaxrs.xsd">
 
 	<!-- 隐式地向Spring容器注册了注解处理器 -->
 	<context:annotation-config />
@@ -19,12 +20,25 @@
 	<context:component-scan base-package="com.hzmc.nbgsyn.service" />
 	<context:component-scan base-package="com.hzmc.nbgsyn.webservice" />
 
+
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
+	<bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
+
 	<!-- CXF Web Service -->
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-http.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
 	<bean id="mdmOutService" class="com.hzmc.nbgsyn.webservice.impl.MdmOutServiceImpl" />
 	<jaxws:endpoint id="MdmOutService" address="/MDMOUTSERVICE" implementor="#mdmOutService" />
+
+	<bean id="userServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmSendServiceImpl"/>
+	<jaxrs:server id="mdmSendService" address="/mdmSendService">
+		<jaxrs:serviceBeans>
+			<ref bean="userServiceImpl" />
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />

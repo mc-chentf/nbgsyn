@@ -46,4 +46,11 @@ public interface IServiceRegisterDao {
 	 */
 	public List<ServiceRegister> findAllServiceRegister();
 
+	/**
+	 * 
+	 * @param serviceRegister
+	 * @return
+	 */
+	public List<ServiceRegister> findServiceRegistersByCondition(ServiceRegister serviceRegister);
+
 }

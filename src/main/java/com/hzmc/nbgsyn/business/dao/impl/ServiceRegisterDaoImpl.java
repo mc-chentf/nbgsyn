@@ -47,4 +47,11 @@ public class ServiceRegisterDaoImpl extends BaseDao implements IServiceRegisterD
 		return (List<ServiceRegister>) this.getSqlMapClientTemplate().queryForList("findAllServiceRegister");
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ServiceRegister> findServiceRegistersByCondition(ServiceRegister serviceRegister) {
+		// TODO Auto-generated method stub
+		return (List<ServiceRegister>) this.getSqlMapClientTemplate().queryForList("findServiceRegistersByCondition");
+	}
+
 }

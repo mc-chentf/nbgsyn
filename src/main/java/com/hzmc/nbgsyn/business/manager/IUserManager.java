@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hzmc.nbgsyn.exception.UserInfoException;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
+import com.hzmc.nbgsyn.pojo.ServiceRegister;
 
 /**
  * 用来管理服务注册接口总线的一些服务
@@ -49,4 +50,11 @@ public interface IUserManager {
 	 * @param userInfoBean
 	 */
 	public void modifyUserInfo(UserInfoBean userInfoBean) throws UserInfoException;
+
+	/**
+	 * 
+	 * @param serviceRegister
+	 * @return
+	 */
+	public List<UserInfoBean> findUserInfosByCondition(ServiceRegister serviceRegister);
 }
