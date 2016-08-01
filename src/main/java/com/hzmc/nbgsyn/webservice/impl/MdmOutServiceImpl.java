@@ -10,6 +10,7 @@ import javax.jws.WebService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
 import com.hzmc.nbgsyn.business.manager.IUserManager;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.exception.UserInfoException;
@@ -46,17 +47,22 @@ public class MdmOutServiceImpl implements IMdmOutService {
 	@Autowired
 	private ITalendService talendService;
 
+	@Autowired
+	private IRequestLogDao requestLog;
+
 	@Override
 	public String publishService(String applyDataStr) {
 		// TODO Auto-generated method stub
-		System.out.println("now in webservice");
-		return this.service(applyDataStr, "publishService");
+		// System.out.println("now in webservice");
+		ResultBean res = this.service(applyDataStr, "publishService");
+		return JSONObject.fromObject(res).toString();
 	}
 
 	@Override
 	public String registerService(String applyDataStr) {
 		// TODO Auto-generated method stub
-		return this.service(applyDataStr, "registerService");
+		ResultBean res = this.service(applyDataStr, "publishService");
+		return JSONObject.fromObject(res).toString();
 	}
 
 	/**
@@ -81,7 +87,7 @@ public class MdmOutServiceImpl implements IMdmOutService {
 			return MsgEnum.FAIL;
 	}
 
-	private String service(String applyDateStr, String method) {
+	private ResultBean service(String applyDateStr, String method) {
 
 		// TalendWs.method1();
 
@@ -99,13 +105,13 @@ public class MdmOutServiceImpl implements IMdmOutService {
 			logger.error(e);
 			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
+			return resultBean;
 		}
 
 		if (applyDate == null) {
 			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
+			return resultBean;
 		}
 
 		String username = applyDate.getUsername();
@@ -117,7 +123,7 @@ public class MdmOutServiceImpl implements IMdmOutService {
 		if (!userManager.validateUser(username, userPassword)) {
 			resultBean.setMsgId(MsgEnum.USER_PWD_ERROR.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.USER_PWD_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
+			return resultBean;
 		}
 
 		String actionType = applyDate.getAction();
@@ -226,10 +232,13 @@ public class MdmOutServiceImpl implements IMdmOutService {
 			resultBean.setMsgId(MsgEnum.METHOD_NO_EXIST.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.METHOD_NO_EXIST.getMsgDesc());
 		}
-		
+
 		UUID uuid = UUID.randomUUID();
 		resultBean.getResult().put("reqId", uuid.toString());
-		return JSONObject.fromObject(resultBean).toString();
+
+		requestLog.saveRequestLog(applyDate, resultBean, method);
+
+		return resultBean;
 	}
 
 }

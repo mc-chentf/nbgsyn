@@ -9,5 +9,5 @@ import com.hzmc.nbgsyn.persistence.ResultBean;
  * @author tfche 2016年7月25日16:45:59
  */
 public interface ISendService {
-	public ResultBean sendSevice(ApplyDate applyDate);
+	public ResultBean sendSevice(ApplyDate applyDate,String uuid);
 }

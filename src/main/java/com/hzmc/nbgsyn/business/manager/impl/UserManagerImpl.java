@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
+import com.hzmc.nbgsyn.business.dao.IServiceUserDao;
 import com.hzmc.nbgsyn.business.manager.IUserManager;
 import com.hzmc.nbgsyn.exception.UserInfoException;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
 import com.hzmc.nbgsyn.pojo.ServiceRegister;
-import com.hzmc.nbgsyn.resource.UserProperties;
+import com.hzmc.nbgsyn.pojo.ServiceUser;
 
 /**
  * 
@@ -29,18 +29,19 @@ public class UserManagerImpl implements IUserManager {
 	@Autowired
 	private IServiceRegisterDao serviceRegisterDao;
 
+	@Autowired
+	private IServiceUserDao serviceUserDao;
+
 	@Override
 	public Boolean validateUser(String userName, String userPassword) {
-		Boolean res = false;
-		// 验证用户 未完成 在缓存中验证 这个是接口认证用户 和其他不同
-		// 模拟通过
-		String pUserName = UserProperties.getInstacne().getProperty("username").trim();
-		String pPwd = UserProperties.getInstacne().getProperty("pwd").trim();
 
-		if (StringUtils.equals(pUserName, userName) && StringUtils.equals(userPassword, pPwd)) {
-			res = true;
-		}
-		return res;
+		ServiceUser temp = new ServiceUser();
+		temp.setActiveFlag("Y");
+		temp.setUserName(userName);
+		temp.setPassWord(userPassword);
+		temp.setType("1");
+
+		return serviceUserDao.findServiceUserByCondition(temp) == null ? false : true;
 	}
 
 	/**

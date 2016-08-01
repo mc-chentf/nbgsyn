@@ -6,4 +6,6 @@
 	<sqlMap resource="sqlmap/serviceRegister.xml" />
 	<sqlMap resource="sqlmap/entityView.xml" />
 	<sqlMap resource="sqlmap/mapBase.xml" />
+	<sqlMap resource="sqlmap/requestLog.xml" />
+	<sqlMap resource="sqlmap/serviceUser.xml" />
 </sqlMapConfig>  

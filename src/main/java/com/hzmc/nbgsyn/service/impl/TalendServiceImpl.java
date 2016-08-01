@@ -349,7 +349,7 @@ public class TalendServiceImpl implements ITalendService {
 		return res;
 	}
 
-	private void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException {
+	public void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException {
 		// TODO Auto-generated method stub
 		List<String> pks = new ArrayList<String>();
 
@@ -357,11 +357,13 @@ public class TalendServiceImpl implements ITalendService {
 		// 拿ja 中的ids
 		for (int i = 0; i < dataList.size(); i++) {
 			JSONObject jo = dataList.getJSONObject(i);
-			JSONArray jsonArray = jo.getJSONArray(entityView.getEntityFk());
-			String foreignKey = jsonArray.getString(0);
-			jo.remove(entityView.getEntityFk());
-			jo.put(entityView.getEntityFk(), foreignKey);
-			pks.add(foreignKey);
+			if (jo.get(entityView.getEntityFk()) instanceof JSONArray) {
+				JSONArray tempJa = (JSONArray) jo.get(entityView.getEntityFk());
+				String foreignKey = tempJa.getString(0);
+				jo.remove(entityView.getEntityFk());
+				jo.put(entityView.getEntityFk(), foreignKey);
+			}
+			pks.add(jo.getString(entityView.getEntityFk()));
 		}
 
 		// 组装wswhereItem的搜索条件
@@ -558,6 +560,17 @@ public class TalendServiceImpl implements ITalendService {
 					dataInfo.put(entityView.getEntityFk(), primaryKey);
 				}
 
+			}
+
+			// 如果是创建的话 设置主键key的id
+			if (StringUtils.equals("C", type) && (!StringUtils.isEmpty(entityView.getMdCode()))) {
+				// 设置id
+				HashMap<String, Object> par = new HashMap<String, Object>();
+				par.put("table", entityView.getEntityName());
+				par.put("col", "X_" + entityView.getMdCode());
+				Integer id = mapBaseDao.getMaxIdByCondition(par);
+				id++;
+				dataInfo.put(entityView.getEntityKey(), id);
 			}
 
 			// 组装xmls

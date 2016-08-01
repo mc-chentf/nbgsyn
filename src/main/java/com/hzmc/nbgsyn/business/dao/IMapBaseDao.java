@@ -8,5 +8,7 @@ import java.util.HashMap;
  *
  */
 public interface IMapBaseDao {
-	public Integer getMaxIdByCondition(HashMap<String,Object> par);
+
+	public Integer getMaxIdByCondition(HashMap<String, Object> par);
+	
 }

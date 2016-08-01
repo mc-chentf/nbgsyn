@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,8 +8,13 @@ import java.util.Date;
  * 
  * @author tfche 2016年7月20日10:17:51
  */
-public class MapBase {
+public class MapBase implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7846193078958127530L;
+
 	private Integer id;
 
 	private Integer rowId;

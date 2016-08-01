@@ -51,7 +51,7 @@ public class ServiceRegisterDaoImpl extends BaseDao implements IServiceRegisterD
 	@Override
 	public List<ServiceRegister> findServiceRegistersByCondition(ServiceRegister serviceRegister) {
 		// TODO Auto-generated method stub
-		return (List<ServiceRegister>) this.getSqlMapClientTemplate().queryForList("findServiceRegistersByCondition");
+		return (List<ServiceRegister>) this.getSqlMapClientTemplate().queryForList("findServiceRegistersByCondition",serviceRegister);
 	}
 
 }

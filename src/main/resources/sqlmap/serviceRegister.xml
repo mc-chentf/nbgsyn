@@ -90,7 +90,6 @@
   				x_entity_code = #entityCode#
   			</isNotEmpty>
   		</dynamic>
-  		 
   		order by x_id
 	</select>
 </sqlMap> 

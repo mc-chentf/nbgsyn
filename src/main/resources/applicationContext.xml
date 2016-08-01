@@ -33,7 +33,7 @@
 	<bean id="mdmOutService" class="com.hzmc.nbgsyn.webservice.impl.MdmOutServiceImpl" />
 	<jaxws:endpoint id="MdmOutService" address="/MDMOUTSERVICE" implementor="#mdmOutService" />
 
-	<bean id="userServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmSendServiceImpl"/>
+	<bean id="userServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmSendServiceImpl" />
 	<jaxrs:server id="mdmSendService" address="/mdmSendService">
 		<jaxrs:serviceBeans>
 			<ref bean="userServiceImpl" />
@@ -76,5 +76,30 @@
 		<aop:pointcut id="txServiceMethod" expression="execution(* com.hzmc.nbgsyn.business.*.*(..))" />
 		<aop:advisor pointcut-ref="txServiceMethod" advice-ref="txAdvice" />
 	</aop:config>
+
+	<!-- 定义目标bean和bean中的方法 -->
+	<bean id="sendServiceQuartzJob" class="com.hzmc.nbgsyn.quartz.SendServiceQuartzJob" />
+
+	<bean id="sendServiceQuartzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="sendServiceQuartzJob" />
+		</property>
+		<property name="targetMethod">  
+			<value>execute</value>
+		</property>
+	</bean>
+
+	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="sendServiceQuartzJobMethod"></property>
+		<property name="cronExpression" value="0/5 * * * * ?"></property>
+	</bean>
+
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="CronTriggerBean" />
+			</list>
+		</property>
+	</bean>
 
 </beans>  

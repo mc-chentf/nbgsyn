@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="requestLog">
+	<typeAlias alias="requestLog" type="com.hzmc.nbgsyn.pojo.RequestLog"/>
+	
+	<insert id="insertRequestLog" parameterClass="requestLog">
+		insert into map_request_log(
+			x_id,x_session_id,x_action,
+			x_type,x_entity,x_max_resend,
+			x_now_resend,x_create_time,x_modify_time,
+			x_request_data,x_response_data,x_username,
+			x_talend_timestamp,x_method,x_is_success)
+		values(
+			request_log_seq.nextval,#sessionId#,#action#,
+			#type#,#entity#,#maxResend#,
+			#nowResend#,#createTime#,#modifyTime#,
+			#requestData#,#responseData#,#userName#,0,#method#,#isSuccess#)
+		<selectKey resultClass="int" keyProperty="id" >
+		   SELECT request_log_seq.CURRVAL AS ID FROM DUAL
+		</selectKey>
+	</insert>
+</sqlMap>

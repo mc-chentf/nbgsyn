@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,12 @@ import java.util.List;
  * 
  * @author tfche 用于保存 view的一些 信息包含 viewName view中的一个字段 主键 view是否包含localcode view中localcode的一级名称 view中localcode的二级名称 view中localcode的对应字段
  */
-public class EntityView {
+public class EntityView implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8734674675617336556L;
 
 	// view 名字
 	private String entityName;

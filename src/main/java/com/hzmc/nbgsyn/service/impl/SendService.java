@@ -9,19 +9,23 @@ import java.util.List;
 
 import javax.xml.ws.BindingProvider;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
+import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
 import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
 import com.hzmc.nbgsyn.enums.MsgEnum;
+import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.persistence.ResultInfo;
 import com.hzmc.nbgsyn.pojo.EntityView;
 import com.hzmc.nbgsyn.pojo.ServiceRegister;
 import com.hzmc.nbgsyn.service.ISendService;
+import com.hzmc.nbgsyn.service.ITalendService;
 import com.hzmc.nbgsyn.util.Constant;
 import com.nbport.ediesb.service.EDIESBService;
 import com.nbport.ediesb.service.EDIESBServicePortType;
@@ -40,6 +44,12 @@ public class SendService implements ISendService {
 	@Autowired
 	private IServiceRegisterDao serviceRegisterDao;
 
+	@Autowired
+	private ITalendService talendService;
+
+	@Autowired
+	private IRequestLogDao requestLogDao;
+
 	private final String EDI_S_URL = Constant.EDI_S_URL;
 
 	private final static URL WSDL_LOCATION;
@@ -55,7 +65,7 @@ public class SendService implements ISendService {
 	}
 
 	@Override
-	public ResultBean sendSevice(ApplyDate applyDate) {
+	public ResultBean sendSevice(ApplyDate applyDate, String uuid) {
 		// TODO Auto-generated method stub
 		// 查找注册表
 		ResultBean resultBean = new ResultBean();
@@ -71,6 +81,26 @@ public class SendService implements ISendService {
 			return resultBean;
 		}
 
+		// 假如是company_base
+		// 假如有外键
+		if (StringUtils.equals("Y", entityView.getIsRalate())) {
+			// 组合数据
+			// 源数据
+			JSONArray dataInfos = applyDate.getData();
+			String model = applyDate.getModel();
+			try {
+				talendService.getRalteInfoDateList(dataInfos, entityView, model);
+			} catch (TalendException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				resultBean.setMsgId(MsgEnum.ENTITY_RELATE_ERROR.getMsgId());
+				resultBean.setMsgDesc(MsgEnum.ENTITY_RELATE_ERROR.getMsgDesc() + ":" + entityName);
+				return resultBean;
+			}
+		}
+
+		// System.out.println("round------------------" + applyDate.getData() + "------------------");
+
 		// 查找注册表
 		ServiceRegister serviceRegister = new ServiceRegister();
 		serviceRegister.setEntityCode(entityView.getEntityName());
@@ -78,6 +108,11 @@ public class SendService implements ISendService {
 		List<ServiceRegister> serviceRegisterList = serviceRegisterDao.findServiceRegistersByCondition(serviceRegister);
 
 		List<ResultInfo> resultInfos = new ArrayList<ResultInfo>();
+
+		if (serviceRegisterList.size() == 0) {
+			resultBean.getResult().put("warn", "没有需要下发的目标");
+			return resultBean;
+		}
 
 		// 循环调用 下发
 		for (ServiceRegister temp : serviceRegisterList) {
@@ -94,23 +129,30 @@ public class SendService implements ISendService {
 			String applyDateStr = ja.toString();
 			String userName = "";
 			String passWorld = "";
+			String isSuccess = "Y";
 			try {
 				String resultStr = this.callEDIESBService(fromNode, toNode, esbId, applyDateStr, userName, passWorld);
 				resultInfo.setMsg(resultStr);
+				JSONObject resJo = JSONObject.fromObject(resultStr);
+				String msgId = resJo.getString("msgID");
+				if (!StringUtils.equals(msgId, MsgEnum.SUCCESS.getMsgId()))
+					isSuccess = "N";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				// 调用失败 需要记录啥
-				HashMap<String, Object> reqInfo = resultInfo.getReqInfo();
+				HashMap<String, Object> reqInfo = new HashMap<String, Object>();
 				reqInfo.put("fromNode", fromNode);
-				reqInfo.put("toNode", fromNode);
-				reqInfo.put("esbId", fromNode);
-				reqInfo.put("applyDateStr", fromNode);
+				reqInfo.put("toNode", toNode);
+				reqInfo.put("esbId", esbId);
+				reqInfo.put("applyDateStr", applyDateStr);
 				reqInfo.put("userName", userName);
 				reqInfo.put("passWorld", passWorld);
 				logger.error("edi-esb调用错误，详情:" + reqInfo + "。堆栈信息:" + e);
 			}
 			resultInfos.add(resultInfo);
+			applyDate.setUsername(toNode);
+			requestLogDao.saveRequestLog(applyDate, resultInfo, uuid, "sendSevice", isSuccess);
 		}
 
 		resultBean.getResult().put("resultInfos", resultInfos);
@@ -118,7 +160,6 @@ public class SendService implements ISendService {
 		MsgEnum resEnum = this.generateMsgEnumByResultInfos(resultInfos);
 		resultBean.setMsgId(resEnum.getMsgId());
 		resultBean.setMsgDesc(resEnum.getMsgDesc());
-
 		return resultBean;
 	}
 

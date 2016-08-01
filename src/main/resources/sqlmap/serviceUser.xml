@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="serviceUser">
+	<typeAlias alias="serviceUser" type="com.hzmc.nbgsyn.pojo.ServiceUser"/>
+	<select id="findServiceUserByCondition" parameterClass="serviceUser" resultClass="serviceUser">
+		select x_id            as id,
+			x_username      as userName,
+			x_password      as passWord,
+			x_username_desc as userNameDesc,
+			x_type          as type,
+			x_create_time   as createTime,
+			x_active_flag as activeFlag
+		from map_service_user
+		where
+			x_username = #userName# and x_password = #passWord# 
+			and x_type = #type# and x_active_flag = #activeFlag#
+		limit 1
+	</select>
+</sqlMap>

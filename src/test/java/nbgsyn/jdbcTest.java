@@ -15,25 +15,27 @@ public class jdbcTest {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		IServiceRegisterDao registerDaoImpl = (IServiceRegisterDao) applicationContext.getBean("serviceRegisterDaoImpl");
 
-		for (int i = 0; i < 5; i++) {
-			ServiceRegister serviceRegister = new ServiceRegister();
-			serviceRegister.setEntityCode("entity");
-			serviceRegister.setMdCode("1000");
-			Date d = new Date();
-			serviceRegister.setModifyTime(d);
-			serviceRegister.setRegisterTime(d);
-			serviceRegister.setPassword("1");
-			serviceRegister.setUsername("chentf");
-			serviceRegister.setSysCode("syscode" + i);
-			serviceRegister.setServiceName("esbid");
-			serviceRegister.setToNode("haha");
+//		for (int i = 0; i < 5; i++) {
+//			ServiceRegister serviceRegister = new ServiceRegister();
+//			serviceRegister.setEntityCode("entity");
+//			serviceRegister.setMdCode("1000");
+//			Date d = new Date();
+//			serviceRegister.setModifyTime(d);
+//			serviceRegister.setRegisterTime(d);
+//			serviceRegister.setPassword("1");
+//			serviceRegister.setUsername("chentf");
+//			serviceRegister.setSysCode("syscode" + i);
+//			serviceRegister.setServiceName("esbid");
+//			serviceRegister.setToNode("haha");
 //			registerDaoImpl.saveServiceRegister(serviceRegister);
-		}
+//		}
 
 		// ServiceRegister temp = registerDaoImpl.findServiceRegisterByCondition(serviceRegister);
 		// System.out.println(temp);
 //		 registerDaoImpl.removeById(4);
-		List list = registerDaoImpl.findAllServiceRegister();
+		ServiceRegister serviceRegister = new ServiceRegister();
+		serviceRegister.setSysCode("haha");
+		List list = registerDaoImpl.findServiceRegistersByCondition(serviceRegister);
 		System.out.println(list);
 	}
 

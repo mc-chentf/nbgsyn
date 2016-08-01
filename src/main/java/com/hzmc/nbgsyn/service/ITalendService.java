@@ -3,6 +3,9 @@ package com.hzmc.nbgsyn.service;
 import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
+import com.hzmc.nbgsyn.pojo.EntityView;
+
+import net.sf.json.JSONArray;
 
 public interface ITalendService {
 
@@ -39,5 +42,14 @@ public interface ITalendService {
 	 * @return
 	 */
 	public ResultBean findApplyDate(ApplyDate applyDate);
+
+	/**
+	 * 
+	 * @param dataList
+	 * @param entityView
+	 * @param model
+	 * @throws TalendException
+	 */
+	public void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException;
 
 }
