@@ -6,8 +6,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nbgsyn Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	<!-- 公司里用 <repositories> <repository> <id>nexus</id> <name>Team Nexus Repository</name> <url>http://file.mchz.com.cn:8081/nexus/content/groups/public</url> </repository> 
-		</repositories> -->
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://file.mchz.com.cn:8081/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -57,7 +62,7 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.0.5.RELEASE</version>
 		</dependency>
-		
+
 		<!-- spring context support -->
 		<dependency>
 			<groupId>org.springframework</groupId>

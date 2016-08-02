@@ -214,4 +214,15 @@ public class SendService implements ISendService {
 		else
 			return MsgEnum.FAIL;
 	}
+
+	@Override
+	public void sendSeviceQuartzJob() {
+		// 查找 需要下发的表
+		
+		// 查找所有下发的 entity
+		
+		
+		// TODO Auto-generated method stub
+		System.out.println("send message");
+	}
 }

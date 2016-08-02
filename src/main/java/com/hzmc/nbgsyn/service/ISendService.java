@@ -9,5 +9,11 @@ import com.hzmc.nbgsyn.persistence.ResultBean;
  * @author tfche 2016年7月25日16:45:59
  */
 public interface ISendService {
-	public ResultBean sendSevice(ApplyDate applyDate,String uuid);
+
+	public ResultBean sendSevice(ApplyDate applyDate, String uuid);
+
+	/**
+	 * 定时下发的任务
+	 */
+	public void sendSeviceQuartzJob();
 }
