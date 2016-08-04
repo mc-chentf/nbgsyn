@@ -1,5 +1,7 @@
 package com.hzmc.nbgsyn.business.dao;
 
+import java.util.List;
+
 import com.hzmc.nbgsyn.pojo.EntityView;
 
 /**
@@ -15,4 +17,9 @@ public interface IEntityViewDao {
 	 * @return
 	 */
 	public EntityView findEntityViewByEntityName(String entityName);
+
+	/**
+	 * 查找所有的entityView
+	 */
+	public List<EntityView> findAllEntityViews();
 }

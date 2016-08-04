@@ -1,5 +1,7 @@
 package com.hzmc.nbgsyn.business.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
@@ -17,6 +19,13 @@ public class EntityViewDaoImpl extends BaseDao implements IEntityViewDao {
 	public EntityView findEntityViewByEntityName(String entityName) {
 		// TODO Auto-generated method stub
 		return (EntityView) this.getSqlMapClientTemplate().queryForObject("findEntityViewByEntityName", entityName);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EntityView> findAllEntityViews() {
+		// TODO Auto-generated method stub
+		return (List<EntityView>) this.getSqlMapClientTemplate().queryForList("findAllEntityViews");
 	}
 
 }

@@ -14,6 +14,5 @@
 		where
 			x_username = #userName# and x_password = #passWord# 
 			and x_type = #type# and x_active_flag = #activeFlag#
-		limit 1
 	</select>
 </sqlMap>

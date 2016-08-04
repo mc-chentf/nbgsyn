@@ -18,5 +18,19 @@
 	   	from MAP_ENTITY_VIEW
 	   	where x_entity_name = #entityName#
 	</select>
+	
+	<select id="findAllEntityViews" resultClass="entityView">
+		select  x_entity_name    as entityName,
+	            x_entity_key     as entityKey,
+	            x_has_local_code as hasLocalCode,
+	            x_md_code as mdCode,
+	            x_map_name as mapName,
+	            x_mapping_cloumn as mappingCloumn,
+	            x_is_ralate as isRalate,
+	            x_entity_fk as entityFk,
+	            x_foreign_entity_name as foreignEntityName,
+	            x_foreign_entity_key as foreignEntityKey
+	   	from MAP_ENTITY_VIEW order by x_entity_name desc
+	</select>
 
 </sqlMap>

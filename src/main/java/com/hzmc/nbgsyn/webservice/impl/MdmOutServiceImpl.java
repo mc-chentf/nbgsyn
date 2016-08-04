@@ -61,7 +61,7 @@ public class MdmOutServiceImpl implements IMdmOutService {
 	@Override
 	public String registerService(String applyDataStr) {
 		// TODO Auto-generated method stub
-		ResultBean res = this.service(applyDataStr, "publishService");
+		ResultBean res = this.service(applyDataStr, "registerService");
 		return JSONObject.fromObject(res).toString();
 	}
 
