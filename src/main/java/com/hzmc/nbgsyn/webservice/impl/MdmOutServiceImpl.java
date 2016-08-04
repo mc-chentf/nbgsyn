@@ -32,7 +32,7 @@ import net.sf.json.JsonConfig;
  * @author tfchen 2016年6月28日15:55:51
  *
  */
-@WebService(serviceName = "MdmOutService", endpointInterface = "com.hzmc.nbgsyn.webservice.IMdmOutService")
+@WebService(serviceName = "mdmOutService", endpointInterface = "com.hzmc.nbgsyn.webservice.IMdmOutService")
 public class MdmOutServiceImpl implements IMdmOutService {
 
 	private Logger logger = Logger.getLogger(MdmOutServiceImpl.class);
