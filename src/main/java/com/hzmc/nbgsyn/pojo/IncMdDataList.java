@@ -32,6 +32,10 @@ public class IncMdDataList implements Serializable {
 
 	private String sendSessionId;
 
+	private String type;
+
+	private Date modifyTime;
+
 	/**
 	 * @return the id
 	 */
@@ -135,6 +139,36 @@ public class IncMdDataList implements Serializable {
 	 */
 	public void setSendSessionId(String sendSessionId) {
 		this.sendSessionId = sendSessionId;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the modifyTime
+	 */
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	/**
+	 * @param modifyTime
+	 *            the modifyTime to set
+	 */
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 }

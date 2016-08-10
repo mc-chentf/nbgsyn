@@ -36,7 +36,9 @@ import com.mchz.nbg.talendservice.TMDMService_Service;
 import com.mchz.nbg.talendservice.WSDataClusterPK;
 import com.mchz.nbg.talendservice.WSDataModelPK;
 import com.mchz.nbg.talendservice.WSDeleteItem;
+import com.mchz.nbg.talendservice.WSGetItem;
 import com.mchz.nbg.talendservice.WSGetItems;
+import com.mchz.nbg.talendservice.WSItem;
 import com.mchz.nbg.talendservice.WSItemPK;
 import com.mchz.nbg.talendservice.WSPutItem;
 import com.mchz.nbg.talendservice.WSPutItemWithReport;
@@ -116,7 +118,7 @@ public class TalendServiceImpl implements ITalendService {
 	 * @return
 	 * @throws TalendException
 	 */
-	public String talendSaveOrUpdateWS(String type, String model, String cluster, String xmls) throws TalendException {
+	public String talendSaveOrUpdateWS(String type, String model, String cluster, String xmls, String source) throws TalendException {
 
 		String rtnMessage = "";
 		try {
@@ -141,7 +143,7 @@ public class TalendServiceImpl implements ITalendService {
 			}
 			item.setXmlString(xmls);
 			WSPutItemWithReport itemrp = new WSPutItemWithReport();
-			itemrp.setSource("cbos-call");
+			itemrp.setSource(source);
 			itemrp.setWsPutItem(item);
 			itemrp.setInvokeBeforeSaving(true);
 
@@ -154,6 +156,38 @@ public class TalendServiceImpl implements ITalendService {
 		}
 
 		return rtnMessage;
+	}
+
+	public WSItem getItemInfoInTalend(String model, String entityName, String pkvalue) throws TalendException {
+		WSItem res = null;
+		TMDMService_Service tws = new TMDMService_Service(WSDL_LOCATION);
+		TMDMService port = tws.getTMDMPort();
+		BindingProvider bp = (BindingProvider) port;
+		WSDataClusterPK dc = new WSDataClusterPK();
+		dc.setPk(model);
+
+		WSItemPK wsItemPK = new WSItemPK();
+		wsItemPK.setConceptName(entityName);
+		wsItemPK.getIds().add(pkvalue);
+		wsItemPK.setWsDataClusterPK(dc);
+
+		WSGetItem wsGetItem = new WSGetItem();
+		wsGetItem.setWsItemPK(wsItemPK);
+
+		bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, "administrator");
+		bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, "administrator");
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, S_URL);
+		try {
+			res = port.getItem(wsGetItem);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			// 扔出异常
+			log.error(e);
+			throw new TalendException("talend调用错误" + e.getMessage());
+		}
+
+		return res;
 	}
 
 	private List<String> getItemsInfoInTalend(String model, String entityName, Integer limitStart, Integer limit) throws TalendException {
@@ -542,7 +576,7 @@ public class TalendServiceImpl implements ITalendService {
 					String xmls = document.getRootElement().asXML();
 					String primaryKey = "";
 					try {
-						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls);
+						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls, applyDate.getSys_code());
 					} catch (TalendException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -590,7 +624,7 @@ public class TalendServiceImpl implements ITalendService {
 					primaryKey = talendDeleteWS(inType, model, cluster, xmls);
 					temp.setMsg("调用成功,删除的主键为" + primaryKey);
 				} else {
-					primaryKey = talendSaveOrUpdateWS(inType, model, cluster, xmls);
+					primaryKey = talendSaveOrUpdateWS(inType, model, cluster, xmls, applyDate.getSys_code());
 					temp.setMsg("调用成功,主键为" + primaryKey);
 				}
 			} catch (TalendException e) {

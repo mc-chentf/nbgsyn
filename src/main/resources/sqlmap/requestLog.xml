@@ -19,4 +19,37 @@
 		   SELECT request_log_seq.CURRVAL AS ID FROM DUAL
 		</selectKey>
 	</insert>
+	
+	<select id="findNeedReSendLogByCount" parameterClass="java.util.HashMap" resultClass="requestLog">
+		SELECT A.*, ROWNUM RN
+		  FROM (select x_id            as id,
+		               x_session_id    as sessionId,
+		               x_action        as action,
+		               x_type          as type,
+		               x_entity        as entity,
+		               x_max_resend    as maxResend,
+		               x_now_resend    as nowResend,
+		               x_create_time   as createTime,
+		               x_modify_time   as modifyTime,
+		               x_request_data  as requestData,
+		               x_response_data as responseData,
+		               x_username      as userName,
+		               x_method        as method,
+		               x_is_success    as isSuccess
+		          from map_request_log t
+		         where x_is_success = 'N'
+		           and x_max_resend > x_now_resend
+		           and #now# > x_modify_time
+		         order by x_id) A
+		 WHERE #count# >= ROWNUM
+	</select>
+	
+	<update id="modifyRequestLog" parameterClass="requestLog">
+		update map_request_log
+			set	x_is_success = #isSuccess#,
+				x_modify_time = #modifyTime#,
+				x_response_data = #responseData#,
+				x_now_resend = #nowResend#
+			where x_id = #id#
+	</update>
 </sqlMap>

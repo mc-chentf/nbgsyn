@@ -1,7 +1,8 @@
 package com.hzmc.nbgsyn.service;
 
-import com.hzmc.nbgsyn.persistence.ApplyDate;
-import com.hzmc.nbgsyn.persistence.ResultBean;
+import java.util.Date;
+
+import com.hzmc.nbgsyn.pojo.IncMdDataList;
 
 /**
  * 下发服务
@@ -10,10 +11,18 @@ import com.hzmc.nbgsyn.persistence.ResultBean;
  */
 public interface ISendService {
 
-	public ResultBean sendSevice(ApplyDate applyDate, String uuid);
-
 	/**
 	 * 定时下发的任务
 	 */
 	public void sendSeviceQuartzJob();
+
+	/**
+	 * 定时下发没有发送成功的任务
+	 */
+	public void reSendSeviceQuartzJob();
+
+	/*
+	 * 下发数据
+	 */
+	public void sendData(IncMdDataList incMdDataList, Date now);
 }

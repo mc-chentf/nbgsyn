@@ -27,9 +27,11 @@ public class MdmSendServiceImpl implements IMdmSendService {
 	@Autowired
 	private IUserManager userManager;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private ISendService sendService;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private IRequestLogDao requestLogDao;
 
@@ -93,12 +95,12 @@ public class MdmSendServiceImpl implements IMdmSendService {
 		UUID uuid = UUID.randomUUID();
 
 		// 下发
-		resultBean = sendService.sendSevice(applyDate, uuid.toString());
+//		resultBean = sendService.sendSevice(applyDate, uuid.toString());
 
 		resultBean.getResult().put("reqId", uuid.toString());
 		
 		applyDate.setUsername(username);
-		requestLogDao.saveRequestLog(applyDate, resultBean, "sendDateDown");
+//		requestLogDao.saveRequestLog(applyDate, resultBean, "sendDateDown");
 
 		logger.info("下发:--------------" + JSONObject.fromObject(resultBean).toString());
 		return JSONObject.fromObject(resultBean).toString();

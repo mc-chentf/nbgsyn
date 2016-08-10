@@ -15,23 +15,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
 import com.hzmc.nbgsyn.pojo.EntityView;
+import com.hzmc.nbgsyn.service.ISendService;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class jdbcTest {
+public class JdbcTest {
 
 	public static void main(String[] args) {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		jdbcTest jdbcTest = new jdbcTest();
+		 ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+		 ISendService sendService = (ISendService) applicationContext.getBean("sendServiceImpl");
+		 sendService.reSendSeviceQuartzJob();
 		// jdbcTest.methodOne();
-		try {
-			jdbcTest.method2(applicationContext);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// jdbcTest.method2(applicationContext);
+//		JdbcTest jdbcTest = new JdbcTest();
+//		jdbcTest.method3();
 	}
 
 	public void methodOne() {
@@ -89,9 +88,9 @@ public class jdbcTest {
 		// String tableName = "MD_COMPANY_FORWARDER";
 		// String tableName = "MD_COMPANY_CTNOWNER";
 		// String tableName = "LD_LOCATION_PORT";
-//		String tableName = "LD_CTN_TYPE";
-//		String tableName = "LD_CTN_SIZETYPE";
-//		String tableName = "LD_COMPANY_CTNOWNER";
+		// String tableName = "LD_CTN_TYPE";
+		// String tableName = "LD_CTN_SIZETYPE";
+		// String tableName = "LD_COMPANY_CTNOWNER";
 		String tableName = "LD_CTN_SIZE";
 
 		HashSet<String> removeCol = new HashSet<String>();
@@ -182,6 +181,24 @@ public class jdbcTest {
 		fja.clear();
 		fja.add(applyDate);
 		System.out.println(fja);
+	}
+
+	public void method3() {
+		String str = "{\"action\":\"TRANSFOR\",\"entity\":\"MD_TRANSPORT_VESSEL\",\"model\":\"MDM_NBG\",\"password\":\"12345\",\"type\":\"U\",\"username\":\"m'dm\"}";
+
+		JSONObject jo = JSONObject.fromObject(str);
+		StringBuffer sb = new StringBuffer();
+		sb.append("(");
+		Iterator<String> iterator = jo.keySet().iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			String value = jo.getString(key);
+			value = value.replace("'", "''");
+			sb.append("'" + value + "'");
+			sb.append(",");
+			System.out.println(jo.getString(key));
+		}
+		System.out.println(sb.toString());
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.business.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hzmc.nbgsyn.pojo.IncMdDataList;
@@ -16,5 +17,8 @@ public interface IIncMdDataListDao {
 
 	// 查找
 	public List<IncMdDataList> findIncMdDataListsByCondition(IncMdDataList incMdDataList);
+
+	// 查找
+	public List<IncMdDataList> findIncMdDataListsByDateAndCountAndType(Date date, Integer count, String type);
 
 }

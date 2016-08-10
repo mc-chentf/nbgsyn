@@ -8,4 +8,5 @@
 	<sqlMap resource="sqlmap/mapBase.xml" />
 	<sqlMap resource="sqlmap/requestLog.xml" />
 	<sqlMap resource="sqlmap/serviceUser.xml" />
+	<sqlMap resource="sqlmap/incMdDataList.xml" />
 </sqlMapConfig>  

@@ -30,8 +30,8 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<bean id="mdmOutService" class="com.hzmc.nbgsyn.webservice.impl.MdmOutServiceImpl" />
-	<jaxws:endpoint id="MdmOutService" address="/MDMOUTSERVICE" implementor="#mdmOutService" />
+	<bean id="mdmOutServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmOutServiceImpl" />
+	<jaxws:endpoint id="mdmOutService" address="/MDMOUTSERVICE" implementor="#mdmOutServiceImpl" />
 
 	<bean id="userServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmSendServiceImpl" />
 	<jaxrs:server id="mdmSendService" address="/mdmSendService">
@@ -77,27 +77,49 @@
 		<aop:advisor pointcut-ref="txServiceMethod" advice-ref="txAdvice" />
 	</aop:config>
 
-	<!-- 定义目标bean和bean中的方法 -->
+	<!-- 定义目标bean和bean中的方法 下发 -->
 	<bean id="sendServiceQuartzJob" class="com.hzmc.nbgsyn.quartz.SendServiceQuartzJob" />
 
+	<!-- 下发job -->
 	<bean id="sendServiceQuartzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="sendServiceQuartzJob" />
 		</property>
-		<property name="targetMethod">  
+		<property name="targetMethod">
 			<value>execute</value>
 		</property>
 	</bean>
 
-	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<!-- 每2分钟调度一次 -->
+	<bean id="sendCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="sendServiceQuartzJobMethod"></property>
-		<property name="cronExpression" value="0/5 * 1 * * ?"></property>
+		<property name="cronExpression" value="0 0/2 * * * ?"></property>
 	</bean>
 
-	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<!-- 定义目标bean和bean中的方法 重发 -->
+	<bean id="reSendServiceQuartzJob" class="com.hzmc.nbgsyn.quartz.ReSendServiceQuartzJob" />
+
+	<!-- 重发job -->
+	<bean id="reSendServiceQuartzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reSendServiceQuartzJob" />
+		</property>
+		<property name="targetMethod">
+			<value>execute</value>
+		</property>
+	</bean>
+
+	<!-- 每2分钟调度一次 重发 每一分钟  0 0/1 * * * ?    ---   0 0 0/1 * * ?-->
+	<bean id="reSendCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="reSendServiceQuartzJobMethod"></property>
+		<property name="cronExpression" value="0 0 0/1 * * ?"></property>
+	</bean>
+
+	<bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="CronTriggerBean" />
+				<ref bean="sendCronTriggerBean" />
+				<ref bean="reSendCronTriggerBean" />
 			</list>
 		</property>
 	</bean>

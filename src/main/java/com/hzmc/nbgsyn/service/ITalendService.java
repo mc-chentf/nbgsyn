@@ -4,12 +4,13 @@ import com.hzmc.nbgsyn.exception.TalendException;
 import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.pojo.EntityView;
+import com.mchz.nbg.talendservice.WSItem;
 
 import net.sf.json.JSONArray;
 
 public interface ITalendService {
 
-	public String talendSaveOrUpdateWS(String type, String model, String cluster, String xmls) throws TalendException;
+	public String talendSaveOrUpdateWS(String type, String model, String cluster, String xmls, String source) throws TalendException;
 
 	/**
 	 * 保存数据
@@ -51,5 +52,15 @@ public interface ITalendService {
 	 * @throws TalendException
 	 */
 	public void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException;
+
+	/**
+	 * 
+	 * @param model
+	 * @param entityName
+	 * @param pkvalue
+	 * @return
+	 * @throws TalendException
+	 */
+	public WSItem getItemInfoInTalend(String model, String entityName, String pkvalue) throws TalendException;
 
 }
