@@ -19,7 +19,6 @@ import com.mchz.nbg.talendservice.WSWhereOr;
 public class TalendWsSelect {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		TalendWsSelect.method1();
 	}
 

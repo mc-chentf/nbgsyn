@@ -12,7 +12,6 @@ import com.mchz.nbg.talendservice.WSPutItemWithReport;
 public class TalendWs {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		TalendWs.method1();
 	}
 
@@ -31,14 +30,14 @@ public class TalendWs {
 			WSPutItem item = new WSPutItem();
 			WSDataModelPK dp = new WSDataModelPK();
 			WSDataClusterPK dc = new WSDataClusterPK();
-			dc.setPk("MDM_NBG");
-			dp.setPk("MDM_NBG");
+			dc.setPk("school");
+			dp.setPk("school");
 			item.setWsDataModelPK(dp);
 			item.setWsDataClusterPK(dc);
 			item.setIsUpdate(false);
 			// item.setXmlString("<RD_COUNTRY><RD_COUNTRYId>66</RD_COUNTRYId><COUNTRY_CODE>25</COUNTRY_CODE></RD_COUNTRY>");
 			item.setXmlString(
-					"<RD_NATIONALITY><NATIONALITY_ACTIVE_FLAG>Y</NATIONALITY_ACTIVE_FLAG><NATIONALITY_CNAME>中国</NATIONALITY_CNAME><NATIONALITY_CODE>CNH</NATIONALITY_CODE><NATIONALITY_ENAME>china</NATIONALITY_ENAME></RD_NATIONALITY>");
+					"<student><studentId>112</studentId><dt>2012-01-01T13:13:13</dt></student>");
 
 			// WSPutItem item1 = new WSPutItem();
 			// item1.setWsDataModelPK(dp);

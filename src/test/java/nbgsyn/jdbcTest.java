@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
+import com.hzmc.nbgsyn.business.dao.IIncMdDataListDao;
 import com.hzmc.nbgsyn.pojo.EntityView;
 import com.hzmc.nbgsyn.service.ISendService;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -24,13 +26,17 @@ import net.sf.json.JSONObject;
 public class JdbcTest {
 
 	public static void main(String[] args) {
-		 ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		 ISendService sendService = (ISendService) applicationContext.getBean("sendServiceImpl");
-		 sendService.reSendSeviceQuartzJob();
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+		IIncMdDataListDao incMdDataListDao = (IIncMdDataListDao) applicationContext.getBean("incMdDataListDaoImpl");
+
+		List res = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(new Date(), 10, "C");
+		System.out.println(res.size());
+		// ISendService sendService = (ISendService) applicationContext.getBean("sendServiceImpl");
+		// sendService.reSendSeviceQuartzJob();
 		// jdbcTest.methodOne();
 		// jdbcTest.method2(applicationContext);
-//		JdbcTest jdbcTest = new JdbcTest();
-//		jdbcTest.method3();
+		// JdbcTest jdbcTest = new JdbcTest();
+		// jdbcTest.method3();
 	}
 
 	public void methodOne() {
@@ -200,5 +206,5 @@ public class JdbcTest {
 		}
 		System.out.println(sb.toString());
 	}
-
+	
 }

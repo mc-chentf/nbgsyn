@@ -10,7 +10,6 @@ public class ServiceUserDaoImpl extends BaseDao implements IServiceUserDao {
 
 	@Override
 	public ServiceUser findServiceUserByCondition(ServiceUser serviceUser) {
-		// TODO Auto-generated method stub
 		return (ServiceUser) this.getSqlMapClientTemplate().queryForObject("findServiceUserByCondition", serviceUser);
 	}
 

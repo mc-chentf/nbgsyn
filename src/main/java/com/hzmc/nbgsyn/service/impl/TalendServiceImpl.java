@@ -180,7 +180,6 @@ public class TalendServiceImpl implements ITalendService {
 		try {
 			res = port.getItem(wsGetItem);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			// 扔出异常
 			log.error(e);
@@ -214,7 +213,6 @@ public class TalendServiceImpl implements ITalendService {
 		try {
 			res = port.getItems(wsGetItems).getStrings();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			// 扔出异常
 			log.error(e);
@@ -224,8 +222,7 @@ public class TalendServiceImpl implements ITalendService {
 		return res;
 	}
 
-	private String talendDeleteWS(String inType, String model, String cluster, String xmls) throws TalendException {
-		// TODO Auto-generated method stub
+	private String talendDeleteWS(String inType, String model, String cluster, String xmls, String sysCode) throws TalendException {
 		String rtnMessage = "";
 		try {
 			Document document = DocumentHelper.parseText(xmls);
@@ -251,7 +248,7 @@ public class TalendServiceImpl implements ITalendService {
 			wsDeleteItem.setWsItemPK(wsItemPK);
 			wsDeleteItem.setInvokeBeforeDeleting(true);
 			wsDeleteItem.setOverride(true);
-			wsDeleteItem.setSource("NBGSYN");
+			wsDeleteItem.setSource(sysCode);
 			wsDeleteItem.setWithReport(true);
 
 			rtnMessage = port.deleteItem(wsDeleteItem).getIds().toString();
@@ -266,25 +263,40 @@ public class TalendServiceImpl implements ITalendService {
 
 	@Override
 	public ResultBean saveApplyDate(ApplyDate applyDate) {
-		// TODO Auto-generated method stub
-		return toTalend(applyDate, "C");
+		// 判断是否存在
+
+		// 存在则返回
+		ResultBean res = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
+		// String entity = applyDate.getEntity();
+		// EntityView entityView = entityViewDao.findEntityViewByEntityName(entity);
+		// if (entityView == null) {
+		// res.setMsgId(MsgEnum.ENTITYKEY_NOTFOUND.getMsgId());
+		// res.setMsgDesc(MsgEnum.ENTITYKEY_NOTFOUND.getMsgDesc() + ":" + entity);
+		// return res;
+		// }
+
+		// this.getItemInfoInTalend(Constant.MODEL, applyDate.getModel(), pkvalue);
+
+		res = toTalend(applyDate, "C");
+		return res;
 	}
 
 	@Override
 	public ResultBean removeApplyDate(ApplyDate applyDate) {
-		// TODO Auto-generated method stub
 		return toTalend(applyDate, "D");
 	}
 
 	@Override
 	public ResultBean updateApplyDate(ApplyDate applyDate) {
-		// TODO Auto-generated method stub
+		// 判断是否存在
+
+		// 不存在则返回
+
 		return toTalend(applyDate, "U");
 	}
 
 	@Override
 	public ResultBean findApplyDate(ApplyDate applyDate) {
-		// TODO Auto-generated method stub
 		ResultBean res = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
 		String model = applyDate.getModel();
 		String entityName = applyDate.getEntity();
@@ -311,12 +323,11 @@ public class TalendServiceImpl implements ITalendService {
 		try {
 			date = this.getItemsInfoInTalend(model, entityName, limitStart, limit);
 		} catch (TalendException e) {
-			// TODO Auto-generated catch block
 			// 处理异常
 			e.printStackTrace();
 			String msg = e.getMessage();
-			if (msg.length() > 100) {
-				msg = msg.substring(0, 100);
+			if (msg.length() > 300) {
+				msg = msg.substring(0, 300);
 			}
 			res.setMsgId(MsgEnum.READDAT_FAIL.getMsgId());
 			res.setMsgDesc(MsgEnum.READDAT_FAIL.getMsgDesc() + ",详情:" + msg);
@@ -360,12 +371,11 @@ public class TalendServiceImpl implements ITalendService {
 			try {
 				this.getRalteInfoDateList(dataList, entityView, model);
 			} catch (TalendException e) {
-				// TODO Auto-generated catch block
 				// 处理异常
 				e.printStackTrace();
 				String msg = e.getMessage();
-				if (msg.length() > 100) {
-					msg = msg.substring(0, 100);
+				if (msg.length() > 300) {
+					msg = msg.substring(0, 300);
 				}
 				res.setMsgId(MsgEnum.READDAT_FAIL.getMsgId());
 				res.setMsgDesc(MsgEnum.READDAT_FAIL.getMsgDesc() + ",详情:" + msg);
@@ -384,7 +394,6 @@ public class TalendServiceImpl implements ITalendService {
 	}
 
 	public void getRalteInfoDateList(JSONArray dataList, EntityView entityView, String model) throws TalendException {
-		// TODO Auto-generated method stub
 		List<String> pks = new ArrayList<String>();
 
 		// 循环ja
@@ -490,7 +499,6 @@ public class TalendServiceImpl implements ITalendService {
 		try {
 			res = port.getItems(wsGetItems).getStrings();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			// 扔出异常
 			log.error(e);
@@ -544,6 +552,7 @@ public class TalendServiceImpl implements ITalendService {
 							removeKey.add(key);
 					}
 				}
+
 				// 遍历removeKey 移除dataInfo中的属性
 				for (String tempKey : removeKey) {
 					dataInfo.remove(tempKey);
@@ -576,13 +585,12 @@ public class TalendServiceImpl implements ITalendService {
 					String xmls = document.getRootElement().asXML();
 					String primaryKey = "";
 					try {
-						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls, applyDate.getSys_code());
+						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls, applyDate.getUsername());
 					} catch (TalendException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						String msg = e.getMessage();
-						if (msg.length() > 100) {
-							msg = msg.substring(0, 100);
+						if (msg.length() > 300) {
+							msg = msg.substring(0, 300);
 						}
 						temp.setMsg("调用talend失败,详情:" + msg);
 						temp.setSuccess("fail");
@@ -616,22 +624,24 @@ public class TalendServiceImpl implements ITalendService {
 				String key = iterator.next().toString();
 				root.addElement(key).addText(dataInfo.getString(key));
 			}
+
 			String xmls = document.getRootElement().asXML();
+
 			try {
 				// 调用toTalendDetail
 				String primaryKey = "";
 				if (inType.equals("D")) {
-					primaryKey = talendDeleteWS(inType, model, cluster, xmls);
+					primaryKey = talendDeleteWS(inType, model, cluster, xmls, applyDate.getUsername());
 					temp.setMsg("调用成功,删除的主键为" + primaryKey);
 				} else {
-					primaryKey = talendSaveOrUpdateWS(inType, model, cluster, xmls, applyDate.getSys_code());
+					primaryKey = talendSaveOrUpdateWS(inType, model, cluster, xmls, applyDate.getUsername());
 					temp.setMsg("调用成功,主键为" + primaryKey);
 				}
 			} catch (TalendException e) {
 				// 处理异常 截取错误
 				String msg = e.getMessage();
-				if (msg.length() > 100) {
-					msg = msg.substring(0, 100);
+				if (msg.length() > 300) {
+					msg = msg.substring(0, 300);
 				}
 				temp.setMsg("调用talend失败,详情:" + msg);
 				temp.setSuccess("fail");
@@ -639,6 +649,7 @@ public class TalendServiceImpl implements ITalendService {
 
 			resultInfos.add(temp);
 		}
+
 		res.getResult().put("resultInfos", resultInfos);
 		MsgEnum resEnum = generateMsgEnumByResultInfos(resultInfos);
 		res.setMsgId(resEnum.getMsgId());
@@ -653,7 +664,6 @@ public class TalendServiceImpl implements ITalendService {
 	 * @return
 	 */
 	private MsgEnum generateMsgEnumByResultInfos(List<ResultInfo> resultInfos) {
-		// TODO Auto-generated method stub
 		HashSet<String> resultSet = new HashSet<String>();
 		for (ResultInfo resultInfo : resultInfos) {
 			resultSet.add(resultInfo.getSuccess());

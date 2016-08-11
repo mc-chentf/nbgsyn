@@ -25,7 +25,6 @@ public enum MsgEnum {
 	private String msgDesc;
 
 	private MsgEnum(String msgId, String msgDesc) {
-		// TODO Auto-generated constructor stub
 		this.msgId = msgId;
 		this.msgDesc = msgDesc;
 	}

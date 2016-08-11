@@ -17,7 +17,6 @@ public class EntityKeyProperties {
 	private static EntityKeyProperties properties;
 
 	private EntityKeyProperties() {
-		// TODO Auto-generated constructor stub
 		try {
 			prop.load(this.getClass().getResourceAsStream("/entityKey.properties"));
 		} catch (FileNotFoundException e) {

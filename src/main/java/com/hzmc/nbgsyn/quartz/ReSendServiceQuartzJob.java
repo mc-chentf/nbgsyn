@@ -9,7 +9,6 @@ public class ReSendServiceQuartzJob {
 	private ISendService sendService;
 
 	public ReSendServiceQuartzJob() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute() {

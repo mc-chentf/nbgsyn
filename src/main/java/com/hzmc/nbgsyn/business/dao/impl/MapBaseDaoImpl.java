@@ -16,7 +16,6 @@ public class MapBaseDaoImpl extends BaseDao implements IMapBaseDao {
 
 	@Override
 	public Integer getMaxIdByCondition(HashMap<String, Object> par) {
-		// TODO Auto-generated method stub
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("getMaxIdByCondition", par);
 	}
 

@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.quartz;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hzmc.nbgsyn.service.ISendService;
@@ -12,15 +13,21 @@ import com.hzmc.nbgsyn.service.ISendService;
  */
 public class SendServiceQuartzJob {
 
+	private Logger logger = Logger.getLogger(SendServiceQuartzJob.class);
+
 	@Autowired
 	private ISendService sendService;
 
 	public SendServiceQuartzJob() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute() {
 		// 运行JOB的方法
-		sendService.sendSeviceQuartzJob();
+		try {
+			sendService.sendSeviceQuartzJob();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			logger.error(e);
+		}
 	}
 }

@@ -6,15 +6,15 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.log4j.Logger;
 
 import com.hzmc.nbgsyn.business.queue.DataQueue;
+import com.hzmc.nbgsyn.context.SpringApplicationContextHolder;
 import com.hzmc.nbgsyn.pojo.IncMdDataList;
 import com.hzmc.nbgsyn.service.ISendService;
-import com.hzmc.nbgsyn.service.impl.SendServiceImpl;
 
 public class SendData implements Runnable {
 
 	private Logger logger = Logger.getLogger(SendData.class);
 
-	private ISendService sendService = new SendServiceImpl();
+	private ISendService sendService = (ISendService) SpringApplicationContextHolder.getSpringBean("sendServiceImpl");
 
 	private CountDownLatch threadsSignal;
 
@@ -24,7 +24,6 @@ public class SendData implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		// 从queue 拿出一个 下发
 		IncMdDataList incMdDataList = DataQueue.getIncMdDataLists().poll();
 		while (incMdDataList != null) {

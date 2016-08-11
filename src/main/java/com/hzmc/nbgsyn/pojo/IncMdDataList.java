@@ -15,7 +15,6 @@ public class IncMdDataList implements Serializable {
 	private static final long serialVersionUID = 2479709577329805654L;
 
 	public IncMdDataList() {
-		// TODO Auto-generated constructor stub
 	}
 
 	private Integer id;
@@ -35,6 +34,10 @@ public class IncMdDataList implements Serializable {
 	private String type;
 
 	private Date modifyTime;
+
+	private String xfrom;
+
+	private String sendThread;
 
 	/**
 	 * @return the id
@@ -169,6 +172,36 @@ public class IncMdDataList implements Serializable {
 	 */
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	/**
+	 * @return the xfrom
+	 */
+	public String getXfrom() {
+		return xfrom;
+	}
+
+	/**
+	 * @param xfrom
+	 *            the xfrom to set
+	 */
+	public void setXfrom(String xfrom) {
+		this.xfrom = xfrom;
+	}
+
+	/**
+	 * @return the sendThread
+	 */
+	public String getSendThread() {
+		return sendThread;
+	}
+
+	/**
+	 * @param sendThread
+	 *            the sendThread to set
+	 */
+	public void setSendThread(String sendThread) {
+		this.sendThread = sendThread;
 	}
 
 }

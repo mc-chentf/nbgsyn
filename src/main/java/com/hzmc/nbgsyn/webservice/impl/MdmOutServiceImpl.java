@@ -52,7 +52,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 
 	@Override
 	public String publishService(String applyDataStr) {
-		// TODO Auto-generated method stub
 		// System.out.println("now in webservice");
 		ResultBean res = this.service(applyDataStr, "publishService");
 		return JSONObject.fromObject(res).toString();
@@ -60,7 +59,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 
 	@Override
 	public String registerService(String applyDataStr) {
-		// TODO Auto-generated method stub
 		ResultBean res = this.service(applyDataStr, "registerService");
 		return JSONObject.fromObject(res).toString();
 	}
@@ -72,7 +70,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 	 * @return
 	 */
 	private MsgEnum generateMsgEnumByResultInfos(List<ResultInfo> resultInfos) {
-		// TODO Auto-generated method stub
 		HashSet<String> resultSet = new HashSet<String>();
 		for (ResultInfo resultInfo : resultInfos) {
 			resultSet.add(resultInfo.getSuccess());
@@ -101,7 +98,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 			JSONObject applyDateJo = JSONObject.fromObject(applyDateStr);
 			applyDate = (ApplyDate) JSONObject.toBean(applyDateJo, ApplyDate.class);
 		} catch (Exception e) {
-			// TODO: handle exception
 			logger.error(e);
 			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());
@@ -167,7 +163,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 						try {
 							userManager.saveRegisterUserInfo(userInfoBean);
 						} catch (UserInfoException e) {
-							// TODO Auto-generated catch block
 							logger.error(e);
 							temp.setSuccess(this.FAIL);
 							temp.setMsg(e.getMessage());
@@ -182,7 +177,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 						try {
 							userManager.removeUserInfo(userInfoBean);
 						} catch (UserInfoException e) {
-							// TODO Auto-generated catch block
 							logger.error(e);
 							temp.setSuccess(this.FAIL);
 							temp.setMsg(e.getMessage());
@@ -197,7 +191,6 @@ public class MdmOutServiceImpl implements IMdmOutService {
 						try {
 							userManager.modifyUserInfo(userInfoBean);
 						} catch (UserInfoException e) {
-							// TODO Auto-generated catch block
 							logger.error(e);
 							temp.setSuccess(this.FAIL);
 							temp.setMsg(e.getMessage());

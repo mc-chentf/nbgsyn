@@ -13,7 +13,6 @@ public class ResultInfo implements Serializable {
 	private String msg;
 
 	public ResultInfo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ResultInfo(String success, String msg) {

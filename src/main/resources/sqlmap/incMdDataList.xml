@@ -13,16 +13,18 @@
 		               x_send_flag       as sendFlag,
 		               x_send_session_id as sendSessionId,
 		               x_type as type,
-		               x_modify_time as modifyTime
+		               x_modify_time as modifyTime,
+		               x_from as xfrom,
+		               x_send_thread as sendThread
 		          from MAP_INC_MD_DATA_LIST t
 		          where x_send_flag is null and #now# > x_create_time
-		          <isEqual prepend="and" compareValue="C" compareProperty="type">
+		          <isEqual prepend="and" compareValue="C" property="type">
 		          		x_type in ('C','I')
 		          </isEqual>
-		          <isEqual prepend="and" compareValue="D" compareProperty="type">
+		          <isEqual prepend="and" compareValue="D" property="type">
 		          		x_type = 'P'
 		          </isEqual>
-		           <isEqual prepend="and" compareValue="U" compareProperty="type">
+		          <isEqual prepend="and" compareValue="U" property="type">
 		          		x_type = 'U'
 		          </isEqual>
 		          order by x_id) A
@@ -34,7 +36,9 @@
 		set x_modify_time = #modifyTime#,
 			x_send_session_id = #sendSessionId#,
 			x_send_flag = #sendFlag#,
-			x_send_time = #sendTime#
+			x_send_time = #sendTime#,
+			x_type = #type#,
+			x_send_thread = #sendThread#
 		where 
 			x_id = #id#
 	</update>

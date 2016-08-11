@@ -20,7 +20,6 @@ public class ResultBean implements Serializable {
 	private HashMap<String, Object> result = new HashMap<String, Object>();
 
 	public ResultBean() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ResultBean(String msgId, String msgDesc) {

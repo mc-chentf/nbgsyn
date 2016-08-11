@@ -64,7 +64,6 @@ public class UserManagerImpl implements IUserManager {
 
 	@Override
 	public List<UserInfoBean> findUserInfosByCondition(ServiceRegister serviceRegister) {
-		// TODO Auto-generated method stub
 		List<ServiceRegister> serviceRegisters = serviceRegisterDao.findServiceRegistersByCondition(serviceRegister);
 		List<UserInfoBean> userInfoBeans = new ArrayList<UserInfoBean>();
 		if (serviceRegisters == null || serviceRegisters.size() == 0)
@@ -131,7 +130,6 @@ public class UserManagerImpl implements IUserManager {
 	}
 
 	private ServiceRegister convertUserInfoBeanToServiceRegister(UserInfoBean userInfoBean) {
-		// TODO Auto-generated method stub
 		if (userInfoBean == null)
 			return null;
 		Date now = new Date();

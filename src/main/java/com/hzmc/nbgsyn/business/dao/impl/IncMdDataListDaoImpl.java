@@ -21,26 +21,23 @@ import com.hzmc.nbgsyn.pojo.IncMdDataList;
 public class IncMdDataListDaoImpl extends BaseDao implements IIncMdDataListDao {
 
 	public IncMdDataListDaoImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public synchronized void modifyIncMdDataList(IncMdDataList incMdDataList) {
-		incMdDataList.setType(incMdDataList.getType() + "-" + Thread.currentThread().getName());
-		// TODO Auto-generated method stub
+		incMdDataList.setType(incMdDataList.getType());
+		incMdDataList.setSendThread(Thread.currentThread().getName());
 		this.getSqlMapClientTemplate().update("modifyIncMdDataList", incMdDataList);
 	}
 
 	@Override
 	public List<IncMdDataList> findIncMdDataListsByCondition(IncMdDataList incMdDataList) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IncMdDataList> findIncMdDataListsByDateAndCountAndType(Date date, Integer count, String type) {
-		// TODO Auto-generated method stub
 		HashMap<String, Object> par = new HashMap<String, Object>();
 		par.put("now", date);
 		par.put("count", count);

@@ -14,7 +14,7 @@ public interface ISendService {
 	/**
 	 * 定时下发的任务
 	 */
-	public void sendSeviceQuartzJob();
+	public void sendSeviceQuartzJob() throws InterruptedException;
 
 	/**
 	 * 定时下发没有发送成功的任务

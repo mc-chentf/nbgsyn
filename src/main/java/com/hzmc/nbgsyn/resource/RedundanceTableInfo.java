@@ -41,7 +41,6 @@ public class RedundanceTableInfo {
 	}
 
 	private void init() {
-		// TODO Auto-generated constructor stub
 		try {
 			prop.load(this.getClass().getResourceAsStream("/redundance.properties"));
 		} catch (FileNotFoundException e) {

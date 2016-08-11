@@ -6,10 +6,10 @@
 	<insert id="insertServiceRegister" parameterClass="serviceRegister">
 		insert into	MAP_SERVICE_REGISTER(
 			x_id,x_md_code,x_sys_code,x_entity_code,x_service_name,x_to_node,x_username,x_password,
-			x_register_time,x_modify_time,x_talend_timestamp)
+			x_register_time,x_modify_time,x_talend_timestamp,x_active_flag)
 		values(
 			service_register_seq.nextval,#mdCode#,#sysCode#,#entityCode#,#serviceName#,#toNode#,
-			#username#,#password#,#registerTime#,#modifyTime#,0)
+			#username#,#password#,#registerTime#,#modifyTime#,0,'Y')
 		<selectKey resultClass="int" keyProperty="id" >
 		   SELECT service_register_seq.CURRVAL AS ID FROM DUAL
 		</selectKey>
@@ -80,7 +80,8 @@
 		       x_username      as username,
 		       x_password      as password,
 		       x_register_time as registerTime,
-		       x_modify_time   as modifyTime
+		       x_modify_time   as modifyTime,
+		       x_active_flag   as activeFlag
   		from map_service_register
   		<dynamic prepend="where">
   			<isNotEmpty prepend="and" property="sysCode">
@@ -88,6 +89,9 @@
   			</isNotEmpty>
   			<isNotEmpty prepend="and" property="entityCode">
   				x_entity_code = #entityCode#
+  			</isNotEmpty>
+  			<isNotEmpty prepend="and" property="activeFlag">
+  				x_active_flag = #activeFlag#
   			</isNotEmpty>
   		</dynamic>
   		order by x_id

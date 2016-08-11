@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
@@ -24,13 +25,11 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 
 	@Override
 	public void saveRequestLog(RequestLog requestLog) {
-		// TODO Auto-generated method stub
 		this.getSqlMapClientTemplate().insert("insertRequestLog", requestLog);
 	}
 
 	@Override
 	public void saveRequestLog(ApplyDate applyDate, ResultBean resultBean, String method) {
-		// TODO Auto-generated method stub
 		Date now = new Date();
 		RequestLog requestLog = new RequestLog();
 		requestLog.setAction(applyDate.getAction());
@@ -54,13 +53,17 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 
 	@Override
 	public void saveRequestLog(HashMap<String, Object> reqInfo, String resultInfo, String uuid, String method, String isSuccess) {
-		// TODO Auto-generated method stub
 		Date now = new Date();
 		RequestLog requestLog = new RequestLog();
 		requestLog.setAction(reqInfo.get("action").toString());
 		requestLog.setCreateTime(now);
 		requestLog.setEntity(reqInfo.get("entity").toString());
-		requestLog.setMaxResend(0);
+		// 如果失败 则记录需要重新下发三次
+		if (StringUtils.equals("N", isSuccess)) {
+			requestLog.setMaxResend(3);
+		} else {
+			requestLog.setMaxResend(0);
+		}
 		requestLog.setNowResend(0);
 		requestLog.setModifyTime(now);
 		requestLog.setRequestData(JSONObject.fromObject(reqInfo).toString());
@@ -76,7 +79,6 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RequestLog> findNeedReSendLogByCount(Date now, Integer i) {
-		// TODO Auto-generated method stub
 		HashMap<String, Object> par = new HashMap<>();
 		par.put("count", i);
 		par.put("now", now);
@@ -85,7 +87,6 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 
 	@Override
 	public void modifyRequestLog(RequestLog requestLog) {
-		// TODO Auto-generated method stub
 		Date now = new Date();
 		requestLog.setModifyTime(now);
 		this.getSqlMapClientTemplate().update("modifyRequestLog", requestLog);

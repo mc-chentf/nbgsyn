@@ -46,7 +46,6 @@ public class MdmSendServiceImpl implements IMdmSendService {
 	@GET
 	@Path("/")
 	public String sendDateDownGet(@QueryParam("applyData") String applyDateStr) {
-		// TODO Auto-generated method stub
 		String res = sendDateDown(applyDateStr);
 		logger.info(res);
 		return res;
@@ -65,7 +64,6 @@ public class MdmSendServiceImpl implements IMdmSendService {
 			JSONObject applyDateJo = JSONObject.fromObject(applyDateStr);
 			applyDate = (ApplyDate) JSONObject.toBean(applyDateJo, ApplyDate.class);
 		} catch (Exception e) {
-			// TODO: handle exception
 			logger.error(e);
 			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
 			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());

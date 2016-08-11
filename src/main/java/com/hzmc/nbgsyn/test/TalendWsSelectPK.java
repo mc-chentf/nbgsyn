@@ -10,7 +10,6 @@ import com.mchz.nbg.talendservice.WSStringArray;
 public class TalendWsSelectPK {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		TalendWsSelectPK.method1();
 	}
 

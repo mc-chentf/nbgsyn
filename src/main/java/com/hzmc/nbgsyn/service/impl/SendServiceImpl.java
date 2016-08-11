@@ -88,7 +88,6 @@ public class SendServiceImpl implements ISendService {
 	 * @throws Exception
 	 */
 	private String callEDIESBService(String fromNode, String toNode, String esbId, String applyData, String userId, String password) throws Exception {
-		// TODO Auto-generated method stub
 		EDIESBService ediesbService = new EDIESBService(WSDL_LOCATION);
 		EDIESBServicePortType ediesbServicePortType = ediesbService.getEDIESBServicePort();
 		BindingProvider bp = (BindingProvider) ediesbServicePortType;
@@ -97,7 +96,6 @@ public class SendServiceImpl implements ISendService {
 		try {
 			res = ediesbServicePortType.callEDIESBPub(fromNode, toNode, esbId, applyData, userId, password);
 		} catch (Exception e) {
-			// TODO: handle exception
 			logger.error(e);
 			throw e;
 		}
@@ -106,7 +104,7 @@ public class SendServiceImpl implements ISendService {
 	}
 
 	@Override
-	public void sendSeviceQuartzJob() {
+	public void sendSeviceQuartzJob() throws InterruptedException {
 		Date now = new Date();
 
 		int count = 5;
@@ -137,11 +135,11 @@ public class SendServiceImpl implements ISendService {
 			Executor executor = Executors.newFixedThreadPool(threadNum);
 
 			for (int i = 0; i < threadNum; i++) { // 开threadNum个线程
-				SendData sendData = new SendData(threadSignal);
-				Thread temp = new Thread(sendData, "sendData-Thread-" + i);
+				Runnable sendData = new SendData(threadSignal);
 				// 执行
-				executor.execute(temp);
+				executor.execute(sendData);
 			}
+			threadSignal.await();
 		}
 
 		while (true) {
@@ -160,7 +158,6 @@ public class SendServiceImpl implements ISendService {
 	 * @param createIncMdDataLists
 	 */
 	private void sendIncMdDataLists(List<IncMdDataList> incMdDataLists, Date now) {
-		// TODO Auto-generated method stub
 		if (incMdDataLists != null && incMdDataLists.size() != 0) {
 			for (IncMdDataList incMdDataList : incMdDataLists) {
 				this.sendData(incMdDataList, now);
@@ -198,11 +195,13 @@ public class SendServiceImpl implements ISendService {
 		// 生成UUID
 		UUID uuid = UUID.randomUUID();
 
+		incMdDataList.setSendFlag("Y");
+
 		try {
 			// 查找注册表
 			ServiceRegister serviceRegister = new ServiceRegister();
 			serviceRegister.setEntityCode(entityView.getEntityName());
-
+			serviceRegister.setActiveFlag("Y");
 			List<ServiceRegister> serviceRegisterList = serviceRegisterDao.findServiceRegistersByCondition(serviceRegister);
 
 			// 没有下发的目标
@@ -251,7 +250,7 @@ public class SendServiceImpl implements ISendService {
 
 				String fromNode = "MDM";
 				String toNode = temp.getToNode();
-				String esbId = "mdm_subscribe";
+				String esbId = temp.getServiceName();
 				applyDate.setPassword(temp.getPassword());
 				applyDate.setUsername(temp.getUsername());
 				JSONObject jo = JSONObject.fromObject(applyDate);
@@ -281,7 +280,6 @@ public class SendServiceImpl implements ISendService {
 					if (!StringUtils.equals(msgId, MsgEnum.SUCCESS.getMsgId()))
 						isSuccess = "N";
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					isSuccess = "N";
 					e.printStackTrace();
 					// 调用失败 需要记录啥
@@ -292,16 +290,12 @@ public class SendServiceImpl implements ISendService {
 			}
 
 		} catch (TalendException e) {
-			// TODO Auto-generated catch block
 			incMdDataList.setSendFlag("E");
-			incMdDataList.setModifyTime(now);
-			incMdDataListDao.modifyIncMdDataList(incMdDataList);
 			e.printStackTrace();
 			logger.error(e);
 		}
 
 		// 更新掉
-		incMdDataList.setSendFlag("Y");
 		incMdDataList.setModifyTime(new Date());
 		incMdDataList.setSendTime(new Date());
 		incMdDataList.setSendSessionId(uuid.toString());
@@ -310,7 +304,6 @@ public class SendServiceImpl implements ISendService {
 
 	@Override
 	public void reSendSeviceQuartzJob() {
-		// TODO Auto-generated method stub
 		// 查找日志表
 		Date now = new Date();
 		while (true) {
@@ -337,7 +330,6 @@ public class SendServiceImpl implements ISendService {
 					if (!StringUtils.equals(msgId, MsgEnum.SUCCESS.getMsgId()))
 						isSuccess = "N";
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					logger.error("edi-esb调用错误，详情,堆栈信息:" + e);
 					resultStr = "edi-esb调用错误，详情,堆栈信息:" + e;

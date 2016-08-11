@@ -39,6 +39,8 @@ public class ServiceRegister implements Serializable {
 
 	private Date modifyTime;
 
+	private String activeFlag;
+
 	public Integer getId() {
 		return id;
 	}
@@ -119,9 +121,24 @@ public class ServiceRegister implements Serializable {
 		this.modifyTime = modifyTime;
 	}
 
+	/**
+	 * @return the activeFlag
+	 */
+	public String getActiveFlag() {
+		return activeFlag;
+	}
+
+	/**
+	 * @param activeFlag
+	 *            the activeFlag to set
+	 */
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return ToStringBuilder.reflectionToString(this);
 	}
+
 }

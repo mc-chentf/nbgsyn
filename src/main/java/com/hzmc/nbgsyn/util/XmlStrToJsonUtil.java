@@ -6,7 +6,6 @@ import net.sf.json.xml.XMLSerializer;
 public class XmlStrToJsonUtil {
 
 	public XmlStrToJsonUtil() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static JSON xmlStrToJson(String str) {

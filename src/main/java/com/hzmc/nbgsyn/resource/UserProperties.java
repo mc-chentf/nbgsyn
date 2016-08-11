@@ -18,7 +18,6 @@ public class UserProperties {
 	private static UserProperties properties;
 
 	private UserProperties() {
-		// TODO Auto-generated constructor stub
 		try {
 			prop.load(this.getClass().getResourceAsStream("/userInfo.properties"));
 		} catch (FileNotFoundException e) {
