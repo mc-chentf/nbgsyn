@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.business.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,11 +79,21 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<RequestLog> findNeedReSendLogByCount(Date now, Integer i) {
+	public List<RequestLog> findNeedReSendLogByCount(Date now, Integer i, String type) {
 		HashMap<String, Object> par = new HashMap<>();
 		par.put("count", i);
 		par.put("now", now);
-		return this.getSqlMapClientTemplate().queryForList("findNeedReSendLogByCount", par);
+		par.put("type", type);
+		List<RequestLog> res = this.getSqlMapClientTemplate().queryForList("findNeedReSendLogByCount", par);
+		if (res != null && res.size() != 0) {
+			// 取出ids
+			List<Integer> ids = new ArrayList<Integer>();
+			for (RequestLog temp : res) {
+				ids.add(temp.getId());
+			}
+			this.getSqlMapClientTemplate().update("modifyNeedReSendLogStatusPrepareByIds", ids);
+		}
+		return res;
 	}
 
 	@Override
@@ -90,6 +101,17 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 		Date now = new Date();
 		requestLog.setModifyTime(now);
 		this.getSqlMapClientTemplate().update("modifyRequestLog", requestLog);
+	}
+
+	@Override
+	public int modifyRequestLogMaxResendAdd(Date start, Date end) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> par = new HashMap<String, Object>();
+		par.put("start", start);
+		par.put("end", end);
+		par.put("isSuccess", "N");
+		par.put("method", "sendSevice");
+		return this.getSqlMapClientTemplate().update("modifyRequestLogMaxResendAdd", par);
 	}
 
 }

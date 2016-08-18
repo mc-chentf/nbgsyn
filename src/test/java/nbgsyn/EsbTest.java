@@ -6,12 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
 
 import javax.xml.ws.BindingProvider;
 
@@ -46,7 +42,7 @@ public class EsbTest {
 		SqlMapClient client = (SqlMapClient) applicationContext.getBean("sqlMapClient");
 		Connection connection = client.getDataSource().getConnection();
 		Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery("select * from jointest where x_id >= 25 and x_id <= 28 order by x_id");
+		ResultSet rs = statement.executeQuery("select * from JOINTEST t  where x_id >= 49 and x_id <= 52 order by x_id");
 		HashMap<String, String> data = new HashMap<String, String>();
 		while (rs.next()) {
 			String key = rs.getString(1);

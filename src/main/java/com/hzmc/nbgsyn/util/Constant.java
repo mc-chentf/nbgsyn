@@ -12,4 +12,6 @@ public class Constant {
 	public static final String EDI_S_URL = "http://169.169.19.33:8888/com.nbport.ediesb.service.EDIESBService";
 
 	public static final String MODEL = "MDM_NBG";
+
+	public static final String E_NOTATION_PATTERN = "[+-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[0-9]{0,2})?";
 }

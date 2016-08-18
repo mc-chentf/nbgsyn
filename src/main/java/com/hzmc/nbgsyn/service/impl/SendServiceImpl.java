@@ -1,14 +1,18 @@
 package com.hzmc.nbgsyn.service.impl;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.ws.BindingProvider;
 
@@ -22,6 +26,7 @@ import com.hzmc.nbgsyn.business.dao.IIncMdDataListDao;
 import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
 import com.hzmc.nbgsyn.business.dao.IServiceRegisterDao;
 import com.hzmc.nbgsyn.business.queue.DataQueue;
+import com.hzmc.nbgsyn.business.runnable.ReSendLog;
 import com.hzmc.nbgsyn.business.runnable.SendData;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.exception.TalendException;
@@ -227,6 +232,25 @@ public class SendServiceImpl implements ISendService {
 				itemJson.remove("ERROR_FLAG");
 				itemJson.remove("INSERT_TIME");
 				itemJson.remove("UPDATE_TIME");
+				Pattern r = Pattern.compile(Constant.E_NOTATION_PATTERN);
+				// 去掉科学计数法
+				@SuppressWarnings("unchecked")
+				Iterator<String> iterator = itemJson.keySet().iterator();
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					String value = itemJson.getString(key);
+					Matcher m = r.matcher(value);
+					if (m.matches()) {
+						BigDecimal bigDecimal = new BigDecimal(value);
+						itemJson.put(key, bigDecimal.toString());
+					}
+					// 外键[]去除
+					if (itemJson.get(key) instanceof JSONArray) {
+						JSONArray ja = (JSONArray) itemJson.get(key);
+						itemJson.put(key, ja.getString(0));
+					}
+				}
+
 				dataInfos.add(itemJson);
 				// 假如有外键
 				if (StringUtils.equals("Y", entityView.getIsRalate())) {
@@ -303,46 +327,97 @@ public class SendServiceImpl implements ISendService {
 	}
 
 	@Override
-	public void reSendSeviceQuartzJob() {
+	public void reSendSeviceQuartzJob() throws InterruptedException {
 		// 查找日志表
 		Date now = new Date();
+		int count = 10;
+
+		// 先 补发 新增的
 		while (true) {
-			List<RequestLog> requestLogs = requestLogDao.findNeedReSendLogByCount(now, 10);
+			List<RequestLog> requestLogs = requestLogDao.findNeedReSendLogByCount(now, count, "C");
 			if (requestLogs == null || requestLogs.size() == 0) {
 				logger.info("处理完毕" + System.currentTimeMillis());
 				break;
 			}
-			// 重新发送数据
-			for (RequestLog requestLog : requestLogs) {
-				JSONObject jo = JSONObject.fromObject(requestLog.getRequestData());
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> reqInfo = (HashMap<String, String>) JSONObject.toBean(jo, HashMap.class);
-				String resultStr = "";
-				String fromNode = reqInfo.get("fromNode");
-				String toNode = reqInfo.get("toNode");
-				String esbId = reqInfo.get("esbId");
-				String applyData = reqInfo.get("applyDateStr");
-				String isSuccess = "Y";
-				try {
-					resultStr = callEDIESBService(fromNode, toNode, esbId, applyData, "", "");
-					JSONObject resJo = JSONObject.fromObject(resultStr);
-					String msgId = resJo.getString("msgId");
-					if (!StringUtils.equals(msgId, MsgEnum.SUCCESS.getMsgId()))
-						isSuccess = "N";
-				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error("edi-esb调用错误，详情,堆栈信息:" + e);
-					resultStr = "edi-esb调用错误，详情,堆栈信息:" + e;
-					isSuccess = "N";
-				}
-				requestLog.setIsSuccess(isSuccess);
-				int nowResend = requestLog.getNowResend() + 1;
-				requestLog.setNowResend(nowResend);
-				requestLog.setResponseData(requestLog.getResponseData() + "--------" + nowResend + "--------" + resultStr);
-				requestLogDao.modifyRequestLog(requestLog);
+			this.reSendRequestLogs(requestLogs);
+		}
+
+		// 再 补发 修改的
+		while (true) {
+			int threadNum = 5;
+			int updateCount = count * threadNum;
+
+			List<RequestLog> requestLogs = requestLogDao.findNeedReSendLogByCount(now, updateCount, "U");
+			if (requestLogs == null || requestLogs.size() == 0) {
+				logger.info("处理完毕" + System.currentTimeMillis());
+				break;
 			}
+
+			DataQueue.getRequestLogs().addAll(requestLogs);
+
+			// 初始化countDown
+			CountDownLatch threadSignal = new CountDownLatch(threadNum);
+
+			// 创建固定长度的线程池
+			Executor executor = Executors.newFixedThreadPool(threadNum);
+
+			for (int i = 0; i < threadNum; i++) { // 开threadNum个线程
+				Runnable sendData = new ReSendLog(threadSignal);
+				// 执行
+				executor.execute(sendData);
+			}
+
+			threadSignal.await();
+		}
+
+		// 再 补发 删除的
+		while (true) {
+			List<RequestLog> requestLogs = requestLogDao.findNeedReSendLogByCount(now, count, "D");
+			if (requestLogs == null || requestLogs.size() == 0) {
+				logger.info("处理完毕" + System.currentTimeMillis());
+				break;
+			}
+			this.reSendRequestLogs(requestLogs);
 		}
 
 	}
 
+	private void reSendRequestLogs(List<RequestLog> requestLogs) {
+		// TODO Auto-generated method stub
+		// 重新发送数据
+		for (RequestLog requestLog : requestLogs) {
+			reSendRequestLog(requestLog);
+		}
+	}
+
+	@Override
+	public void reSendRequestLog(RequestLog requestLog) {
+		JSONObject jo = JSONObject.fromObject(requestLog.getRequestData());
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> reqInfo = (HashMap<String, String>) JSONObject.toBean(jo, HashMap.class);
+		String resultStr = "";
+		String fromNode = reqInfo.get("fromNode");
+		String toNode = reqInfo.get("toNode");
+		String esbId = reqInfo.get("esbId");
+		String applyData = reqInfo.get("applyDateStr");
+		String isSuccess = "Y";
+		try {
+			resultStr = callEDIESBService(fromNode, toNode, esbId, applyData, "", "");
+			JSONObject resJo = JSONObject.fromObject(resultStr);
+			String msgId = resJo.getString("msgId");
+			if (!StringUtils.equals(msgId, MsgEnum.SUCCESS.getMsgId()))
+				isSuccess = "N";
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("edi-esb调用错误，详情,堆栈信息:" + e);
+			resultStr = "edi-esb调用错误，详情,堆栈信息:" + e;
+			isSuccess = "N";
+		}
+		resultStr = Thread.currentThread().getName() + "----" + resultStr;
+		requestLog.setIsSuccess(isSuccess);
+		int nowResend = requestLog.getNowResend() + 1;
+		requestLog.setNowResend(nowResend);
+		requestLog.setResponseData(requestLog.getResponseData() + "--------" + nowResend + "--------" + resultStr);
+		requestLogDao.modifyRequestLog(requestLog);
+	}
 }

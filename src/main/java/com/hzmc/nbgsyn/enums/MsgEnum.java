@@ -19,7 +19,8 @@ public enum MsgEnum {
 	READDAT_FAIL("206", "读取错误异常，请检查"), 
 	ENTITYKEY_NOTFOUND("207","无法在配置文件找到entity的主键"), 
 	ENTITY_RELATE_ERROR("209","关联数据失败"),
-	METHOD_NO_EXIST("208","方法不存在");
+	METHOD_NO_EXIST("208","方法不存在"), 
+	SEND_DATA_NOW_PAR_ERROR("209","参数异常,需要startDate(yyyy-MM-dd)<必须>,endDate(yyyy-MM-dd)<可选>");
 
 	private String msgId;
 	private String msgDesc;

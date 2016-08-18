@@ -12,6 +12,10 @@ public class ResultInfo implements Serializable {
 
 	private String msg;
 
+	private String pk;
+
+	private String fk;
+
 	public ResultInfo() {
 	}
 
@@ -35,6 +39,36 @@ public class ResultInfo implements Serializable {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	/**
+	 * @return the pk
+	 */
+	public String getPk() {
+		return pk;
+	}
+
+	/**
+	 * @param pk
+	 *            the pk to set
+	 */
+	public void setPk(String pk) {
+		this.pk = pk;
+	}
+
+	/**
+	 * @return the fk
+	 */
+	public String getFk() {
+		return fk;
+	}
+
+	/**
+	 * @param fk
+	 *            the fk to set
+	 */
+	public void setFk(String fk) {
+		this.fk = fk;
 	}
 
 }

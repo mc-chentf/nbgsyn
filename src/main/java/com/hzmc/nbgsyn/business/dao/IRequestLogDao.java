@@ -28,7 +28,7 @@ public interface IRequestLogDao {
 	 * @param 条数
 	 * @return
 	 */
-	public List<RequestLog> findNeedReSendLogByCount(Date now, Integer i);
+	public List<RequestLog> findNeedReSendLogByCount(Date now, Integer i, String type);
 
 	/**
 	 * 更新数据
@@ -36,5 +36,14 @@ public interface IRequestLogDao {
 	 * @param requestLog
 	 */
 	public void modifyRequestLog(RequestLog requestLog);
+
+	/**
+	 * 根据时间更新 下发不成功的log
+	 * 
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public int modifyRequestLogMaxResendAdd(Date start, Date end);
 
 }

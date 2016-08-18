@@ -1,5 +1,6 @@
 package com.hzmc.nbgsyn.service.impl;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,6 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.ws.BindingProvider;
 
@@ -289,9 +292,7 @@ public class TalendServiceImpl implements ITalendService {
 	@Override
 	public ResultBean updateApplyDate(ApplyDate applyDate) {
 		// 判断是否存在
-
 		// 不存在则返回
-
 		return toTalend(applyDate, "U");
 	}
 
@@ -384,9 +385,30 @@ public class TalendServiceImpl implements ITalendService {
 		}
 
 		// 移除字段
+		// 数字类型转化 科学计数法
+		Pattern r = Pattern.compile(Constant.E_NOTATION_PATTERN);
 		for (int i = 0; i < dataList.size(); i++) {
 			JSONObject jo = (JSONObject) dataList.get(i);
 			jo.remove("ERROR_FLAG");
+			jo.remove("INSERT_TIME");
+			jo.remove("UPDATE_TIME");
+			// 循环jo
+			@SuppressWarnings("unchecked")
+			Iterator<String> joIterator = jo.keySet().iterator();
+			while (joIterator.hasNext()) {
+				String key = joIterator.next();
+				String value = jo.getString(key);
+				Matcher m = r.matcher(value);
+				if (m.matches()) {
+					BigDecimal bigDecimal = new BigDecimal(value);
+					jo.put(key, bigDecimal.toString());
+				}
+				// 外键[]去除
+				if (jo.get(key) instanceof JSONArray) {
+					JSONArray ja = (JSONArray) jo.get(key);
+					jo.put(key, ja.getString(0));
+				}
+			}
 		}
 
 		result.put("dataList", dataList);
@@ -538,6 +560,7 @@ public class TalendServiceImpl implements ITalendService {
 				// 遍历是否在set 在set 就扔出dataINfoPk
 				HashSet<String> entityColumns = ralateTableInfo.get(entityView.getForeignEntityName());
 				HashSet<String> redundanceColumns = RedundanceTableInfo.getInstacne().getRedundance().get(entityView.getEntityName());
+				redundanceColumns = redundanceColumns == null ? new HashSet<String>() : redundanceColumns;
 
 				JSONObject dataInfoFk = new JSONObject();
 				HashSet<String> removeKey = new HashSet<String>();
@@ -562,7 +585,10 @@ public class TalendServiceImpl implements ITalendService {
 					// 如果是 不是删除 就判断是否含companyId 有更新 没有 插入
 					// 先直接扔进去试试
 					// 是更新还是插入
-					String pkIntype = StringUtils.isEmpty(dataInfoFk.getString(entityView.getForeignEntityKey())) ? "C" : "U";
+					String pkIntype = "U";
+					String fk = entityView.getForeignEntityKey();
+					if (!dataInfoFk.containsKey(fk) || StringUtils.isEmpty(dataInfoFk.getString(fk)) || "0".equals(dataInfoFk.getString(fk)))
+						pkIntype = "C";
 					if (pkIntype.equals("C")) {
 						// 找到最大值
 						HashMap<String, Object> par = new HashMap<String, Object>();
@@ -597,7 +623,8 @@ public class TalendServiceImpl implements ITalendService {
 						resultInfos.add(temp);
 						continue;
 					}
-					temp.setMsg("调用成功,主键为" + primaryKey);
+					temp.setMsg("调用成功,company_id为" + primaryKey);
+					temp.setFk(primaryKey);
 					// 如果是删除 则不做操作
 					dataInfo.put(entityView.getEntityFk(), primaryKey);
 				}
@@ -635,8 +662,9 @@ public class TalendServiceImpl implements ITalendService {
 					temp.setMsg("调用成功,删除的主键为" + primaryKey);
 				} else {
 					primaryKey = talendSaveOrUpdateWS(inType, model, cluster, xmls, applyDate.getUsername());
-					temp.setMsg("调用成功,主键为" + primaryKey);
+					temp.setMsg(temp.getMsg() + "调用成功,主键为" + primaryKey);
 				}
+				temp.setPk(primaryKey);
 			} catch (TalendException e) {
 				// 处理异常 截取错误
 				String msg = e.getMessage();

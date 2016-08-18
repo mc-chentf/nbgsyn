@@ -34,7 +34,7 @@
 	<jaxws:endpoint id="mdmOutService" address="/MDMOUTSERVICE" implementor="#mdmOutServiceImpl" />
 
 	<bean id="userServiceImpl" class="com.hzmc.nbgsyn.webservice.impl.MdmSendServiceImpl" />
-	<jaxrs:server id="mdmSendService" address="/mdmSendService">
+	<jaxrs:server id="mdmSendService" address="/MDMSENDSERVICE">
 		<jaxrs:serviceBeans>
 			<ref bean="userServiceImpl" />
 		</jaxrs:serviceBeans>
@@ -118,10 +118,8 @@
 	<bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<!-- 
 				<ref bean="sendCronTriggerBean" />
 				<ref bean="reSendCronTriggerBean" />
-				 -->
 			</list>
 		</property>
 	</bean>

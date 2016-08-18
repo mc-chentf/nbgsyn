@@ -39,6 +39,7 @@
 		          from map_request_log t
 		         where x_is_success = 'N'
 		           and x_max_resend > x_now_resend
+		           and x_type = #type#
 		           and #now# > x_modify_time
 		         order by x_id) A
 		 WHERE #count# >= ROWNUM
@@ -52,4 +53,21 @@
 				x_now_resend = #nowResend#
 			where x_id = #id#
 	</update>
+	
+	<update id="modifyRequestLogMaxResendAdd" parameterClass="java.util.HashMap">
+		update map_request_log
+			set x_max_resend = x_max_resend + 1
+			where x_is_success = #isSuccess# and x_method = #method#
+			and x_create_time > #start# and #end# > x_create_time
+ 	</update>
+ 	
+ 	<update id="modifyNeedReSendLogStatusPrepareByIds" parameterClass="java.util.List">
+ 		update map_request_log
+ 			set x_is_success = 'P'
+ 			where x_id in
+ 			<iterate open="(" close=")" conjunction=",">  
+	            #ids[]#  
+	        </iterate>
+ 	</update>
+ 	
 </sqlMap>

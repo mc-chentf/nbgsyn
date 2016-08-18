@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,9 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
-import com.hzmc.nbgsyn.business.dao.IIncMdDataListDao;
 import com.hzmc.nbgsyn.pojo.EntityView;
-import com.hzmc.nbgsyn.service.ISendService;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import net.sf.json.JSONArray;
@@ -25,16 +23,17 @@ import net.sf.json.JSONObject;
 
 public class JdbcTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		IIncMdDataListDao incMdDataListDao = (IIncMdDataListDao) applicationContext.getBean("incMdDataListDaoImpl");
-
-		List res = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(new Date(), 10, "C");
-		System.out.println(res.size());
+		// IIncMdDataListDao incMdDataListDao = (IIncMdDataListDao) applicationContext.getBean("incMdDataListDaoImpl");
+		//
+		// List res = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(new Date(), 10, "C");
+		// System.out.println(res.size());
+		JdbcTest jdbcTest = new JdbcTest();
 		// ISendService sendService = (ISendService) applicationContext.getBean("sendServiceImpl");
 		// sendService.reSendSeviceQuartzJob();
 		// jdbcTest.methodOne();
-		// jdbcTest.method2(applicationContext);
+		jdbcTest.method2(applicationContext);
 		// JdbcTest jdbcTest = new JdbcTest();
 		// jdbcTest.method3();
 	}
@@ -82,22 +81,7 @@ public class JdbcTest {
 	}
 
 	public void method2(ApplicationContext applicationContext) throws SQLException {
-		// String tableName = "RD_FEE_SUBJECT";
-		// String tableName = "RD_CTN_TYPE";
-		// String tableName = "RD_CTN_SIZETYPE";
-		// String tableName = "RD_CTN_SIZE";
-		// String tableName = "MD_TRANSPORT_VESSEL";
-		// String tableName = "MD_TRANSPORT_TRUCK";
-		// String tableName = "MD_LOCATION_PORT";
-		// String tableName = "MD_LINE_SHIPLINE";
-		// String tableName = "MD_COMPANY_SHIP";
-		// String tableName = "MD_COMPANY_FORWARDER";
-		// String tableName = "MD_COMPANY_CTNOWNER";
-		// String tableName = "LD_LOCATION_PORT";
-		// String tableName = "LD_CTN_TYPE";
-		// String tableName = "LD_CTN_SIZETYPE";
-		// String tableName = "LD_COMPANY_CTNOWNER";
-		String tableName = "LD_CTN_SIZE";
+		String tableName = "MD_COMPANY_CTNOWNER";
 
 		HashSet<String> removeCol = new HashSet<String>();
 		removeCol.add("X_TALEND_TASK_ID");
@@ -106,6 +90,8 @@ public class JdbcTest {
 		removeCol.add("X_TALEND_TASK_ID");
 		removeCol.add("X_TALEND_TIMESTAMP");
 		removeCol.add("X_UPDATE_TIME");
+		removeCol.add("X_TALEND_COMPANY_FLAG");
+		removeCol.add("COMPANY_ID_X_COMPANY_ID");
 
 		SqlMapClient client = (SqlMapClient) applicationContext.getBean("sqlMapClient");
 		Connection connection = client.getDataSource().getConnection();
@@ -118,13 +104,14 @@ public class JdbcTest {
 		while (rs.next()) {
 			System.out.println(rs.getString(1));
 			if (!removeCol.contains(rs.getString(1))) {
-				String key = rs.getString(1).replace("X_", "");
+				String key = rs.getString(1);
+				key = key.substring(2);
 				String type = rs.getString(2);
 				String value = "";
 				if (key.equals("ACTIVE_FLAG"))
 					value = "Y";
 				else if (type.equals("VARCHAR2"))
-					value = "w" + index++;
+					value = "w";
 				else if (type.equals("NUMBER"))
 					value = Integer.valueOf(index++).toString();
 				else if (type.equals("DATE"))
@@ -135,6 +122,7 @@ public class JdbcTest {
 			}
 		}
 
+		List<String> rylist = new ArrayList<>();
 		System.out.println("-----------------------------------");
 		if (tableName.contains("COMPANY")) {
 			// 查company表
@@ -143,19 +131,22 @@ public class JdbcTest {
 			while (rs.next()) {
 				System.out.println(rs.getString(1));
 				if (!removeCol.contains(rs.getString(1))) {
-					String key = rs.getString(1).replace("X_", "");
+					String key = rs.getString(1);
+					key = key.substring(2);
 					String type = rs.getString(2);
 					String value = "";
 					if (key.equals("ACTIVE_FLAG"))
 						value = "Y";
 					else if (type.equals("VARCHAR2"))
-						value = "w" + index++;
+						value = "c";
 					else if (type.equals("NUMBER"))
 						value = Integer.valueOf(index++).toString();
 					else if (type.equals("DATE"))
 						value = "2016-08-04T13:11:12";
 					else
 						System.out.println(type + "-----------------");
+					if (par.containsKey(key))
+						rylist.add(key);
 					par.put(key, value);
 				}
 			}
@@ -187,6 +178,11 @@ public class JdbcTest {
 		fja.clear();
 		fja.add(applyDate);
 		System.out.println(fja);
+		String rystr = "";
+		for (String str : rylist) {
+			rystr += "," + str;
+		}
+		System.out.println(tableName + "=" + rystr.substring(1));
 	}
 
 	public void method3() {
@@ -206,5 +202,5 @@ public class JdbcTest {
 		}
 		System.out.println(sb.toString());
 	}
-	
+
 }

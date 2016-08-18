@@ -1,19 +1,20 @@
 package com.hzmc.nbgsyn.webservice.impl;
 
-import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
-import com.hzmc.nbgsyn.business.manager.IUserManager;
 import com.hzmc.nbgsyn.enums.MsgEnum;
-import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.service.ISendService;
 import com.hzmc.nbgsyn.webservice.IMdmSendService;
@@ -25,83 +26,82 @@ public class MdmSendServiceImpl implements IMdmSendService {
 	private Logger logger = Logger.getLogger(MdmSendServiceImpl.class);
 
 	@Autowired
-	private IUserManager userManager;
+	private IRequestLogDao requestLogDao;
 
-	@SuppressWarnings("unused")
 	@Autowired
 	private ISendService sendService;
 
-	@SuppressWarnings("unused")
-	@Autowired
-	private IRequestLogDao requestLogDao;
-
 	@POST
 	@Path("/")
-	public String sendDateDownPost(@QueryParam("applyData") String applyDateStr) {
-		String res = sendDateDown(applyDateStr);
+	public String sendDateDownPost(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+		ResultBean res = sendDateDown(startDate, endDate);
 		logger.info(res);
-		return res;
+		return JSONObject.fromObject(res).toString();
 	}
 
 	@GET
 	@Path("/")
-	public String sendDateDownGet(@QueryParam("applyData") String applyDateStr) {
-		String res = sendDateDown(applyDateStr);
+	public String sendDateDownGet(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+		ResultBean res = sendDateDown(startDate, endDate);
 		logger.info(res);
-		return res;
+		return JSONObject.fromObject(res).toString();
 	}
 
-	private String sendDateDown(String applyDateStr) {
-		// System.out.println("resevice----------" + applyDateStr);
-		ResultBean resultBean = new ResultBean();
-		resultBean.setMsgId(MsgEnum.SUCCESS.getMsgId());
-		resultBean.setMsgDesc(MsgEnum.SUCCESS.getMsgDesc());
-		
-		
-		// 封装applyDate
-		ApplyDate applyDate = new ApplyDate();
+	private ResultBean sendDateDown(String startDate, String endDate) {
+		ResultBean resultBean = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
+		// 判断是否为空
+		if (StringUtils.isEmpty(startDate)) {
+			resultBean.setMsgId(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgId());
+			resultBean.setMsgDesc(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgDesc());
+			return resultBean;
+		}
+
+		Date start;
+		Date end;
+		// 转化时间
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		// 开始时间转化错误 就扔出去
 		try {
-			JSONObject applyDateJo = JSONObject.fromObject(applyDateStr);
-			applyDate = (ApplyDate) JSONObject.toBean(applyDateJo, ApplyDate.class);
-		} catch (Exception e) {
+			start = dateFormat.parse(startDate);
+		} catch (ParseException e) {
 			logger.error(e);
-			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
-			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
+			resultBean.setMsgId(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgId());
+			resultBean.setMsgDesc(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgDesc());
+			return resultBean;
 		}
 
-		if (applyDate == null) {
-			resultBean.setMsgId(MsgEnum.FORMART_ERROR.getMsgId());
-			resultBean.setMsgDesc(MsgEnum.FORMART_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
+		// 结束时间转化错误 就取当前时间
+		try {
+			if (StringUtils.isEmpty(endDate))
+				end = new Date();
+			else
+				end = dateFormat.parse(endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.error(e);
+			end = new Date();
 		}
 
-		String username = applyDate.getUsername();
-		String userPassword = applyDate.getPassword();
-		username = username == null ? "" : username;
-		userPassword = userPassword == null ? "" : userPassword;
+		int count = requestLogDao.modifyRequestLogMaxResendAdd(start, end);
 
-		// 验证用户 --- 通讯用户--和下面注册的用户无关
-		if (!userManager.validateUser(username, userPassword)) {
-			resultBean.setMsgId(MsgEnum.USER_PWD_ERROR.getMsgId());
-			resultBean.setMsgDesc(MsgEnum.USER_PWD_ERROR.getMsgDesc());
-			return JSONObject.fromObject(resultBean).toString();
-		}
+		resultBean.getResult().put("resend_count", count);
 
-		
-		// 检查是否在配置文件中
-		UUID uuid = UUID.randomUUID();
+		// 创建线程 调度下发
 
-		// 下发
-//		resultBean = sendService.sendSevice(applyDate, uuid.toString());
+		Thread resendMain = new Thread(new Runnable() {
+			public void run() {
+				try {
+					sendService.reSendSeviceQuartzJob();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					logger.error(e);
+				}
+			}
+		}, "resendMain");
 
-		resultBean.getResult().put("reqId", uuid.toString());
-		
-		applyDate.setUsername(username);
-//		requestLogDao.saveRequestLog(applyDate, resultBean, "sendDateDown");
+		resendMain.start();
 
-		logger.info("下发:--------------" + JSONObject.fromObject(resultBean).toString());
-		return JSONObject.fromObject(resultBean).toString();
+		return resultBean;
 	}
 
 }
