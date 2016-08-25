@@ -350,10 +350,11 @@ public class TalendServiceImpl implements ITalendService {
 				result.put("total", totalCount);
 				// 计算totalPage
 				int totalPage = (totalCount + pageSize - 1) / pageSize;
+				totalPage = totalPage <= 0 ? 1 : totalPage;
 				result.put("totalpage", totalPage);
 				result.put("pagesize", pageSize);
 				result.put("page", page);
-				result.put("isMore", page == totalPage ? "N" : "Y");
+				result.put("isMore", page >= totalPage ? "N" : "Y");
 			}
 			// 每条数据
 			else if (json instanceof JSONObject) {
@@ -400,8 +401,13 @@ public class TalendServiceImpl implements ITalendService {
 				String value = jo.getString(key);
 				Matcher m = r.matcher(value);
 				if (m.matches()) {
-					BigDecimal bigDecimal = new BigDecimal(value);
-					jo.put(key, bigDecimal.toString());
+					try {
+						BigDecimal bigDecimal = new BigDecimal(value);
+						jo.put(key, bigDecimal.toString());
+					} catch (Exception e) {
+						// TODO: handle exception
+						log.error("bigdecimal -- format - error" + e);
+					}
 				}
 				// 外键[]去除
 				if (jo.get(key) instanceof JSONArray) {

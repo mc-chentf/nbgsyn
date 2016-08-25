@@ -7,9 +7,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>callEDIESB complex type的 Java 类。
+ * <p>callEDIESB complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
  * 
  * <pre>
  * &lt;complexType name="callEDIESB"&gt;
@@ -46,7 +45,6 @@ public class CallEDIESB {
     protected String arg4;
 
     /**
-     * 获取arg0属性的值。
      * 
      * @return
      *     possible object is
@@ -58,7 +56,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 设置arg0属性的值。
      * 
      * @param value
      *     allowed object is
@@ -70,7 +67,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 获取arg1属性的值。
      * 
      * @return
      *     possible object is
@@ -82,7 +78,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 设置arg1属性的值。
      * 
      * @param value
      *     allowed object is
@@ -94,7 +89,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 获取arg2属性的值。
      * 
      * @return
      *     possible object is
@@ -106,7 +100,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 设置arg2属性的值。
      * 
      * @param value
      *     allowed object is
@@ -118,7 +111,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 获取arg3属性的值。
      * 
      * @return
      *     possible object is
@@ -130,7 +122,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 设置arg3属性的值。
      * 
      * @param value
      *     allowed object is
@@ -142,7 +133,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 获取arg4属性的值。
      * 
      * @return
      *     possible object is
@@ -154,7 +144,6 @@ public class CallEDIESB {
     }
 
     /**
-     * 设置arg4属性的值。
      * 
      * @param value
      *     allowed object is

@@ -7,9 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>callEDIESBPub complex type的 Java 类。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
  * 
  * <pre>
  * &lt;complexType name="callEDIESBPub"&gt;
@@ -49,7 +47,6 @@ public class CallEDIESBPub {
     protected String arg5;
 
     /**
-     * 获取arg0属性的值。
      * 
      * @return
      *     possible object is
@@ -61,7 +58,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg0属性的值。
      * 
      * @param value
      *     allowed object is
@@ -73,7 +69,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 获取arg1属性的值。
      * 
      * @return
      *     possible object is
@@ -85,7 +80,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg1属性的值。
      * 
      * @param value
      *     allowed object is
@@ -97,7 +91,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 获取arg2属性的值。
      * 
      * @return
      *     possible object is
@@ -109,7 +102,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg2属性的值。
      * 
      * @param value
      *     allowed object is
@@ -121,7 +113,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 获取arg3属性的值。
      * 
      * @return
      *     possible object is
@@ -133,7 +124,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg3属性的值。
      * 
      * @param value
      *     allowed object is
@@ -145,7 +135,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 获取arg4属性的值。
      * 
      * @return
      *     possible object is
@@ -157,7 +146,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg4属性的值。
      * 
      * @param value
      *     allowed object is
@@ -169,7 +157,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 获取arg5属性的值。
      * 
      * @return
      *     possible object is
@@ -181,7 +168,6 @@ public class CallEDIESBPub {
     }
 
     /**
-     * 设置arg5属性的值。
      * 
      * @param value
      *     allowed object is

@@ -14,6 +14,7 @@ import com.hzmc.nbgsyn.persistence.ApplyDate;
 import com.hzmc.nbgsyn.persistence.ResultBean;
 import com.hzmc.nbgsyn.pojo.RequestLog;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -31,25 +32,50 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 
 	@Override
 	public void saveRequestLog(ApplyDate applyDate, ResultBean resultBean, String method) {
-		Date now = new Date();
-		RequestLog requestLog = new RequestLog();
-		requestLog.setAction(applyDate.getAction());
-		requestLog.setCreateTime(now);
-		requestLog.setEntity(applyDate.getEntity());
-		requestLog.setMaxResend(0);
-		requestLog.setNowResend(0);
-		requestLog.setModifyTime(now);
-		requestLog.setRequestData(JSONObject.fromObject(applyDate).toString());
-		requestLog.setResponseData(JSONObject.fromObject(resultBean).toString());
-		requestLog.setSessionId(resultBean.getResult().get("reqId").toString());
-		requestLog.setType(applyDate.getType());
-		requestLog.setUserName(applyDate.getUsername());
-		requestLog.setMethod(method);
-		if (resultBean.getMsgId().equals(MsgEnum.SUCCESS.getMsgId()))
-			requestLog.setIsSuccess("Y");
-		else
-			requestLog.setIsSuccess("N");
-		this.saveRequestLog(requestLog);
+		try {
+			String resPonseDate = "";
+			// 如果是查询方法
+			if ("TRANSFOR".equals(applyDate.getAction()) && "R".equals(applyDate.getType())) {
+				try {
+					resPonseDate = JSONObject.fromObject(resultBean).toString();
+					JSONObject jo = JSONObject.fromObject(resPonseDate);
+					JSONArray ja = jo.getJSONObject("result").getJSONArray("dataList");
+					if (ja.size() > 5) {
+						ja = JSONArray.fromObject(ja.subList(0, 4));
+					}
+					jo.getJSONObject("result").put("dataList", ja);
+					jo.put("part", "Y");
+					resPonseDate = JSONObject.fromObject(jo).toString();
+				} catch (Exception e) {
+					// TODO: handle exception
+					logger.error(e);
+				}
+
+			}
+			Date now = new Date();
+			RequestLog requestLog = new RequestLog();
+			requestLog.setAction(applyDate.getAction());
+			requestLog.setCreateTime(now);
+			requestLog.setEntity(applyDate.getEntity());
+			requestLog.setMaxResend(0);
+			requestLog.setNowResend(0);
+			requestLog.setModifyTime(now);
+			requestLog.setRequestData(JSONObject.fromObject(applyDate).toString());
+			requestLog.setResponseData(resPonseDate);
+			requestLog.setSessionId(resultBean.getResult().get("reqId").toString());
+			requestLog.setType(applyDate.getType());
+			requestLog.setUserName(applyDate.getUsername());
+			requestLog.setMethod(method);
+			if (resultBean.getMsgId().equals(MsgEnum.SUCCESS.getMsgId()))
+				requestLog.setIsSuccess("Y");
+			else
+				requestLog.setIsSuccess("N");
+			this.saveRequestLog(requestLog);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e);
+		}
 	}
 
 	@Override

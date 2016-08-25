@@ -3,6 +3,7 @@ package com.hzmc.nbgsyn.webservice.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hzmc.nbgsyn.business.dao.IRequestLogDao;
 import com.hzmc.nbgsyn.enums.MsgEnum;
 import com.hzmc.nbgsyn.persistence.ResultBean;
+import com.hzmc.nbgsyn.pojo.RequestLog;
 import com.hzmc.nbgsyn.service.ISendService;
 import com.hzmc.nbgsyn.webservice.IMdmSendService;
 
@@ -100,6 +102,29 @@ public class MdmSendServiceImpl implements IMdmSendService {
 		}, "resendMain");
 
 		resendMain.start();
+
+		Date now = new Date();
+		UUID uuid = UUID.randomUUID();
+		resultBean.getResult().put("reqId", uuid.toString());
+
+		RequestLog requestLog = new RequestLog();
+		requestLog.setAction("SEND");
+		requestLog.setCreateTime(now);
+		requestLog.setModifyTime(now);
+		requestLog.setEntity("");
+		requestLog.setIsSuccess("Y");
+		requestLog.setMaxResend(0);
+		requestLog.setNowResend(0);
+		requestLog.setType("S");
+		requestLog.setUserName("mdm");
+		requestLog.setMethod("sendDateDown");
+		requestLog.setSessionId(uuid.toString());
+		JSONObject jo = new JSONObject();
+		jo.put("startDate", startDate);
+		jo.put("endDate", endDate);
+		requestLog.setRequestData(jo.toString());
+		requestLog.setResponseData(JSONObject.fromObject(resultBean).toString());
+		requestLogDao.saveRequestLog(requestLog);
 
 		return resultBean;
 	}

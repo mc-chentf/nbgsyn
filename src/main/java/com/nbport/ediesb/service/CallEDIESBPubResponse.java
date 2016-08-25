@@ -8,9 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>callEDIESBPubResponse complex type的 Java 类。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
  * 
  * <pre>
  * &lt;complexType name="callEDIESBPubResponse"&gt;
@@ -36,7 +34,6 @@ public class CallEDIESBPubResponse {
     protected String _return;
 
     /**
-     * 获取return属性的值。
      * 
      * @return
      *     possible object is
@@ -48,7 +45,6 @@ public class CallEDIESBPubResponse {
     }
 
     /**
-     * 设置return属性的值。
      * 
      * @param value
      *     allowed object is

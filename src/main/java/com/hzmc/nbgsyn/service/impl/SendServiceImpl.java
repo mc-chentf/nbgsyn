@@ -112,6 +112,8 @@ public class SendServiceImpl implements ISendService {
 	public void sendSeviceQuartzJob() throws InterruptedException {
 		Date now = new Date();
 
+		int total = 0;
+
 		int count = 5;
 
 		while (true) {
@@ -120,6 +122,7 @@ public class SendServiceImpl implements ISendService {
 			List<IncMdDataList> createIncMdDataLists = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(now, count, "C");
 			if (createIncMdDataLists == null || createIncMdDataLists.size() == 0)
 				break;
+			total += createIncMdDataLists.size();
 			this.sendIncMdDataLists(createIncMdDataLists, now);
 		}
 
@@ -131,6 +134,7 @@ public class SendServiceImpl implements ISendService {
 			List<IncMdDataList> updateIncMdDataLists = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(now, updateCount, "U");
 			if (updateIncMdDataLists == null || updateIncMdDataLists.size() == 0)
 				break;
+			total += updateIncMdDataLists.size();
 			DataQueue.getIncMdDataLists().addAll(updateIncMdDataLists);
 
 			// 初始化countDown
@@ -152,8 +156,26 @@ public class SendServiceImpl implements ISendService {
 			List<IncMdDataList> deleteIncMdDataLists = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(now, count, "D");
 			if (deleteIncMdDataLists == null || deleteIncMdDataLists.size() == 0)
 				break;
+			total += deleteIncMdDataLists.size();
 			this.sendIncMdDataLists(deleteIncMdDataLists, now);
 		}
+
+		UUID uuid = UUID.randomUUID();
+		RequestLog requestLog = new RequestLog();
+		requestLog.setAction("SEND");
+		requestLog.setCreateTime(now);
+		requestLog.setModifyTime(now);
+		requestLog.setEntity("");
+		requestLog.setIsSuccess("Y");
+		requestLog.setMaxResend(0);
+		requestLog.setNowResend(0);
+		requestLog.setType("S");
+		requestLog.setUserName("mdm");
+		requestLog.setMethod("sendDate");
+		requestLog.setSessionId(uuid.toString());
+		requestLog.setRequestData("");
+		requestLog.setResponseData("excute  count " + total + "主数据");
+		requestLogDao.saveRequestLog(requestLog);
 
 	}
 
@@ -241,8 +263,13 @@ public class SendServiceImpl implements ISendService {
 					String value = itemJson.getString(key);
 					Matcher m = r.matcher(value);
 					if (m.matches()) {
-						BigDecimal bigDecimal = new BigDecimal(value);
-						itemJson.put(key, bigDecimal.toString());
+						try {
+							BigDecimal bigDecimal = new BigDecimal(value);
+							itemJson.put(key, bigDecimal.toString());
+						} catch (Exception e) {
+							// TODO: handle exception
+							logger.error("bigdecimal -- format - error" + e);
+						}
 					}
 					// 外键[]去除
 					if (itemJson.get(key) instanceof JSONArray) {
@@ -314,7 +341,10 @@ public class SendServiceImpl implements ISendService {
 			}
 
 		} catch (TalendException e) {
-			incMdDataList.setSendFlag("E");
+			if (e.getMessage().contains("Error reading XMLStreamReader."))
+				incMdDataList.setSendFlag("N");
+			if (e.getMessage().contains("Could not find item"))
+				incMdDataList.setSendFlag("E");
 			e.printStackTrace();
 			logger.error(e);
 		}
@@ -332,6 +362,8 @@ public class SendServiceImpl implements ISendService {
 		Date now = new Date();
 		int count = 10;
 
+		int total = 0;
+
 		// 先 补发 新增的
 		while (true) {
 			List<RequestLog> requestLogs = requestLogDao.findNeedReSendLogByCount(now, count, "C");
@@ -339,6 +371,7 @@ public class SendServiceImpl implements ISendService {
 				logger.info("处理完毕" + System.currentTimeMillis());
 				break;
 			}
+			total += requestLogs.size();
 			this.reSendRequestLogs(requestLogs);
 		}
 
@@ -352,7 +385,7 @@ public class SendServiceImpl implements ISendService {
 				logger.info("处理完毕" + System.currentTimeMillis());
 				break;
 			}
-
+			total += requestLogs.size();
 			DataQueue.getRequestLogs().addAll(requestLogs);
 
 			// 初始化countDown
@@ -377,8 +410,26 @@ public class SendServiceImpl implements ISendService {
 				logger.info("处理完毕" + System.currentTimeMillis());
 				break;
 			}
+			total += requestLogs.size();
 			this.reSendRequestLogs(requestLogs);
 		}
+
+		UUID uuid = UUID.randomUUID();
+		RequestLog requestLog = new RequestLog();
+		requestLog.setAction("SEND");
+		requestLog.setCreateTime(now);
+		requestLog.setModifyTime(now);
+		requestLog.setEntity("");
+		requestLog.setIsSuccess("Y");
+		requestLog.setMaxResend(0);
+		requestLog.setNowResend(0);
+		requestLog.setType("S");
+		requestLog.setUserName("mdm");
+		requestLog.setMethod("reSendDate");
+		requestLog.setSessionId(uuid.toString());
+		requestLog.setRequestData("");
+		requestLog.setResponseData("excute  count " + total + "日志数据");
+		requestLogDao.saveRequestLog(requestLog);
 
 	}
 

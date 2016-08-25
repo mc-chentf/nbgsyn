@@ -17,7 +17,8 @@
 		               x_from as xfrom,
 		               x_send_thread as sendThread
 		          from MAP_INC_MD_DATA_LIST t
-		          where x_send_flag is null and #now# > x_create_time
+		          where (x_send_flag is null or x_send_flag = 'N') and #now# > x_create_time
+		          and (#now# > x_modify_time or x_modify_time is null)
 		          <isEqual prepend="and" compareValue="C" property="type">
 		          		x_type in ('C','I')
 		          </isEqual>
