@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -141,7 +141,7 @@ public class SendServiceImpl implements ISendService {
 			CountDownLatch threadSignal = new CountDownLatch(threadNum);
 
 			// 创建固定长度的线程池
-			Executor executor = Executors.newFixedThreadPool(threadNum);
+			ExecutorService executor = Executors.newFixedThreadPool(threadNum);
 
 			for (int i = 0; i < threadNum; i++) { // 开threadNum个线程
 				Runnable sendData = new SendData(threadSignal);
@@ -149,6 +149,7 @@ public class SendServiceImpl implements ISendService {
 				executor.execute(sendData);
 			}
 			threadSignal.await();
+			executor.shutdown();
 		}
 
 		while (true) {
@@ -392,7 +393,7 @@ public class SendServiceImpl implements ISendService {
 			CountDownLatch threadSignal = new CountDownLatch(threadNum);
 
 			// 创建固定长度的线程池
-			Executor executor = Executors.newFixedThreadPool(threadNum);
+			ExecutorService executor = Executors.newFixedThreadPool(threadNum);
 
 			for (int i = 0; i < threadNum; i++) { // 开threadNum个线程
 				Runnable sendData = new ReSendLog(threadSignal);
@@ -401,6 +402,7 @@ public class SendServiceImpl implements ISendService {
 			}
 
 			threadSignal.await();
+			executor.shutdown();
 		}
 
 		// 再 补发 删除的

@@ -3,7 +3,9 @@ package com.hzmc.nbgsyn.service.impl;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -539,6 +541,10 @@ public class TalendServiceImpl implements ITalendService {
 	private ResultBean toTalend(ApplyDate applyDate, String type) {
 		ResultBean res = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
 
+		Date now = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		String nowStr = simpleDateFormat.format(now);
+
 		String entity = applyDate.getEntity();
 		String inType = type;
 		String model = applyDate.getModel();
@@ -559,6 +565,13 @@ public class TalendServiceImpl implements ITalendService {
 		for (int i = 0; i < jsonArray.size(); i++) {
 			ResultInfo temp = new ResultInfo("success", "");
 			JSONObject dataInfo = (JSONObject) jsonArray.get(i);
+			// 如果是创建的话默认添加2个字段
+			if (StringUtils.equals("C", type)) {
+				dataInfo.put("INSERT_TIME", nowStr);
+				dataInfo.put("UPDATE_TIME", nowStr);
+			} else if (StringUtils.equals("U", type)) {
+				dataInfo.put("UPDATE_TIME", nowStr);
+			}
 
 			// 如果关联表的话 dataInfo 要清洗 拆成dataInfoMain 和 dataInFoPK
 			if (StringUtils.equals("Y", entityView.getIsRalate())) {
