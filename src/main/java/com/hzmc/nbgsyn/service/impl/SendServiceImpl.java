@@ -38,6 +38,7 @@ import com.hzmc.nbgsyn.pojo.ServiceRegister;
 import com.hzmc.nbgsyn.service.ISendService;
 import com.hzmc.nbgsyn.service.ITalendService;
 import com.hzmc.nbgsyn.util.Constant;
+import com.hzmc.nbgsyn.util.EncypterUtil;
 import com.hzmc.nbgsyn.util.XmlStrToJsonUtil;
 import com.mchz.nbg.talendservice.WSItem;
 import com.nbport.ediesb.service.EDIESBService;
@@ -196,6 +197,8 @@ public class SendServiceImpl implements ISendService {
 	@Override
 	public void sendData(IncMdDataList incMdDataList, Date now) {
 
+		// N talend错误 Y 成功 E 找不到数据 V 不必下发 T没有下发的目标
+
 		// 获取 table
 		String entityName = incMdDataList.getTableName();
 
@@ -203,7 +206,7 @@ public class SendServiceImpl implements ISendService {
 		EntityView entityView = entityViewDao.findEntityViewByEntityName(entityName);
 		if (entityView == null) {
 			// 更新掉
-			incMdDataList.setSendFlag("N");
+			incMdDataList.setSendFlag("V");
 			incMdDataList.setModifyTime(now);
 			incMdDataListDao.modifyIncMdDataList(incMdDataList);
 			return;
@@ -234,9 +237,10 @@ public class SendServiceImpl implements ISendService {
 
 			// 没有下发的目标
 			if (serviceRegisterList == null || serviceRegisterList.size() == 0) {
-				incMdDataList.setSendFlag("N");
+				incMdDataList.setSendFlag("T");
 				incMdDataList.setModifyTime(now);
 				incMdDataListDao.modifyIncMdDataList(incMdDataList);
+				return;
 			}
 
 			// applydate的dataInfos
@@ -273,9 +277,9 @@ public class SendServiceImpl implements ISendService {
 						}
 					}
 					// 外键[]去除
-					if (itemJson.get(key) instanceof JSONArray) {
-						JSONArray ja = (JSONArray) itemJson.get(key);
-						itemJson.put(key, ja.getString(0));
+					if (value.startsWith("[") && value.endsWith("]")) {
+						value = value.substring(1, value.length() - 1);
+						itemJson.put(key, value);
 					}
 				}
 
@@ -303,7 +307,9 @@ public class SendServiceImpl implements ISendService {
 				String fromNode = "MDM";
 				String toNode = temp.getToNode();
 				String esbId = temp.getServiceName();
-				applyDate.setPassword(temp.getPassword());
+				String pwd = temp.getPassword();
+				String passWord = EncypterUtil.getInstacne().jasyptDecrypt(pwd);
+				applyDate.setPassword(passWord);
 				applyDate.setUsername(temp.getUsername());
 				JSONObject jo = JSONObject.fromObject(applyDate);
 				jo.remove("page");

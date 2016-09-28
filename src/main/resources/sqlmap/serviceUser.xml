@@ -12,7 +12,6 @@
 			x_active_flag as activeFlag
 		from map_service_user
 		where
-			x_username = #userName# and x_password = #passWord# 
-			and x_type = #type# and x_active_flag = #activeFlag#
+			x_username = #userName# and x_type = #type# and x_active_flag = #activeFlag#
 	</select>
 </sqlMap>

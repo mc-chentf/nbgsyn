@@ -51,6 +51,7 @@
 		<property name="maxWait" value="5000"></property>
 		<property name="removeAbandoned" value="true"></property>
 		<property name="removeAbandonedTimeout" value="3000"></property>
+		<property name="validationQuery" value="select 1 from dual"/>
 	</bean>
 
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">

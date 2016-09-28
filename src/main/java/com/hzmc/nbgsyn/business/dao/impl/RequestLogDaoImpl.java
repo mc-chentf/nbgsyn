@@ -130,7 +130,7 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 	}
 
 	@Override
-	public int modifyRequestLogMaxResendAdd(Date start, Date end) {
+	public Integer modifyRequestLogMaxResendAdd(Date start, Date end) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> par = new HashMap<String, Object>();
 		par.put("start", start);
@@ -138,6 +138,17 @@ public class RequestLogDaoImpl extends BaseDao implements IRequestLogDao {
 		par.put("isSuccess", "N");
 		par.put("method", "sendSevice");
 		return this.getSqlMapClientTemplate().update("modifyRequestLogMaxResendAdd", par);
+	}
+
+	@Override
+	public Integer findRequestLogResendCount(Date start, Date end) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> par = new HashMap<String, Object>();
+		par.put("start", start);
+		par.put("end", end);
+		par.put("isSuccess", "N");
+		par.put("method", "sendSevice");
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("findRequestLogResendCount", par);
 	}
 
 }

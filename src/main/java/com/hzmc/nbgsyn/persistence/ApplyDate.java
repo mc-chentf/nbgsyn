@@ -79,6 +79,10 @@ public class ApplyDate implements Serializable {
 		return password;
 	}
 
+	/**
+	 * @param password
+	 *            the password to set
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}

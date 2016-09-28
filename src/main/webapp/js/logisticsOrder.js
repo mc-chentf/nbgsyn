@@ -1,0 +1,13 @@
+$(function(){
+	$("#reset").on("click",function(){
+		$("#logisticsOrderNo").val("");
+		$("#bookingNo").val("");
+		$("#blNo").val("");
+		$("#ctnNo").val("");
+		$("#custDeclartionNo").val("");
+		$("#voyageCode").val("");
+		$("#startDate").val("");
+		$("#endDate").val("");
+		$(".message").html("");
+	});
+})

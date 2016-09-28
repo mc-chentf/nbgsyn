@@ -61,6 +61,13 @@
 			and x_create_time > #start# and #end# > x_create_time
  	</update>
  	
+ 	<select id="findRequestLogResendCount" parameterClass="java.util.HashMap" resultClass="Integer">
+ 		select count(1) from map_request_log
+ 		where x_is_success = #isSuccess# and x_method = #method#
+			  and x_create_time > #start# and #end# > x_create_time
+ 	</select>
+ 	
+ 	
  	<update id="modifyNeedReSendLogStatusPrepareByIds" parameterClass="java.util.List">
  		update map_request_log
  			set x_is_success = 'P'

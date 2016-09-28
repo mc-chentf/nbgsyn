@@ -6,15 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nbgsyn Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	<!-- 
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://file.mchz.com.cn:8081/nexus/content/groups/public</url>
-		</repository>
-	</repositories>
-	 -->
+	<!-- <repositories> <repository> <id>nexus</id> <name>Team Nexus Repository</name> <url>http://file.mchz.com.cn:8081/nexus/content/groups/public</url> </repository> </repositories> -->
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -237,6 +229,14 @@
 			<artifactId>quartz</artifactId>
 			<version>1.8.5</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>nbgsyn</finalName>

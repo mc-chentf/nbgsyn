@@ -48,6 +48,7 @@ import com.mchz.nbg.talendservice.WSItemPK;
 import com.mchz.nbg.talendservice.WSPutItem;
 import com.mchz.nbg.talendservice.WSPutItemWithReport;
 import com.mchz.nbg.talendservice.WSStringPredicate;
+import com.mchz.nbg.talendservice.WSWhereAnd;
 import com.mchz.nbg.talendservice.WSWhereCondition;
 import com.mchz.nbg.talendservice.WSWhereItem;
 import com.mchz.nbg.talendservice.WSWhereOperator;
@@ -412,9 +413,9 @@ public class TalendServiceImpl implements ITalendService {
 					}
 				}
 				// 外键[]去除
-				if (jo.get(key) instanceof JSONArray) {
-					JSONArray ja = (JSONArray) jo.get(key);
-					jo.put(key, ja.getString(0));
+				if (value.startsWith("[") && value.endsWith("]")) {
+					value = value.substring(1, value.length() - 1);
+					jo.put(key, value);
 				}
 			}
 		}
@@ -487,15 +488,24 @@ public class TalendServiceImpl implements ITalendService {
 			// 获取PK
 			String foreignKey = jo.getString(entityView.getEntityFk());
 			// 循环 外键的data
-			for (int j = 0; j < pkDataList.size(); j++) {
-				JSONObject fkJo = pkDataList.getJSONObject(j);
+			@SuppressWarnings("unchecked")
+			Iterator<JSONObject> jsonIter = pkDataList.iterator();
+			while (jsonIter.hasNext()) {
+				JSONObject fkJo = jsonIter.next();
 				// 移除不需要的属性
 				for (String temp : removeKey) {
 					fkJo.remove(temp);
 				}
 				String fkJoPk = fkJo.getString(entityView.getForeignEntityKey());
-				if (StringUtils.equals(fkJoPk, foreignKey))
+				if (StringUtils.equals(fkJoPk, foreignKey)) {
+					fkJo.remove(entityView.getForeignEntityKey());
+					fkJo.remove("ERROR_FLAG");
+					fkJo.remove("INSERT_TIME");
+					fkJo.remove("UPDATE_TIME");
 					jo.putAll(fkJo);
+					jo.remove(entityView.getEntityFk());
+					jsonIter.remove();
+				}
 			}
 		}
 
@@ -601,21 +611,101 @@ public class TalendServiceImpl implements ITalendService {
 				}
 
 				if (!StringUtils.equals("D", inType)) {
-					// 如果是 不是删除 就判断是否含companyId 有更新 没有 插入
-					// 先直接扔进去试试
-					// 是更新还是插入
-					String pkIntype = "U";
-					String fk = entityView.getForeignEntityKey();
-					if (!dataInfoFk.containsKey(fk) || StringUtils.isEmpty(dataInfoFk.getString(fk)) || "0".equals(dataInfoFk.getString(fk)))
-						pkIntype = "C";
-					if (pkIntype.equals("C")) {
-						// 找到最大值
-						HashMap<String, Object> par = new HashMap<String, Object>();
-						par.put("table", entityView.getForeignEntityName());
-						par.put("col", "X_" + entityView.getForeignEntityKey());
-						Integer id = mapBaseDao.getMaxIdByCondition(par);
-						id++;
-						dataInfoFk.put(entityView.getForeignEntityKey(), id);
+					// 默认更新
+					String fkInType = "C";
+
+					String fkPk = "";
+					/*
+					 * // 找到最大值 HashMap<String, Object> par = new HashMap<String, Object>(); par.put("table", entityView.getForeignEntityName());
+					 * par.put("col", "X_" + entityView.getForeignEntityKey()); Integer id = mapBaseDao.getMaxIdByCondition(par); id++;
+					 * dataInfoFk.put(entityView.getForeignEntityKey(), id);
+					 */
+					// 获取seq
+					// 先根据 uncode和中文名查找company_base表
+					if (entityView.getForeignEntityName().equals("MD_COMPANY_BASE")) {
+						// 取出company_code 和 company_cname
+						String companyCode = dataInfoFk.containsKey("COMPANY_CODE") ? dataInfoFk.getString("COMPANY_CODE") : null;
+						String companyCname = dataInfoFk.containsKey("COMPANY_CNAME") ? dataInfoFk.getString("COMPANY_CNAME") : null;
+						if (companyCode == null || companyCname == null) {
+							temp.setMsg("缺少必要的参数 COMPANY_CODE和COMPANY_CNAME");
+							temp.setSuccess("fail");
+							resultInfos.add(temp);
+							continue;
+						}
+						// 根据companyCode和cname查找base数据 不管外键 直接这样
+						// 组装wswhereItem的搜索条件
+						WSWhereItem wsWhereItem = new WSWhereItem();
+						WSWhereAnd wsWhereAnd = new WSWhereAnd();
+						WSWhereItem tempWsWhereItemCompanyCode = new WSWhereItem();
+						WSWhereCondition tempWsWhereConditionCompanyCode = new WSWhereCondition();
+						tempWsWhereConditionCompanyCode.setLeftPath("COMPANY_CODE");
+						tempWsWhereConditionCompanyCode.setOperator(WSWhereOperator.EQUALS);
+						tempWsWhereConditionCompanyCode.setRightValueOrPath(companyCode);
+						tempWsWhereConditionCompanyCode.setSpellCheck(true);
+						tempWsWhereConditionCompanyCode.setStringPredicate(WSStringPredicate.NONE);
+						tempWsWhereItemCompanyCode.setWhereCondition(tempWsWhereConditionCompanyCode);
+						wsWhereAnd.getWhereItems().add(tempWsWhereItemCompanyCode);
+
+						WSWhereItem tempWsWhereItemCompanyCname = new WSWhereItem();
+						WSWhereCondition tempWsWhereConditionCompanyCname = new WSWhereCondition();
+						tempWsWhereConditionCompanyCname.setLeftPath("COMPANY_CNAME");
+						tempWsWhereConditionCompanyCname.setOperator(WSWhereOperator.EQUALS);
+						tempWsWhereConditionCompanyCname.setRightValueOrPath(companyCode);
+						tempWsWhereConditionCompanyCname.setSpellCheck(true);
+						tempWsWhereConditionCompanyCname.setStringPredicate(WSStringPredicate.NONE);
+						tempWsWhereItemCompanyCname.setWhereCondition(tempWsWhereConditionCompanyCname);
+						wsWhereAnd.getWhereItems().add(tempWsWhereItemCompanyCname);
+						wsWhereItem.setWhereAnd(wsWhereAnd);
+
+						// 根据ids 去 talend 中 找到相应的数据块
+						try {
+							List<String> date = this.getItemsInfoInTalendByCondition(model, entityView.getForeignEntityName(), 0, 1, wsWhereItem);
+							JSONArray fkDataList = new JSONArray();
+							// 处理返回的信息
+							Iterator<String> fkDateiterator = date.iterator();
+							while (fkDateiterator.hasNext()) {
+								String talendStr = fkDateiterator.next();
+								// 使用dom4j解析
+								JSON json = XmlStrToJsonUtil.xmlStrToJson(talendStr);
+								if (json instanceof JSONObject) {
+									JSONObject jo = (JSONObject) json;
+									@SuppressWarnings("unchecked")
+									Iterator<String> joIterator = jo.keys();
+									while (joIterator.hasNext()) {
+										String key = joIterator.next();
+										fkDataList.add(jo.getJSONObject(key));
+									}
+								}
+							}
+							if (!fkDataList.isEmpty()) {
+								fkPk = fkDataList.getJSONObject(0).getString(entityView.getForeignEntityKey());
+							}
+						} catch (TalendException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							String msg = e.getMessage();
+							if (msg.length() > 300) {
+								msg = msg.substring(0, 300);
+							}
+							temp.setMsg("调用talend失败,详情:" + msg);
+							temp.setSuccess("fail");
+							resultInfos.add(temp);
+							continue;
+						}
+						// 如果是空则seq去拿
+						if (StringUtils.isEmpty(fkPk)) {
+							String seqName = "seq_company_base";
+							Integer id = mapBaseDao.getSeqNextVal(seqName);
+							dataInfoFk.put(entityView.getForeignEntityKey(), id);
+							dataInfoFk.put("INSERT_TIME", nowStr);
+							dataInfoFk.put("UPDATE_TIME", nowStr);
+						}
+						// 否则直接把fk 赋值 intype 改成U
+						else {
+							dataInfoFk.put(entityView.getForeignEntityKey(), fkPk);
+							dataInfoFk.put("UPDATE_TIME", nowStr);
+							fkInType = "U";
+						}
 					}
 
 					// 组装xmls
@@ -630,7 +720,7 @@ public class TalendServiceImpl implements ITalendService {
 					String xmls = document.getRootElement().asXML();
 					String primaryKey = "";
 					try {
-						primaryKey = talendSaveOrUpdateWS(pkIntype, model, cluster, xmls, applyDate.getUsername());
+						primaryKey = talendSaveOrUpdateWS(fkInType, model, cluster, xmls, applyDate.getUsername());
 					} catch (TalendException e) {
 						e.printStackTrace();
 						String msg = e.getMessage();
@@ -652,13 +742,27 @@ public class TalendServiceImpl implements ITalendService {
 
 			// 如果是创建的话 设置主键key的id
 			if (StringUtils.equals("C", type) && (!StringUtils.isEmpty(entityView.getMdCode()))) {
-				// 设置id
-				HashMap<String, Object> par = new HashMap<String, Object>();
-				par.put("table", entityView.getEntityName());
-				par.put("col", "X_" + entityView.getMdCode());
-				Integer id = mapBaseDao.getMaxIdByCondition(par);
-				id++;
-				dataInfo.put(entityView.getEntityKey(), id);
+				/*
+				 * // 设置id HashMap<String, Object> par = new HashMap<String, Object>(); par.put("table", entityView.getEntityName()); par.put("col",
+				 * "X_" + entityView.getMdCode()); Integer id = mapBaseDao.getMaxIdByCondition(par); id++; dataInfo.put(entityView.getEntityKey(),
+				 * id);
+				 */
+				// 获取seq
+				try {
+					String seqName = entityView.getMdCode();
+					Integer id = mapBaseDao.getSeqNextVal(seqName);
+					dataInfo.put(entityView.getEntityKey(), id);
+				} catch (Exception e) {
+					// TODO: handle exception
+					String msg = e.getMessage();
+					if (msg.length() > 300) {
+						msg = msg.substring(0, 300);
+					}
+					temp.setMsg("seq 获取异常,详情:" + msg);
+					temp.setSuccess("fail");
+					resultInfos.add(temp);
+					continue;
+				}
 			}
 
 			// 组装xmls

@@ -4,4 +4,8 @@
 	<select id="getMaxIdByCondition" parameterClass="java.util.HashMap" resultClass="Integer">
 		select max($col$) from $table$
 	</select>
+	
+	<select id="getSeqNextVal" parameterClass="String" resultClass="Integer">
+		select $table$.nextval from dual
+	</select>
 </sqlMap>

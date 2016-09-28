@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +25,7 @@ import com.hzmc.nbgsyn.webservice.IMdmSendService;
 
 import net.sf.json.JSONObject;
 
+@Produces({ "application/json" })
 public class MdmSendServiceImpl implements IMdmSendService {
 
 	private Logger logger = Logger.getLogger(MdmSendServiceImpl.class);
@@ -35,7 +38,7 @@ public class MdmSendServiceImpl implements IMdmSendService {
 
 	@POST
 	@Path("/")
-	public String sendDateDownPost(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+	public String sendDataDownPost(@FormParam("startDate") String startDate, @FormParam("endDate") String endDate) {
 		ResultBean res = sendDateDown(startDate, endDate);
 		logger.info(res);
 		return JSONObject.fromObject(res).toString();
@@ -43,10 +46,67 @@ public class MdmSendServiceImpl implements IMdmSendService {
 
 	@GET
 	@Path("/")
-	public String sendDateDownGet(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+	public String sendDataDownGet(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
 		ResultBean res = sendDateDown(startDate, endDate);
 		logger.info(res);
 		return JSONObject.fromObject(res).toString();
+	}
+
+	@POST
+	@Path("/findSendDataCount")
+	public String findSendDateCountPost(@FormParam("startDate") String startDate, @FormParam("endDate") String endDate) {
+		ResultBean res = findSendDateCount(startDate, endDate);
+		logger.info(res);
+		return JSONObject.fromObject(res).toString();
+	}
+
+	@GET
+	@Path("/findSendDataCount")
+	public String findSendDateCountGet(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+		ResultBean res = findSendDateCount(startDate, endDate);
+		logger.info(res);
+		return JSONObject.fromObject(res).toString();
+	}
+
+	private ResultBean findSendDateCount(String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		ResultBean resultBean = new ResultBean(MsgEnum.SUCCESS.getMsgId(), MsgEnum.SUCCESS.getMsgDesc());
+		// 判断是否为空
+		if (StringUtils.isEmpty(startDate)) {
+			resultBean.setMsgId(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgId());
+			resultBean.setMsgDesc(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgDesc());
+			return resultBean;
+		}
+
+		Date start;
+		Date end;
+		// 转化时间
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		// 开始时间转化错误 就扔出去
+		try {
+			start = dateFormat.parse(startDate);
+		} catch (ParseException e) {
+			logger.error(e);
+			resultBean.setMsgId(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgId());
+			resultBean.setMsgDesc(MsgEnum.SEND_DATA_NOW_PAR_ERROR.getMsgDesc());
+			return resultBean;
+		}
+
+		// 结束时间转化错误 就取当前时间
+		try {
+			if (StringUtils.isEmpty(endDate))
+				end = new Date();
+			else
+				end = dateFormat.parse(endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.error(e);
+			end = new Date();
+		}
+
+		int count = requestLogDao.findRequestLogResendCount(start, end);
+		resultBean.getResult().put("resend_count", count);
+		return resultBean;
 	}
 
 	private ResultBean sendDateDown(String startDate, String endDate) {

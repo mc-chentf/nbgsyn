@@ -19,4 +19,10 @@ public class MapBaseDaoImpl extends BaseDao implements IMapBaseDao {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("getMaxIdByCondition", par);
 	}
 
+	@Override
+	public Integer getSeqNextVal(String seqName) {
+		// TODO Auto-generated method stub
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("getSeqNextVal", seqName);
+	}
+
 }

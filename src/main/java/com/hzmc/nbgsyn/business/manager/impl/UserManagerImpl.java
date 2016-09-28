@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.hzmc.nbgsyn.exception.UserInfoException;
 import com.hzmc.nbgsyn.persistence.UserInfoBean;
 import com.hzmc.nbgsyn.pojo.ServiceRegister;
 import com.hzmc.nbgsyn.pojo.ServiceUser;
+import com.hzmc.nbgsyn.util.EncypterUtil;
 
 /**
  * 
@@ -34,14 +36,21 @@ public class UserManagerImpl implements IUserManager {
 
 	@Override
 	public Boolean validateUser(String userName, String userPassword) {
-
+		Boolean res = false;
 		ServiceUser temp = new ServiceUser();
 		temp.setActiveFlag("Y");
 		temp.setUserName(userName);
 		temp.setPassWord(userPassword);
 		temp.setType("1");
 
-		return serviceUserDao.findServiceUserByCondition(temp) == null ? false : true;
+		ServiceUser serviceUser = serviceUserDao.findServiceUserByCondition(temp);
+		if (serviceUser != null) {
+			String pwd = serviceUser.getPassWord();
+			String pwdDecrpty = EncypterUtil.getInstacne().jasyptDecrypt(pwd);
+			if (StringUtils.equals(userPassword, pwdDecrpty))
+				res = true;
+		}
+		return res;
 	}
 
 	/**

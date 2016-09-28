@@ -10,5 +10,12 @@ import java.util.HashMap;
 public interface IMapBaseDao {
 
 	public Integer getMaxIdByCondition(HashMap<String, Object> par);
+
+	/**
+	 * 获取seq的下一个值
+	 * @param seqName
+	 * @return
+	 */
+	public Integer getSeqNextVal(String seqName);
 	
 }

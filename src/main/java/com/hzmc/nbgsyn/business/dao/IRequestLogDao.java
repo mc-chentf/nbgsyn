@@ -44,6 +44,8 @@ public interface IRequestLogDao {
 	 * @param end
 	 * @return
 	 */
-	public int modifyRequestLogMaxResendAdd(Date start, Date end);
+	public Integer modifyRequestLogMaxResendAdd(Date start, Date end);
+
+	public Integer findRequestLogResendCount(Date start, Date end);
 
 }

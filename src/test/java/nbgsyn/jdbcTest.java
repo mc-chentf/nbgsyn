@@ -1,6 +1,7 @@
 package nbgsyn;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.hzmc.nbgsyn.business.dao.IEntityViewDao;
 import com.hzmc.nbgsyn.pojo.EntityView;
+import com.hzmc.nbgsyn.util.EncypterUtil;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import net.sf.json.JSONArray;
@@ -24,18 +26,53 @@ import net.sf.json.JSONObject;
 public class JdbcTest {
 
 	public static void main(String[] args) throws SQLException {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+		for (int i = 0; i < 100; i++) {
+			System.out.println(EncypterUtil.getInstacne().jasyptEncrypt("ss"));
+		}
+		
 		// IIncMdDataListDao incMdDataListDao = (IIncMdDataListDao) applicationContext.getBean("incMdDataListDaoImpl");
 		//
 		// List res = incMdDataListDao.findIncMdDataListsByDateAndCountAndType(new Date(), 10, "C");
 		// System.out.println(res.size());
-		JdbcTest jdbcTest = new JdbcTest();
+//		JdbcTest jdbcTest = new JdbcTest();
 		// ISendService sendService = (ISendService) applicationContext.getBean("sendServiceImpl");
 		// sendService.reSendSeviceQuartzJob();
 		// jdbcTest.methodOne();
-		jdbcTest.method2(applicationContext);
+		// jdbcTest.method2(applicationContext);
 		// JdbcTest jdbcTest = new JdbcTest();
 		// jdbcTest.method3();
+//		jdbcTest.methodEncrypt(applicationContext);
+	}
+
+	private void methodEncrypt(ApplicationContext applicationContext) throws SQLException {
+		// TODO Auto-generated method stub
+		SqlMapClient client = (SqlMapClient) applicationContext.getBean("sqlMapClient");
+		Connection connection = client.getDataSource().getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery("select x_id,x_password from map_service_register");
+		HashMap<Integer, String> info = new HashMap<>();
+
+		while (rs.next()) {
+			System.out.print(rs.getInt(1));
+			System.out.print('\t');
+			System.out.print(rs.getString(2));
+			System.out.print('\t');
+			System.out.print(EncypterUtil.getInstacne().jasyptEncrypt(rs.getString(2)));
+			System.out.println();
+			info.put(rs.getInt(1), EncypterUtil.getInstacne().jasyptEncrypt(rs.getString(2)));
+		}
+
+		PreparedStatement preparedStatement = connection.prepareStatement("update map_service_register set x_password = ? where x_id = ?");
+		Iterator<Integer> iterator = info.keySet().iterator();
+		while (iterator.hasNext()) {
+			Integer key = iterator.next();
+			String value = info.get(key);
+			preparedStatement.setString(1, value);
+			preparedStatement.setInt(2, key);
+			preparedStatement.executeUpdate();
+		}
+		System.out.println("end");
 	}
 
 	public void methodOne() {
